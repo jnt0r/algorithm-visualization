@@ -14,10 +14,20 @@ module.exports = {
         }),
     ],
     module: {
-
+        rules: [
+            {
+                test: /\.ts/,
+                exclude: /node_modules/,
+                use: ["awesome-typescript-loader"],
+            }
+        ],
     },
     resolve: {
         extensions: ['.ts', '.js'],
+        modules: [
+            path.join(__dirname, 'src'),
+            'node_modules'
+        ]
     },
     output: {
         filename: '[name].bundle.js',
