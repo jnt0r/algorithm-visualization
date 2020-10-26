@@ -1,7 +1,14 @@
-export default class Application {
-    constructor() {}
+import Renderer from './Renderer';
 
-    run() {
+export default class Application {
+    private readonly renderer;
+
+    constructor() {
+        this.renderer = new Renderer();
+    }
+
+    run(): void {
         console.log('Hello World');
+        this.renderer.render();
     }
 }
