@@ -6,9 +6,47 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><%= htmlWebpackPlugin.options.title %></title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+        div.options {
+            display: flex;
+            width: 80%;
+            margin: 0 auto;
+            flex-wrap: nowrap;
+            flex-direction: row;
+        }
+        h1 {
+            margin: 20px 15px;
+        }
+        div.options button {
+            padding: 4px 6px;
+        }
+        svg {
+            display: block;
+            width: 80%;
+            height: 80%;
+            margin: 10px auto;
+            border: 1px solid black;
+        }
+    </style>
 </head>
 <body>
     <h1>Algorithm Visualization</h1>
+
+    <div class="options">
+        <button>Test</button>
+        <button>Test</button>
+        <button>Test</button>
+    </div>
 
     <svg id="svg-animation-frame"></svg>
 </body>
