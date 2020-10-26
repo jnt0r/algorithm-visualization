@@ -1,4 +1,4 @@
-import Renderer from './Renderer';
+import Renderer from './display/Renderer';
 
 export default class Application {
     private readonly renderer;
