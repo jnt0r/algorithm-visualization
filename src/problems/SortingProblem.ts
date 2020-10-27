@@ -49,52 +49,6 @@ export default class SortingProblem {
                 await renderer.unmarkComparing(this.numbers[j].getId(), this.numbers[j + 1].getId());
             }
         }
-
-        // const interval = setInterval(() => {
-        //     renderer.markComparing(this.numbers[j].getId(), this.numbers[j + 1].getId());
-        //
-        //     if (this.numbers[j].getValue() > this.numbers[j + 1].getValue()) {
-        //         const temp = this.numbers[j];
-        //         this.numbers[j] = this.numbers[j + 1];
-        //         this.numbers[j + 1] = temp;
-        //
-        //         renderer.swap(this.numbers[j].getId(), this.numbers[j + 1].getId());
-        //     }
-        //
-        //     renderer.unmarkComparing(this.numbers[j].getId(), this.numbers[j + 1].getId());
-        //
-        //     j++;
-        //     if (j === this.numbers.length - 1) {
-        //         j = 0;
-        //         i--;
-        //     }
-        //     if (i === 0) {
-        //         clearInterval(interval);
-        //     }
-        // }, 500);
-
-        // renderer.markComparing(1, 2);
-        // setTimeout(() => {
-        //     renderer.unmarkComparing(1, 2);
-        // }, 2000);
-        // for (let i = this.numbers.length; i > 0; i--) {
-        //     for (let j = 0; j < this.numbers.length - 1; j++) {
-        //         console.log('comparing', j, j + 1);
-        //         renderer.markComparing(j, j + 1);
-        //         wait(500);
-        //         if (this.numbers[j] > this.numbers[j + 1]) {
-        //             console.log('swapping', j, j + 1);
-        //             const temp = this.numbers[j];
-        //             this.numbers[j] = this.numbers[j + 1];
-        //             this.numbers[j + 1] = temp;
-        //
-        //             renderer.swap(j, j + 1);
-        //             wait(500);
-        //         }
-        //         renderer.unmarkComparing(j, j + 1);
-        //     }
-        // }
-        console.log(this.numbers);
     }
 
     render(renderer: Renderer) {
