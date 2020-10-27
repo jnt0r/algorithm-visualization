@@ -1,12 +1,14 @@
 import Renderer from './display/Renderer';
 import SortingProblem from './problems/SortingProblem';
+import PathFindingProblem from './problems/PathFindingProblem';
 
 export default class Application {
     private readonly renderer;
-    private readonly problem = new SortingProblem();
+    private readonly problem;
 
     constructor() {
         this.renderer = new Renderer();
+        this.problem = new PathFindingProblem(this.renderer);
     }
 
     run(): void {
