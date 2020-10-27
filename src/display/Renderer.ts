@@ -5,6 +5,10 @@ const animationSpeed = 1;
 export default class Renderer {
     private readonly svg = SVG('#svg-animation-frame');
 
+    clear(): void {
+        this.svg.clear();
+    }
+
     display(rect: Element): void {
         rect.addTo(this.svg);
     }

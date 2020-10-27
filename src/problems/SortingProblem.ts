@@ -22,30 +22,10 @@ export class Bar {
 }
 
 export default class SortingProblem {
-    private readonly numbers: Bar[];
+    private numbers: Bar[] = [];
 
     constructor() {
-        this.numbers = [
-            new Bar(0, 8, 0, 0),
-            new Bar(1, 1, 0, 22),
-            new Bar(2, 10, 0, 44),
-            new Bar(3, 5, 0, 66),
-            new Bar(4, 1, 0, 88),
-            new Bar(5, 2, 0, 110),
-            new Bar(6, 8, 0, 132),
-            new Bar(7, 7, 0, 154),
-            new Bar(8, 3, 0, 176),
-            new Bar(9, 9, 0, 198),
-            new Bar(10, 6, 0, 220),
-            new Bar(11, 8, 0, 242),
-            new Bar(12, 4, 0, 264),
-            new Bar(13, 1, 0, 286),
-            new Bar(14, 4, 0, 308),
-            new Bar(15, 2, 0, 330),
-        ];
-        // for (let i = 0; i < 10; i++) {
-        //     this.numbers.push(Math.random() * 100);
-        // }
+        this.generate();
     }
 
     async solve(renderer: Renderer): Promise<void> {
@@ -118,8 +98,16 @@ export default class SortingProblem {
     }
 
     render(renderer: Renderer) {
+        renderer.clear();
         this.numbers.forEach((v) => {
             renderer.display(v.getElement());
         });
+    }
+
+    generate() {
+        this.numbers = [];
+        for (let i = 0; i < 20; i++) {
+            this.numbers.push(new Bar(i, Math.random() * 10, 0, i * 22));
+        }
     }
 }

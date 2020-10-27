@@ -15,5 +15,10 @@ export default class Application {
         document.getElementById('solveBtn')!.onclick = () => {
             this.problem.solve(this.renderer).then(() => console.log('solved'));
         };
+
+        document.getElementById('generateBtn')!.onclick = () => {
+            this.problem.generate();
+            this.problem.render(this.renderer);
+        };
     }
 }
