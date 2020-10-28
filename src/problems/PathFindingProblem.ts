@@ -1,5 +1,5 @@
 import Renderer from '../display/Renderer';
-import { Element, Rect } from '@svgdotjs/svg.js';
+import { Element, Rect, Text } from '@svgdotjs/svg.js';
 
 export class Box {
     readonly element: Element;
@@ -13,78 +13,117 @@ export class Box {
 
 export class Grid {
     private readonly boxes: Box[][] = [];
+    private start: Box;
+    private goal: Box;
 
-    constructor(readonly renderer: Renderer, readonly a: number, readonly b: number) {
-        for (let i = 0; i < a; i++) {
+    constructor(readonly renderer: Renderer, readonly width: number, readonly height: number) {
+        for (let i = 0; i < width; i++) {
             this.boxes[i] = [];
-            for (let j = 0; j < b; j++) {
+            for (let j = 0; j < height; j++) {
                 this.boxes[i][j] = new Box(i * 41, j * 41);
-
-                if (i === 5 && j === 10) {
-                    this.boxes[i][j].element.fill('#0F0');
-                }
-
-                if (i === 9 && j === 1) {
-                    this.boxes[i][j].element.fill('#F00');
-                }
 
                 renderer.display(this.boxes[i][j].element);
             }
         }
 
-        const o = [this.boxes[5][10]];
-        while (o.indexOf(this.boxes[9][1]) === -1) {
-            for (const box of o.filter((el) => !el.visited)) {
-                box.cost = this.getDistance(box.x / 41, box.y / 41);
-                this.process(o, box.x / 41 + 1, box.y / 41);
-                this.process(o, box.x / 41 - 1, box.y / 41);
-                this.process(o, box.x / 41, box.y / 41 + 1);
-                this.process(o, box.x / 41, box.y / 41 - 1);
-                this.boxes[box.x / 41][box.y / 41].visited = true;
-            }
-            console.log(o);
+        // Set start
+        this.start = this.boxes[Math.floor(Math.random() * width)][Math.floor(Math.random() * height)];
+        this.start.element.fill('#F00');
+
+        // Set goal
+        this.goal = this.boxes[Math.floor(Math.random() * width)][Math.floor(Math.random() * height)];
+        this.goal.element.fill('#0F0');
+    }
+
+    async solve(): Promise<void> {
+        const o: Box[] = [this.start];
+        let layer: Box[] = [this.start];
+        while (layer.indexOf(this.goal) === -1) {
+            const newlayer: Box[] = [];
+            await new Promise((resolve) => {
+                console.log(layer);
+                for (const box of layer) {
+                    this.boxes[box.x / 41][box.y / 41].cost = this.getDistance(box.x / 41, box.y / 41);
+                    this.boxes[box.x / 41][box.y / 41].visited = true;
+                    this.process(newlayer, box.x / 41 + 1, box.y / 41);
+                    this.process(newlayer, box.x / 41 - 1, box.y / 41);
+                    this.process(newlayer, box.x / 41, box.y / 41 + 1);
+                    this.process(newlayer, box.x / 41, box.y / 41 - 1);
+                }
+
+                // Wait for the transition to end!
+                window.requestAnimationFrame(function () {
+                    setTimeout(() => {
+                        resolve();
+                    }, 1);
+                });
+            });
+            layer = [];
+            layer.push(...newlayer);
+            o.push(...newlayer);
         }
 
-        this.boxes[5][10].element.fill('#F00');
-        this.boxes[9][1].element.fill('#F00');
+        this.start.element.fill('#F00');
+        this.goal.element.fill('#0F0');
+        this.goal.cost = 0;
 
         let box = o[0];
-        while (box != undefined && box !== this.boxes[9][1]) {
-            box.element.fill('#00F');
-            box = this.getBestNeighbour(box.x / 41, box.y / 41);
+        while (box != undefined && box !== this.goal && box.cost !== 0) {
+            await new Promise((resolve) => {
+                box.element.fill('#00F');
+                box = this.getBestNeighbour(box.x / 41, box.y / 41);
+                // this.renderer.display(new Text().move(box.x + 20, box.y + 20).text('' + box.cost));
+
+                // Wait for the transition to end!
+                window.requestAnimationFrame(function () {
+                    setTimeout(() => {
+                        resolve();
+                    }, 1);
+                });
+            });
         }
-        this.boxes[5][10].element.fill('#0F0');
-        this.boxes[9][1].element.fill('#F00');
+
+        this.start.element.fill('#F00');
+        this.goal.element.fill('#0F0');
     }
 
     process(o: Box[], i: number, j: number): void {
-        if (i >= 0 && j >= 0 && i < this.a && j < this.b) {
+        if (this.boxes[i] && this.boxes[i][j] && !this.boxes[i][j].visited) {
             this.boxes[i][j].element.fill('#0FF');
             o.push(this.boxes[i][j]);
         }
     }
 
     getDistance(i: number, j: number): number {
-        return Math.abs(9 - i) + Math.abs(1 - j);
+        return Math.abs(this.goal.x / 41 - i) + Math.abs(this.goal.y / 41 - j);
     }
 
     private getBestNeighbour(x: number, y: number) {
-        const neighbours = [this.boxes[x + 1][y], this.boxes[x - 1][y], this.boxes[x][y - 1], this.boxes[x][y + 1]];
+        const neighbours = [];
+        if (this.boxes[x + 1]) neighbours.push(this.boxes[x + 1][y]);
+        if (this.boxes[x - 1]) neighbours.push(this.boxes[x - 1][y]);
+        if (this.boxes[x][y - 1]) neighbours.push(this.boxes[x][y - 1]);
+        if (this.boxes[x][y + 1]) neighbours.push(this.boxes[x][y + 1]);
         return neighbours.filter((a) => a.cost != -1).sort((a, b) => (a.cost < b.cost ? -1 : 1))[0];
     }
 }
 
 export default class PathFindingProblem {
-    readonly grid: Grid;
+    private grid: Grid;
 
-    constructor(renderer: Renderer) {
-        this.grid = new Grid(renderer, 16, 16);
+    constructor(private readonly renderer: Renderer) {
         this.generate();
     }
 
-    async solve(renderer: Renderer): Promise<void> {}
+    async solve(renderer: Renderer): Promise<void> {
+        // return this.grid.solve();
+        while(grid.)
+    }
 
     render(renderer: Renderer) {}
 
-    generate() {}
+    generate() {
+        this.renderer.clear();
+        this.grid = new Grid(this.renderer, 37, 18);
+    }
 }
