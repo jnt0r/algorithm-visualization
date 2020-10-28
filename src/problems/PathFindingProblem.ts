@@ -1,5 +1,5 @@
 import Renderer from '../display/Renderer';
-import { Element, Rect, Text } from '@svgdotjs/svg.js';
+import { Element, Rect } from '@svgdotjs/svg.js';
 
 export class Box {
     readonly element: Element;
@@ -7,7 +7,11 @@ export class Box {
     visited = false;
 
     constructor(readonly x: number, readonly y: number) {
-        this.element = new Rect().size(40, 40).move(x, y).fill('#FFF').stroke('#000');
+        this.element = new Rect()
+            .size(40, 40)
+            .move(x * 41, y * 41)
+            .fill('#FFF')
+            .stroke('#000');
     }
 }
 
@@ -20,7 +24,7 @@ export class Grid {
         for (let i = 0; i < width; i++) {
             this.boxes[i] = [];
             for (let j = 0; j < height; j++) {
-                this.boxes[i][j] = new Box(i * 41, j * 41);
+                this.boxes[i][j] = new Box(i, j);
 
                 renderer.display(this.boxes[i][j].element);
             }
@@ -43,12 +47,12 @@ export class Grid {
             await new Promise((resolve) => {
                 console.log(layer);
                 for (const box of layer) {
-                    this.boxes[box.x / 41][box.y / 41].cost = this.getDistance(box.x / 41, box.y / 41);
-                    this.boxes[box.x / 41][box.y / 41].visited = true;
-                    this.process(newlayer, box.x / 41 + 1, box.y / 41);
-                    this.process(newlayer, box.x / 41 - 1, box.y / 41);
-                    this.process(newlayer, box.x / 41, box.y / 41 + 1);
-                    this.process(newlayer, box.x / 41, box.y / 41 - 1);
+                    this.boxes[box.x][box.y].cost = this.getDistance(box.x, box.y);
+                    this.boxes[box.x][box.y].visited = true;
+                    this.process(newlayer, box.x + 1, box.y);
+                    this.process(newlayer, box.x - 1, box.y);
+                    this.process(newlayer, box.x, box.y + 1);
+                    this.process(newlayer, box.x, box.y - 1);
                 }
 
                 // Wait for the transition to end!
@@ -71,7 +75,7 @@ export class Grid {
         while (box != undefined && box !== this.goal && box.cost !== 0) {
             await new Promise((resolve) => {
                 box.element.fill('#00F');
-                box = this.getBestNeighbour(box.x / 41, box.y / 41);
+                box = this.getBestNeighbour(box.x, box.y);
                 // this.renderer.display(new Text().move(box.x + 20, box.y + 20).text('' + box.cost));
 
                 // Wait for the transition to end!
@@ -95,7 +99,7 @@ export class Grid {
     }
 
     getDistance(i: number, j: number): number {
-        return Math.abs(this.goal.x / 41 - i) + Math.abs(this.goal.y / 41 - j);
+        return Math.abs(this.goal.x - i) + Math.abs(this.goal.y - j);
     }
 
     private getBestNeighbour(x: number, y: number) {
@@ -116,8 +120,7 @@ export default class PathFindingProblem {
     }
 
     async solve(renderer: Renderer): Promise<void> {
-        // return this.grid.solve();
-        while(grid.)
+        return this.grid.solve();
     }
 
     render(renderer: Renderer) {}
