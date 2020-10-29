@@ -1,5 +1,6 @@
-import Renderer from '../display/Renderer';
-import { Element, Rect, Text } from '@svgdotjs/svg.js';
+import Renderer from '../../display/Renderer';
+import { Element, Rect } from '@svgdotjs/svg.js';
+import { Problem } from '../Problem';
 
 export class Box {
     readonly element: Element;
@@ -110,21 +111,23 @@ export class Grid {
     }
 }
 
-export default class PathFindingProblem {
+export default class PathFindingProblem implements Problem {
     private grid: Grid;
 
-    constructor(private readonly renderer: Renderer) {
-        this.generate();
+    getAlgorithms(): string[] {
+        return ['Dijkstra', 'A*', 'Depth first', 'Breath first'];
     }
 
     async solve(renderer: Renderer): Promise<void> {
         return this.grid.solve();
     }
 
-    render(renderer: Renderer) {}
+    render(renderer: Renderer) {
+        renderer.clear();
+        this.grid = new Grid(renderer, 37, 18);
+    }
 
     generate() {
-        this.renderer.clear();
-        this.grid = new Grid(this.renderer, 37, 18);
+        console.log('generate');
     }
 }

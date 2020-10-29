@@ -1,5 +1,6 @@
-import Renderer from '../display/Renderer';
+import Renderer from '../../display/Renderer';
 import { Element, Rect } from '@svgdotjs/svg.js';
+import { Problem } from '../Problem';
 
 export class Bar {
     constructor(readonly id: number, readonly value: number, readonly x: number, readonly y: number) {}
@@ -21,11 +22,11 @@ export class Bar {
     }
 }
 
-export default class SortingProblem {
+export default class SortingProblem implements Problem {
     private numbers: Bar[] = [];
 
-    constructor() {
-        this.generate();
+    getAlgorithms(): string[] {
+        return ['Dijkstra', 'A*', 'Depth first', 'Breath first'];
     }
 
     async solve(renderer: Renderer): Promise<void> {
