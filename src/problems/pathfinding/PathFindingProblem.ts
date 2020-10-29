@@ -1,6 +1,6 @@
 import Renderer from '../../display/Renderer';
 import { Element, Rect } from '@svgdotjs/svg.js';
-import { Problem } from '../Problem';
+import Problem from '../Problem';
 
 export class Box {
     readonly element: Element;

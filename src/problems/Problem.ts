@@ -1,6 +1,6 @@
 import Renderer from '../display/Renderer';
 
-export interface Problem {
+export default interface Problem {
     getAlgorithms(): string[];
 
     generate(): void;

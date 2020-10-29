@@ -1,6 +1,6 @@
 import Renderer from '../../display/Renderer';
 import { Element, Rect } from '@svgdotjs/svg.js';
-import { Problem } from '../Problem';
+import Problem from '../Problem';
 
 export class Bar {
     constructor(readonly id: number, readonly value: number, readonly x: number, readonly y: number) {}

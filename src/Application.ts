@@ -1,7 +1,7 @@
 import Renderer from './display/Renderer';
 import SortingProblem from './problems/sorting/SortingProblem';
 import PathFindingProblem from './problems/pathfinding/PathFindingProblem';
-import { Problem } from './problems/Problem';
+import Problem from './problems/Problem';
 
 export default class Application {
     private readonly renderer;
@@ -14,10 +14,11 @@ export default class Application {
     constructor() {
         this.renderer = new Renderer();
 
+        // Adding Problems to be able to choose from
         this.problems['Sorting'] = SortingProblem;
         this.problems['Path-finding'] = PathFindingProblem;
-        // this.problem = new PathFindingProblem(this.renderer);
 
+        // Set default problem to 'Sorting'
         this.setProblem('Sorting');
     }
 
