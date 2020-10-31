@@ -1,5 +1,6 @@
-import Renderer from '../display/Renderer';
-import { Element, Rect, Text } from '@svgdotjs/svg.js';
+import Renderer from '../../display/Renderer';
+import { Element, Rect } from '@svgdotjs/svg.js';
+import Problem from '../Problem';
 
 export class Box {
     readonly element: Element;
@@ -8,10 +9,14 @@ export class Box {
 
     constructor(readonly x: number, readonly y: number) {
         this.element = new Rect()
-            .size(40, 40)
-            .move(x * 41, y * 41)
+            .size(20, 20)
+            .move(x * 21, y * 21)
             .fill('#FFF')
-            .stroke('#000');
+            .stroke('#000')
+            .click(() => {
+                this.element.fill('#000');
+                this.visited = true;
+            });
     }
 
     markVisited(): void {
@@ -110,21 +115,23 @@ export class Grid {
     }
 }
 
-export default class PathFindingProblem {
+export default class PathFindingProblem implements Problem {
     private grid: Grid;
 
-    constructor(private readonly renderer: Renderer) {
-        this.generate();
+    getAlgorithms(): string[] {
+        return ['Dijkstra'];
     }
 
     async solve(renderer: Renderer): Promise<void> {
         return this.grid.solve();
     }
 
-    render(renderer: Renderer) {}
+    render(renderer: Renderer): void {
+        renderer.clear();
+        this.grid = new Grid(renderer, 40, 30);
+    }
 
-    generate() {
-        this.renderer.clear();
-        this.grid = new Grid(this.renderer, 37, 18);
+    generate(): void {
+        console.log('generate');
     }
 }
