@@ -9,10 +9,14 @@ export class Box {
 
     constructor(readonly x: number, readonly y: number) {
         this.element = new Rect()
-            .size(40, 40)
-            .move(x * 41, y * 41)
+            .size(20, 20)
+            .move(x * 21, y * 21)
             .fill('#FFF')
-            .stroke('#000');
+            .stroke('#000')
+            .click(() => {
+                this.element.fill('#000');
+                this.visited = true;
+            });
     }
 
     markVisited(): void {
@@ -115,7 +119,7 @@ export default class PathFindingProblem implements Problem {
     private grid: Grid;
 
     getAlgorithms(): string[] {
-        return ['Dijkstra', 'A*', 'Depth first', 'Breath first'];
+        return ['Dijkstra'];
     }
 
     async solve(renderer: Renderer): Promise<void> {
@@ -124,7 +128,7 @@ export default class PathFindingProblem implements Problem {
 
     render(renderer: Renderer): void {
         renderer.clear();
-        this.grid = new Grid(renderer, 37, 18);
+        this.grid = new Grid(renderer, 40, 30);
     }
 
     generate(): void {

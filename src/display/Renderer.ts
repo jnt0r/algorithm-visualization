@@ -1,10 +1,17 @@
 import { Element, SVG } from '@svgdotjs/svg.js';
 
-const animationSpeed = 1;
+const animationSpeed = 10;
 
 export default class Renderer {
     private readonly svg = SVG('#svg-animation-frame');
 
+    constructor() {
+        this.svg.transform({ flip: 'y' });
+    }
+
+    /**
+     * Clear the whole animation area
+     */
     clear(): void {
         this.svg.clear();
     }
@@ -13,40 +20,18 @@ export default class Renderer {
         rect.addTo(this.svg);
     }
 
-    async markComparing(a: number, b: number): Promise<void> {
-        return new Promise((resolve) => {
-            this.svg.get(a).attr('fill', '#F00');
-            this.svg.get(b).attr('fill', '#F00');
-
-            // Wait for the transition to end!
-            window.requestAnimationFrame(function () {
-                setTimeout(() => {
-                    resolve();
-                }, animationSpeed);
-            });
+    async swapElementsById(elementId1: number, elementId2: number): Promise<void> {
+        return this.animate(() => {
+            const e1 = this.svg.get(elementId1);
+            const e2 = this.svg.get(elementId2);
+            e1.animate({ delay: 0, duration: animationSpeed }).move(e2.x(), e2.y());
+            e2.animate({ delay: 0, duration: animationSpeed }).move(e1.x(), e1.y());
         });
     }
 
-    async unmarkComparing(a: number, b: number): Promise<void> {
+    async animate(func: () => void): Promise<void> {
         return new Promise((resolve) => {
-            this.svg.get(a).attr('fill', '#000');
-            this.svg.get(b).attr('fill', '#000');
-
-            // Wait for the transition to end!
-            window.requestAnimationFrame(function () {
-                setTimeout(() => {
-                    resolve();
-                }, animationSpeed);
-            });
-        });
-    }
-
-    async swap(a: number, b: number): Promise<void> {
-        return new Promise((resolve) => {
-            const e1 = this.svg.get(a);
-            const e2 = this.svg.get(b);
-            e1.animate({ delay: 0, duration: animationSpeed }).move(0, e2.y());
-            e2.animate({ delay: 0, duration: animationSpeed }).move(0, e1.y());
+            func();
 
             // Wait for the transition to end!
             window.requestAnimationFrame(function () {
