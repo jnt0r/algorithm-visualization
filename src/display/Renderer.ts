@@ -1,4 +1,5 @@
-import { Element, SVG } from '@svgdotjs/svg.js';
+import { SVG } from '@svgdotjs/svg.js';
+import Renderable from './Renderable';
 
 const animationSpeed = 10;
 
@@ -16,8 +17,8 @@ export default class Renderer {
         this.svg.clear();
     }
 
-    display(rect: Element): void {
-        rect.addTo(this.svg);
+    render(renderable: Renderable): void {
+        renderable.getElement().addTo(this.svg);
     }
 
     async swapElementsById(elementId1: number, elementId2: number): Promise<void> {

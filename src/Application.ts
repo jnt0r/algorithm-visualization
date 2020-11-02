@@ -1,7 +1,9 @@
 import Renderer from './display/Renderer';
-import SortingProblem, { BubbleSort, ProblemSolver, SelectionSort } from './problems/sorting/SortingProblem';
+import SortingProblem from './problems/sorting/SortingProblem';
 import PathFindingProblem from './problems/pathfinding/PathFindingProblem';
 import Problem from './problems/Problem';
+import BubbleSort from './problems/sorting/solver/BubbleSort';
+import ProblemSolver from './problems/ProblemSolver';
 
 export default class Application {
     private readonly renderer: Renderer = new Renderer();
@@ -22,17 +24,22 @@ export default class Application {
         this.algorithms['Path-finding'] = [];
 
         // Set default problem to 'Sorting'
-        this.setProblem('Sorting');
+        this.setProblem('Path-finding');
     }
 
     run(): void {
+        this.problems['Path-finding']
+            .solve(this.renderer, new BubbleSort())
+            .then(() => console.log('Solved'))
+            .catch((reason) => console.log(reason));
+
         for (const p in this.problems) {
             this.problemSelect.appendChild(new Option(p, p));
         }
         this.problemSelect.onchange = () => this.setProblem(this.problemSelect.value);
 
         this.solveBtn.onclick = () => {
-            this.problem.solve(this.renderer).then(() => console.log('solved'));
+            // this.problem.solve(this.renderer, this.solver).then(() => console.log('solved'));
         };
 
         this.generateBtn.onclick = () => {
