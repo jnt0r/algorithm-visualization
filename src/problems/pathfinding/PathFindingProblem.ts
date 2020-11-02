@@ -12,10 +12,10 @@ export default class PathFindingProblem implements Problem {
 
     render(renderer: Renderer): void {
         renderer.clear();
-        this.grid = new Grid(renderer, 40, 30);
+        this.grid.render(renderer);
     }
 
     generate(): void {
-        console.log('generate');
+        this.grid = new Grid(40, 30);
     }
 }
