@@ -6,10 +6,6 @@ import Bar from './Bar';
 export default class SortingProblem implements Problem {
     private values: Bar[] = [];
 
-    getAlgorithms(): string[] {
-        return ['Bubblesort', 'Selectionsort'];
-    }
-
     async solve(renderer: Renderer, solver: SortingProblemSolver): Promise<void> {
         return solver.solve(this.values, renderer);
     }

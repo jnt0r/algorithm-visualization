@@ -6,10 +6,6 @@ import PathFindingProblemSolver from './PathFindingProblemSolver';
 export default class PathFindingProblem implements Problem {
     private grid!: Grid;
 
-    getAlgorithms(): string[] {
-        return ['Dijkstra'];
-    }
-
     async solve(renderer: Renderer, solver: PathFindingProblemSolver): Promise<void> {
         return solver.solve(this.grid, renderer);
     }
