@@ -1,4 +1,4 @@
-import Renderer from '../../display/Renderer';
+import Renderer from '../../renderer/Renderer';
 import Problem from '../Problem';
 import SortingProblemSolver from './SortingProblemSolver';
 import Bar from './Bar';

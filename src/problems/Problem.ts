@@ -1,4 +1,4 @@
-import Renderer from '../display/Renderer';
+import Renderer from '../renderer/Renderer';
 import ProblemSolver from './ProblemSolver';
 
 export default interface Problem {

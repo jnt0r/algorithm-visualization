@@ -1,4 +1,4 @@
-import Rectangle from '../../display/components/Rectangle';
+import Rectangle from '../../renderer/components/Rectangle';
 
 export default class Box extends Rectangle {
     cost = -1;

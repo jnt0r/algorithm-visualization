@@ -1,4 +1,4 @@
-import Rectangle from '../../display/components/Rectangle';
+import Rectangle from '../../renderer/components/Rectangle';
 
 export default class Bar extends Rectangle {
     private readonly defaultColor = '#58B7FF';

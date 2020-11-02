@@ -1,6 +1,6 @@
 import SortingProblemSolver from '../SortingProblemSolver';
 import Bar from '../Bar';
-import Renderer from '../../../display/Renderer';
+import Renderer from '../../../renderer/Renderer';
 
 export default class SelectionSort implements SortingProblemSolver {
     async solve(values: Bar[], renderer: Renderer): Promise<void> {

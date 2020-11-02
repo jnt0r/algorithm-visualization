@@ -1,5 +1,5 @@
 import Box from './Box';
-import Renderer from '../../display/Renderer';
+import Renderer from '../../renderer/Renderer';
 
 export default class Grid {
     private readonly boxes: Box[][] = [];
@@ -73,7 +73,7 @@ export default class Grid {
             if (o.indexOf(this.boxes[x][y]) === -1) {
                 o.push(this.boxes[x][y]);
             }
-            // this.renderer.display(new Text().text(cost + '').amove(x * 41 + 15, y * 41 + 15));
+            // this.renderer.renderer(new Text().text(cost + '').amove(x * 41 + 15, y * 41 + 15));
         }
     }
 

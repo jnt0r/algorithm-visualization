@@ -1,4 +1,4 @@
-import Renderer from '../../display/Renderer';
+import Renderer from '../../renderer/Renderer';
 import Problem from '../Problem';
 import Grid from './Grid';
 import PathFindingProblemSolver from './PathFindingProblemSolver';
