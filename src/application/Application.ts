@@ -7,15 +7,14 @@ import SelectionSort from '../problems/sorting/solver/SelectionSort';
 import SelectComponent from './SelectComponent';
 import SolverDisplay from './SolverDisplay';
 import ProblemDisplay from './ProblemDisplay';
+import Dijkstra from '../problems/pathfinding/solver/Dijkstra';
 
 export default class Application {
     private readonly renderer: Renderer = new Renderer();
-
     private problem!: Problem;
 
     private readonly problemSelectElement = new SelectComponent<ProblemDisplay>('problemSelect');
     private readonly algorithmSelectElement = new SelectComponent<SolverDisplay>('algorithmSelect');
-
     private readonly solveBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('solveBtn');
     private readonly generateBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('generateBtn');
 
@@ -27,7 +26,11 @@ export default class Application {
             ]),
         );
 
-        this.problemSelectElement.addItem(new ProblemDisplay('Pathfinding', new PathFindingProblem(), []));
+        this.problemSelectElement.addItem(
+            new ProblemDisplay('Pathfinding', new PathFindingProblem(), [
+                new SolverDisplay('Dijkstra', new Dijkstra()),
+            ]),
+        );
 
         this.setProblem(this.problemSelectElement.getSelectedItem());
     }
