@@ -53,10 +53,10 @@ export default class Dijkstra implements PathFindingProblemSolver {
 
     private getBestNeighbour(x: number, y: number): Box | undefined {
         const neighbours: Box[] = [];
-        if (this.grid.getElement(x + 1, y)) neighbours.push(this.grid.getElement(x + 1, y));
-        if (this.grid.getElement(x - 1, y)) neighbours.push(this.grid.getElement(x - 1, y));
-        if (this.grid.getElement(x, y - 1)) neighbours.push(this.grid.getElement(x, y - 1));
-        if (this.grid.getElement(x, y + 1)) neighbours.push(this.grid.getElement(x, y + 1));
+        if (this.grid.getElement(x + 1, y)) neighbours.push(<Box>this.grid.getElement(x + 1, y));
+        if (this.grid.getElement(x - 1, y)) neighbours.push(<Box>this.grid.getElement(x - 1, y));
+        if (this.grid.getElement(x, y - 1)) neighbours.push(<Box>this.grid.getElement(x, y - 1));
+        if (this.grid.getElement(x, y + 1)) neighbours.push(<Box>this.grid.getElement(x, y + 1));
         return neighbours.filter((a) => a.cost != -1).sort((a, b) => (a.cost < b.cost ? -1 : 1))[0];
     }
 }
