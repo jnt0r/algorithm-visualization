@@ -35,8 +35,8 @@ export default class SelectionSort implements SortingProblemSolver {
             await renderer.swapElementsById(values[i].getId(), values[smallestIndex].getId());
 
             await renderer.animate(() => {
-                values[i].markGreen();
                 values[smallestIndex].unmark();
+                values[i].markGreen();
             });
         }
     }
