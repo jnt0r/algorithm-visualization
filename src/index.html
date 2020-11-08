@@ -17,24 +17,42 @@
             height: 100%;
             width: 100%;
         }
-        div.options {
-            display: flex;
-            width: 80%;
-            margin: 0 auto;
-            flex-wrap: nowrap;
-            flex-direction: row;
-        }
         h1 {
             margin: 20px 15px;
         }
-        div.options button {
-            padding: 4px 6px;
+        .app {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-content: space-between;
         }
-        svg {
+        .app .options {
+            display: flex;
+            width: 15%;
+            flex-wrap: nowrap;
+            flex-direction: column;
+
+            padding: 10px;
+        }
+        .app .options label {
             display: block;
-            width: 80%;
+            margin-bottom: 10px;
+        }
+        .app .options label select {
+            display: block;
+            width: 100%;
+            padding: 4px 6px;
+            margin-top: 5px;
+        }
+        .app .options button {
+            padding: 4px 6px;
+            margin: 2px 0;
+        }
+        .app svg {
+            display: block;
+            flex: 1;
             height: 80%;
-            margin: 10px auto;
             border: 1px solid black;
         }
     </style>
@@ -42,20 +60,22 @@
 <body>
     <h1>Algorithm Visualization</h1>
 
-    <div class="options">
-        <label>
-            Problem
-            <select id="problemSelect"></select>
-        </label>
-        <label>
-            Algorithm
-            <select id="algorithmSelect"></select>
-        </label>
-        <button id="generateBtn">Generate</button>
-        <button id="solveBtn">Solve</button>
-        <button>Test</button>
-    </div>
+    <div class="app">
+        <div class="options">
+            <label>
+                Problem
+                <select id="problemSelect"></select>
+            </label>
+            <label>
+                Algorithm
+                <select id="algorithmSelect"></select>
+            </label>
+            <button id="generateBtn">Generate Problem</button>
+            <button id="solveBtn">Solve Problem</button>
+<!--            <button id="resetBtn">Reset Problem</button>-->
+        </div>
 
-    <svg id="svg-animation-frame"></svg>
+        <svg id="svg-animation-frame"></svg>
+    </div>
 </body>
 </html>
