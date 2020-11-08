@@ -1,4 +1,4 @@
-import Application from './Application';
+import Application from './application/Application';
 
 const app = new Application();
 app.run();
