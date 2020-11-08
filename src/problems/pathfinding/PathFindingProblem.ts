@@ -18,4 +18,8 @@ export default class PathFindingProblem implements Problem {
     generate(): void {
         this.grid = new Grid(40, 30);
     }
+
+    reset(): void {
+        this.grid.reset();
+    }
 }

@@ -16,18 +16,23 @@ export default class Box extends Rectangle {
 
     markVisited(): void {
         this.visited = true;
-        this.element.fill('#0FF');
+        this.setColor('#0FF');
     }
 
     markPartOfPath(): void {
-        this.element.fill('#00F');
+        this.setColor('#00F');
     }
 
     markStart(): void {
-        this.element.fill('#F00');
+        this.setColor('#F00');
     }
 
     markGoal(): void {
-        this.element.fill('#0F0');
+        this.setColor('#0F0');
+    }
+
+    unmark(): void {
+        this.setColor('#FFF');
+        this.setBorderColor('#000');
     }
 }

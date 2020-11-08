@@ -18,6 +18,7 @@ export default class Application {
     private readonly algorithmSelectElement = new SelectComponent<SolverDisplay>('algorithmSelect');
     private readonly solveBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('solveBtn');
     private readonly generateBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('generateBtn');
+    private readonly resetBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('resetBtn');
 
     constructor() {
         this.problemSelectElement.addItem(
@@ -55,10 +56,17 @@ export default class Application {
             }
         };
         this.generateBtn.onclick = () => this.regenerateProblem();
+        this.resetBtn.onclick = () => this.resetProblem();
     }
 
     private regenerateProblem(): void {
         this.problem.generate();
+        this.problem.render(this.renderer);
+    }
+
+    private resetProblem() {
+        console.log('Resetting');
+        this.problem.reset();
         this.problem.render(this.renderer);
     }
 
