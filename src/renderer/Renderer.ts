@@ -1,7 +1,7 @@
 import { SVG } from '@svgdotjs/svg.js';
 import Renderable from './Renderable';
 
-const animationSpeed = 10;
+const animationSpeed = 300;
 
 export default class Renderer {
     private readonly svg = SVG('#svg-animation-frame');

@@ -8,6 +8,7 @@ import SelectComponent from './SelectComponent';
 import SolverDisplay from './SolverDisplay';
 import ProblemDisplay from './ProblemDisplay';
 import Dijkstra from '../problems/pathfinding/solver/Dijkstra';
+import AStar from '../problems/pathfinding/solver/AStar';
 
 export default class Application {
     private readonly renderer: Renderer = new Renderer();
@@ -29,6 +30,7 @@ export default class Application {
         this.problemSelectElement.addItem(
             new ProblemDisplay('Pathfinding', new PathFindingProblem(), [
                 new SolverDisplay('Dijkstra', new Dijkstra()),
+                new SolverDisplay('A*', new AStar()),
             ]),
         );
 
