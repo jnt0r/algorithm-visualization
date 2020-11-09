@@ -1,12 +1,14 @@
 import { SVG } from '@svgdotjs/svg.js';
 import Renderable from './Renderable';
 
-const animationSpeed = 300;
+const animationSpeed = 1;
 
 export default class Renderer {
     private readonly svg = SVG('#svg-animation-frame');
 
     constructor() {
+        console.log('width', this.svg.width());
+        console.log('height', this.svg.height());
         this.svg.transform({ flip: 'y' });
     }
 
