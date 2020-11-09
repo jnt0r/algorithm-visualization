@@ -54,6 +54,8 @@ export default class Application {
             }
         });
 
+        this.algorithmSelectElement.onUpdate(() => this.resetProblem());
+
         this.solveBtn.onclick = () => {
             const solver = this.algorithmSelectElement.getSelectedItem();
             if (!solver) {
