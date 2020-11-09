@@ -1,18 +1,19 @@
 import Problem from '../problems/Problem';
 import SolverDisplay from './SolverDisplay';
+import ProblemSolver from '../problems/ProblemSolver';
 
-export default class ProblemDisplay {
+export default class ProblemDisplay<T extends Problem<T>, S extends ProblemSolver<T>> {
     constructor(
         private readonly displayName: string,
-        private readonly problem: Problem,
-        private readonly solvers: SolverDisplay[],
+        private readonly problem: T,
+        private readonly solvers: SolverDisplay<S>[],
     ) {}
 
-    getProblem(): Problem {
+    getProblem(): T {
         return this.problem;
     }
 
-    getSolvers(): SolverDisplay[] {
+    getSolvers(): SolverDisplay<S>[] {
         return this.solvers;
     }
 

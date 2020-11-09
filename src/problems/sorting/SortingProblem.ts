@@ -3,7 +3,7 @@ import Problem from '../Problem';
 import SortingProblemSolver from './SortingProblemSolver';
 import Bar from './Bar';
 
-export default class SortingProblem implements Problem {
+export default class SortingProblem implements Problem<SortingProblem> {
     private bars: Bar[] = [];
     private numbers: number[] = [];
 

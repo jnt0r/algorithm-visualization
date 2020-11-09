@@ -3,7 +3,7 @@ import Problem from '../Problem';
 import Grid from './Grid';
 import PathFindingProblemSolver from './PathFindingProblemSolver';
 
-export default class PathFindingProblem implements Problem {
+export default class PathFindingProblem implements Problem<PathFindingProblem> {
     private grid!: Grid;
 
     async solve(renderer: Renderer, solver: PathFindingProblemSolver): Promise<void> {
