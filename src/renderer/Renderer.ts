@@ -15,7 +15,6 @@ export default class Renderer {
         this.svg.transform({
             origin: 'top left',
             flip: 'y',
-            scale: 0.75,
         });
     }
 
