@@ -1,7 +1,8 @@
 import Rectangle from '../../renderer/components/Rectangle';
+import { Text } from '@svgdotjs/svg.js';
 
 export default class Box extends Rectangle {
-    cost = -1;
+    cost = Number.MAX_VALUE;
     visited = false;
 
     constructor(readonly ax: number, readonly ay: number) {
