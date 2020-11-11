@@ -20,6 +20,7 @@ export default class Application {
     private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never>>>('problemSelect');
     private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never>>>('algorithmSelect');
     private readonly animationSpeedSelect: HTMLInputElement = <HTMLInputElement>document.getElementById('animationSpeedSelect');
+    private readonly animationSpeedOutput: HTMLOutputElement = <HTMLOutputElement>document.getElementById('animationSpeedOutput');
     private readonly solveBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('solveBtn');
     private readonly generateBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('generateBtn');
     private readonly resetBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('resetBtn');
@@ -40,6 +41,7 @@ export default class Application {
         );
 
         this.setProblem(this.problemSelectElement.getSelectedItem());
+        this.setAnimationSpeed(300);
     }
 
     run(): void {
@@ -53,7 +55,7 @@ export default class Application {
 
         this.algorithmSelectElement.onUpdate(() => this.resetProblem());
 
-        this.animationSpeedSelect.oninput = () => this.renderer.setAnimationSpeed(this.animationSpeedSelect.valueAsNumber);
+        this.animationSpeedSelect.oninput = () => this.setAnimationSpeed(this.animationSpeedSelect.valueAsNumber);
 
         this.solveBtn.onclick = () => {
             const solver = this.algorithmSelectElement.getSelectedItem();
@@ -89,5 +91,11 @@ export default class Application {
     private showErrorMessage(message: string) {
         console.log(message);
         alert(message);
+    }
+
+    private setAnimationSpeed(animationSpeed: number): void {
+        this.renderer.setAnimationSpeed(animationSpeed);
+        this.animationSpeedOutput.value = '' + animationSpeed;
+        this.animationSpeedSelect.valueAsNumber = animationSpeed;
     }
 }
