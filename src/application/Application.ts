@@ -45,28 +45,29 @@ export default class Application {
     }
 
     run(): void {
-        this.problemSelectElement.onUpdate((problem) => {
-            if (!problem) {
-                this.showErrorMessage('No Problem selected!');
-            } else {
-                this.setProblem(problem);
-            }
-        });
-
+        this.problemSelectElement.onUpdate((problem) => this.onProblemSelectChange(problem));
         this.algorithmSelectElement.onUpdate(() => this.resetProblem());
-
         this.animationSpeedSelect.oninput = () => this.setAnimationSpeed(this.animationSpeedSelect.valueAsNumber);
-
-        this.solveBtn.onclick = () => {
-            const solver = this.algorithmSelectElement.getSelectedItem();
-            if (!solver) {
-                this.showErrorMessage('No Algorithm selected');
-            } else {
-                this.problem.solve(this.renderer, solver.getSolver()).then(() => console.log('solved'));
-            }
-        };
+        this.solveBtn.onclick = () => this.onSolveBtnClick();
         this.generateBtn.onclick = () => this.regenerateProblem();
         this.resetBtn.onclick = () => this.resetProblem();
+    }
+
+    private onProblemSelectChange(problem: ProblemDisplay<Problem<never>, ProblemSolver<never>> | undefined) {
+        if (!problem) {
+            this.showErrorMessage('No Problem selected!');
+        } else {
+            this.setProblem(problem);
+        }
+    }
+
+    private onSolveBtnClick() {
+        const solver = this.algorithmSelectElement.getSelectedItem();
+        if (!solver) {
+            this.showErrorMessage('No Algorithm selected');
+        } else {
+            this.problem.solve(this.renderer, solver.getSolver()).then(() => console.log('solved'));
+        }
     }
 
     private regenerateProblem(): void {
