@@ -17,12 +17,9 @@ export default class Application {
     private readonly renderer: Renderer = new Renderer();
     private problem!: Problem<never>;
 
-    private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never>>>(
-        'problemSelect',
-    );
-    private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never>>>(
-        'algorithmSelect',
-    );
+    private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never>>>('problemSelect');
+    private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never>>>('algorithmSelect');
+    private readonly animationSpeedSelect: HTMLInputElement = <HTMLInputElement>document.getElementById('animationSpeedSelect');
     private readonly solveBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('solveBtn');
     private readonly generateBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('generateBtn');
     private readonly resetBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('resetBtn');
@@ -55,6 +52,8 @@ export default class Application {
         });
 
         this.algorithmSelectElement.onUpdate(() => this.resetProblem());
+
+        this.animationSpeedSelect.oninput = () => this.renderer.setAnimationSpeed(this.animationSpeedSelect.valueAsNumber);
 
         this.solveBtn.onclick = () => {
             const solver = this.algorithmSelectElement.getSelectedItem();

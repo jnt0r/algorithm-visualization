@@ -47,7 +47,8 @@
                 margin-bottom: 10px;
             }
 
-            .app .options label select {
+            .app .options label select,
+            .app .options label input {
                 display: block;
                 width: 100%;
                 padding: 4px 6px;
@@ -80,9 +81,17 @@
                     Algorithm
                     <select id="algorithmSelect"></select>
                 </label>
+                <label>
+                    Animationspeed
+                    <input id="animationSpeedSelect" type="range" min="1" max="1000" value="300" oninput="this.nextElementSibling.value = this.value">
+                    <output>300</output>
+                </label>
+
                 <button id="generateBtn">Generate Problem</button>
                 <button id="solveBtn">Solve Problem</button>
                 <button id="resetBtn">Reset Problem</button>
+
+
             </div>
 
             <div class="svg-wrapper">
