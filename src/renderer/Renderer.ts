@@ -1,15 +1,22 @@
-import { SVG } from '@svgdotjs/svg.js';
+import { Rect, SVG } from '@svgdotjs/svg.js';
 import Renderable from './Renderable';
 
 const animationSpeed = 1;
 
 export default class Renderer {
-    private readonly svg = SVG('#svg-animation-frame');
+    private readonly svg = SVG().addTo('.svg-wrapper').size('100%', '100%');
 
     constructor() {
         console.log('width', this.svg.width());
         console.log('height', this.svg.height());
-        this.svg.transform({ flip: 'y' });
+        // Wrong types. @See documentation svgjs.io
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        this.svg.transform({
+            origin: 'top left',
+            flip: 'y',
+            scale: 0.75,
+        });
     }
 
     /**
@@ -20,7 +27,7 @@ export default class Renderer {
     }
 
     render(renderable: Renderable): void {
-        renderable.getElement().addTo(this.svg);
+        this.svg.add(renderable.getElement());
     }
 
     async swapElementsById(elementId1: number, elementId2: number): Promise<void> {

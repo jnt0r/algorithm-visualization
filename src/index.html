@@ -27,11 +27,10 @@
             }
 
             .app {
-                height: 100%;
                 width: 100%;
                 display: flex;
                 flex-direction: row;
-                align-content: space-between;
+                justify-content: space-around;
             }
 
             .app .options {
@@ -60,12 +59,12 @@
                 margin: 2px 0;
             }
 
-            .app svg {
-                display: block;
-                flex: 1;
-                height: 80%;
-                border: 1px solid black;
+            .app .svg-wrapper {
+                height: 800px;
+                width: 1800px;
+                border: 1px solid #999;
             }
+
         </style>
     </head>
     <body>
@@ -86,7 +85,8 @@
                 <button id="resetBtn">Reset Problem</button>
             </div>
 
-            <svg id="svg-animation-frame"></svg>
+            <div class="svg-wrapper">
+            </div>
         </div>
     </body>
 </html>
