@@ -47,7 +47,6 @@ export default class Dijkstra implements PathFindingProblemSolver {
             if (o.indexOf(element) === -1) {
                 o.push(element);
             }
-            // this.renderer.renderer(new Text().text(cost + '').amove(x * 41 + 15, y * 41 + 15));
         }
     }
 
