@@ -23,4 +23,15 @@ export default class Component implements Renderable {
     onClick(func: () => void): void {
         this.element.click(func);
     }
+
+    onRightClick(func: () => void): void {
+        this.element.on('contextmenu', (ev: Event) => {
+            ev.preventDefault(); // prevent contextmenu to open
+            func();
+        });
+    }
+
+    onMouseOver(func: (ev: { buttons: number }) => void): void {
+        this.element.on('mouseover mousedown', func);
+    }
 }

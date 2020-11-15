@@ -6,8 +6,6 @@ export default class Renderer {
     private readonly svg = SVG().addTo('.svg-wrapper').size('100%', '100%');
 
     constructor() {
-        console.log('width', this.svg.width());
-        console.log('height', this.svg.height());
         // Wrong types. @See documentation svgjs.io
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
