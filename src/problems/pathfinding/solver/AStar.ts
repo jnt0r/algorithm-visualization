@@ -36,7 +36,7 @@ export default class AStar implements PathFindingProblemSolver {
             });
         }
         // No path has been found
-        alert('no path found');
+        throw new Error('No path found');
     }
 
     private async constructPath(): Promise<void> {

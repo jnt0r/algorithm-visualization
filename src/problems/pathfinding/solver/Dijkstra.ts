@@ -31,7 +31,7 @@ export default class Dijkstra implements PathFindingProblemSolver {
             });
             lastLayer = nextLayer;
         }
-        alert('No path found');
+        throw new Error('No path found');
     }
 
     private async constructPath() {

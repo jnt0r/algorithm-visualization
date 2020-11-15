@@ -74,7 +74,10 @@ export default class Application {
         if (!solver) {
             this.showErrorMessage('No Algorithm selected');
         } else {
-            this.problem.solve(this.renderer, solver.getSolver()).then(() => console.log('solved'));
+            this.problem
+                .solve(this.renderer, solver.getSolver())
+                .then(() => console.log('solved'))
+                .catch((error) => this.showErrorMessage(error));
         }
     }
 
