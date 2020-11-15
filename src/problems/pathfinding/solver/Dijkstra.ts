@@ -11,8 +11,29 @@ export default class Dijkstra implements PathFindingProblemSolver {
         grid.start.cost = 0;
         grid.start.visited = true;
 
-        let lastLayer: Box[] = [grid.start];
-        while (lastLayer.indexOf(grid.goal) === -1) {
+        await this.findPath(renderer)
+            .then(() => this.constructPath(grid, renderer))
+            .catch(() => alert('No path found'));
+    }
+
+    private async constructPath(grid: Grid, renderer: Renderer) {
+        let current = grid.goal;
+        while (current.cost !== 1) {
+            await renderer.animate(() => {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                current = this.getBestNeighbour(current.ax, current.ay);
+                current.markPartOfPath();
+            });
+        }
+    }
+
+    private async findPath(renderer: Renderer) {
+        let lastLayer: Box[] = [this.grid.start];
+        while (lastLayer.length > 0) {
+            if (lastLayer.indexOf(this.grid.goal) !== -1) {
+                return;
+            }
             const nextLayer: Box[] = [];
             await renderer.animate(() => {
                 for (const box of lastLayer) {
@@ -24,16 +45,7 @@ export default class Dijkstra implements PathFindingProblemSolver {
             });
             lastLayer = nextLayer;
         }
-
-        let dot = grid.goal;
-        while (dot.cost !== 1) {
-            await renderer.animate(() => {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                dot = this.getBestNeighbour(dot.ax, dot.ay);
-                dot.markPartOfPath();
-            });
-        }
+        throw new Error('Goal not found');
     }
 
     processBox(o: Box[], x: number, y: number, cost: number): void {
