@@ -35,16 +35,16 @@ export default class Application {
 
     constructor() {
         this.problemSelectElement.addItem(
-            new ProblemDisplay<SortingProblem, SortingProblemSolver>('Sorting', new SortingProblem(), [
-                new SolverDisplay('Bubblesort', new BubbleSort()),
-                new SolverDisplay('Selectionsort', new SelectionSort()),
+            new ProblemDisplay<SortingProblem, SortingProblemSolver>('Sorting', SortingProblem, [
+                new SolverDisplay('Bubblesort', BubbleSort),
+                new SolverDisplay('Selectionsort', SelectionSort),
             ]),
         );
 
         this.problemSelectElement.addItem(
-            new ProblemDisplay<PathFindingProblem, PathFindingProblemSolver>('Pathfinding', new PathFindingProblem(), [
-                new SolverDisplay('Dijkstra', new Dijkstra()),
-                new SolverDisplay('A*', new AStar()),
+            new ProblemDisplay<PathFindingProblem, PathFindingProblemSolver>('Pathfinding', PathFindingProblem, [
+                new SolverDisplay('Dijkstra', Dijkstra),
+                new SolverDisplay('A*', AStar),
             ]),
         );
 
@@ -100,7 +100,7 @@ export default class Application {
         this.regenerateProblem();
     }
 
-    private showErrorMessage(message: string) {
+    private showErrorMessage(message: string): void {
         console.log(message);
         alert(message);
     }
