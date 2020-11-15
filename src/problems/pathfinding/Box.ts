@@ -13,9 +13,10 @@ export default class Box extends Rectangle {
 
         this.onMouseOver((ev) => {
             if (ev.buttons === 1) {
-                this.markAsWall();
+                this.setWall();
             }
             if (ev.buttons === 2) {
+                this.visited = false;
                 this.unmark();
             }
         });
@@ -52,7 +53,8 @@ export default class Box extends Rectangle {
         this.setBorderColor('#000');
     }
 
-    markAsWall(): void {
+    setWall(): void {
+        this.visited = true;
         this.setColor('#000');
     }
 }
