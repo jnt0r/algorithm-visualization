@@ -5,21 +5,24 @@ import Box from '../Box';
 
 export default class AStar implements PathFindingProblemSolver {
     private grid!: Grid;
+    private renderer!: Renderer;
+
     private openSet: Box[] = [];
     private cameFrom: Box[][] = [];
 
     async solve(grid: Grid, renderer: Renderer): Promise<void> {
         this.grid = grid;
-        grid.start.cost = 0;
+        this.renderer = renderer;
         this.openSet = [grid.start];
         this.cameFrom = [];
+        grid.start.setCost(0);
 
         while (this.openSet.length !== 0) {
             const current: Box = this.getBestBoxFromOpenSet();
-            current.visited = true;
+            current.setVisited();
 
             if (current === grid.goal) {
-                this.constructPath();
+                await this.constructPath();
                 return; // Path found. Stop execution
             }
 
@@ -36,31 +39,35 @@ export default class AStar implements PathFindingProblemSolver {
         alert('no path found');
     }
 
-    private constructPath(): void {
+    private async constructPath(): Promise<void> {
         let current = this.grid.goal;
         current = this.cameFrom[current.ax][current.ay];
         while (current !== this.grid.start) {
-            current.markPartOfPath();
-            current = this.cameFrom[current.ax][current.ay];
+            await this.renderer.animate(() => {
+                current.markPartOfPath();
+                current = this.cameFrom[current.ax][current.ay];
+            });
         }
     }
 
     private getBestBoxFromOpenSet(): Box {
-        this.openSet.sort((a, b) => a.cost + this.getDistanceToGoal(a) - (b.cost + this.getDistanceToGoal(b)));
+        this.openSet.sort(
+            (a, b) => a.getCost() + this.getDistanceToGoal(a) - (b.getCost() + this.getDistanceToGoal(b)),
+        );
         return this.openSet.splice(0, 1)[0];
     }
 
     private processNeighbour(neighbour: Box | undefined, current: Box) {
-        if (neighbour && !neighbour.visited) {
+        if (neighbour && !neighbour.isVisited()) {
             neighbour.markVisited();
 
-            const costFromStart = current.cost + 1;
-            if (costFromStart < neighbour.cost) {
+            const costFromStart = current.getCost() + 1;
+            if (costFromStart < neighbour.getCost()) {
                 if (!this.cameFrom[neighbour.ax]) {
                     this.cameFrom[neighbour.ax] = [];
                 }
                 this.cameFrom[neighbour.ax][neighbour.ay] = current;
-                neighbour.cost = costFromStart;
+                neighbour.setCost(costFromStart);
                 if (this.openSet.indexOf(neighbour) === -1) {
                     this.openSet.push(neighbour);
                 }

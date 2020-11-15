@@ -1,10 +1,10 @@
 import Rectangle from '../../renderer/components/Rectangle';
 
 export default class Box extends Rectangle {
+    private visited = false;
     private start = false;
     private goal = false;
-    cost = Number.MAX_VALUE;
-    visited = false;
+    private cost = Number.MAX_VALUE;
 
     constructor(readonly ax: number, readonly ay: number) {
         super(ax * 21, ay * 21, 20, 20);
@@ -20,6 +20,10 @@ export default class Box extends Rectangle {
                 this.unmark();
             }
         });
+    }
+
+    setCost(cost: number): void {
+        this.cost = cost;
     }
 
     // @Override
@@ -56,5 +60,22 @@ export default class Box extends Rectangle {
     setWall(): void {
         this.visited = true;
         this.setColor('#000');
+    }
+
+    isVisited(): boolean {
+        return this.visited;
+    }
+
+    getCost(): number {
+        return this.cost;
+    }
+
+    setVisited(): void {
+        this.visited = true;
+    }
+
+    reset(): void {
+        this.cost = Number.MAX_VALUE;
+        this.visited = false;
     }
 }

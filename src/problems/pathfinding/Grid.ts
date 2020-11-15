@@ -45,8 +45,7 @@ export default class Grid {
                 if (box !== this.start && box !== this.goal) {
                     box.unmark();
                 }
-                box.cost = Number.MAX_VALUE;
-                box.visited = false;
+                box.reset();
             }
         }
     }
