@@ -1,7 +1,8 @@
 import Rectangle from '../../renderer/components/Rectangle';
-import { Text } from '@svgdotjs/svg.js';
 
 export default class Box extends Rectangle {
+    private start = false;
+    private goal = false;
     cost = Number.MAX_VALUE;
     visited = false;
 
@@ -9,10 +10,22 @@ export default class Box extends Rectangle {
         super(ax * 21, ay * 21, 20, 20);
         this.setColor('#FFF');
         this.setBorderColor('#000');
-        this.onClick(() => {
-            this.element.fill('#000');
-            this.visited = true;
+
+        this.onMouseOver((ev) => {
+            if (ev.buttons === 1) {
+                this.markAsWall();
+            }
+            if (ev.buttons === 2) {
+                this.unmark();
+            }
         });
+    }
+
+    // @Override
+    setColor(hexCode: string): void {
+        if (!this.start && !this.goal) {
+            super.setColor(hexCode);
+        }
     }
 
     markVisited(): void {
@@ -24,16 +37,22 @@ export default class Box extends Rectangle {
         this.setColor('#00F');
     }
 
-    markStart(): void {
+    setStart(): void {
         this.setColor('#F00');
+        this.start = true;
     }
 
-    markGoal(): void {
+    setGoal(): void {
         this.setColor('#0F0');
+        this.goal = true;
     }
 
     unmark(): void {
         this.setColor('#FFF');
         this.setBorderColor('#000');
+    }
+
+    markAsWall(): void {
+        this.setColor('#000');
     }
 }

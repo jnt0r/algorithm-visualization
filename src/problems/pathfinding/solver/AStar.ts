@@ -43,7 +43,6 @@ export default class AStar implements PathFindingProblemSolver {
             current.markPartOfPath();
             current = this.cameFrom[current.ax][current.ay];
         }
-        this.grid.goal.markGoal();
     }
 
     private getBestBoxFromOpenSet(): Box {

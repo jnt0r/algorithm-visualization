@@ -25,8 +25,6 @@ export default class Dijkstra implements PathFindingProblemSolver {
             lastLayer = nextLayer;
         }
 
-        grid.goal.markGoal();
-
         let dot = grid.goal;
         while (dot.cost !== 1) {
             await renderer.animate(() => {

@@ -16,11 +16,11 @@ export default class Grid {
 
         // Set start
         this.start = this.boxes[Math.floor(Math.random() * width)][Math.floor(Math.random() * height)];
-        this.start.markStart();
+        this.start.setStart();
 
         // Set goal
         this.goal = this.boxes[Math.floor(Math.random() * width)][Math.floor(Math.random() * height)];
-        this.goal.markGoal();
+        this.goal.setGoal();
     }
 
     render(renderer: Renderer): void {

@@ -17,26 +17,34 @@ export default class Application {
     private readonly renderer: Renderer = new Renderer();
     private problem!: Problem<never>;
 
-    private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never>>>('problemSelect');
-    private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never>>>('algorithmSelect');
-    private readonly animationSpeedSelect: HTMLInputElement = <HTMLInputElement>document.getElementById('animationSpeedSelect');
-    private readonly animationSpeedOutput: HTMLOutputElement = <HTMLOutputElement>document.getElementById('animationSpeedOutput');
+    private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never>>>(
+        'problemSelect',
+    );
+    private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never>>>(
+        'algorithmSelect',
+    );
+    private readonly animationSpeedSelect: HTMLInputElement = <HTMLInputElement>(
+        document.getElementById('animationSpeedSelect')
+    );
+    private readonly animationSpeedOutput: HTMLOutputElement = <HTMLOutputElement>(
+        document.getElementById('animationSpeedOutput')
+    );
     private readonly solveBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('solveBtn');
     private readonly generateBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('generateBtn');
     private readonly resetBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('resetBtn');
 
     constructor() {
         this.problemSelectElement.addItem(
-            new ProblemDisplay<SortingProblem, SortingProblemSolver>('Sorting', new SortingProblem(), [
-                new SolverDisplay('Bubblesort', new BubbleSort()),
-                new SolverDisplay('Selectionsort', new SelectionSort()),
+            new ProblemDisplay<PathFindingProblem, PathFindingProblemSolver>('Pathfinding', new PathFindingProblem(), [
+                new SolverDisplay('Dijkstra', new Dijkstra()),
+                new SolverDisplay('A*', new AStar()),
             ]),
         );
 
         this.problemSelectElement.addItem(
-            new ProblemDisplay<PathFindingProblem, PathFindingProblemSolver>('Pathfinding', new PathFindingProblem(), [
-                new SolverDisplay('Dijkstra', new Dijkstra()),
-                new SolverDisplay('A*', new AStar()),
+            new ProblemDisplay<SortingProblem, SortingProblemSolver>('Sorting', new SortingProblem(), [
+                new SolverDisplay('Bubblesort', new BubbleSort()),
+                new SolverDisplay('Selectionsort', new SelectionSort()),
             ]),
         );
 
