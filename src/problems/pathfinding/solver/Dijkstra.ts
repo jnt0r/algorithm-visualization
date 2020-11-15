@@ -20,8 +20,6 @@ export default class Dijkstra implements PathFindingProblemSolver {
         let current = grid.goal;
         while (current.cost !== 1) {
             await renderer.animate(() => {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
                 current = this.getBestNeighbour(current.ax, current.ay);
                 current.markPartOfPath();
             });
@@ -60,7 +58,7 @@ export default class Dijkstra implements PathFindingProblemSolver {
         }
     }
 
-    private getBestNeighbour(x: number, y: number): Box | undefined {
+    private getBestNeighbour(x: number, y: number): Box {
         const neighbours: Box[] = [];
         if (this.grid.getElement(x + 1, y)) neighbours.push(<Box>this.grid.getElement(x + 1, y));
         if (this.grid.getElement(x - 1, y)) neighbours.push(<Box>this.grid.getElement(x - 1, y));
