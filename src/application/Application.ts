@@ -36,15 +36,15 @@ export default class Application {
     constructor() {
         this.problemSelectElement.addItem(
             new ProblemDisplay<SortingProblem, SortingProblemSolver>('Sorting', new SortingProblem(), [
-                new SolverDisplay('Bubblesort', new BubbleSort()),
-                new SolverDisplay('Selectionsort', new SelectionSort()),
+                new SolverDisplay('Bubblesort', BubbleSort),
+                new SolverDisplay('Selectionsort', SelectionSort),
             ]),
         );
 
         this.problemSelectElement.addItem(
             new ProblemDisplay<PathFindingProblem, PathFindingProblemSolver>('Pathfinding', new PathFindingProblem(), [
-                new SolverDisplay('Dijkstra', new Dijkstra()),
-                new SolverDisplay('A*', new AStar()),
+                new SolverDisplay('Dijkstra', Dijkstra),
+                new SolverDisplay('A*', AStar),
             ]),
         );
 
