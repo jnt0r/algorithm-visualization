@@ -1,21 +1,19 @@
 import Renderer from '../../renderer/Renderer';
 import Problem from '../Problem';
 import SortingProblemSolver from './SortingProblemSolver';
-import Bar from './Bar';
+import SortableData from './SortableData';
 
 export default class SortingProblem implements Problem<SortingProblem> {
-    private bars: Bar[] = [];
+    private sortables!: SortableData;
     private numbers: number[] = [];
 
     async solve(renderer: Renderer, solver: SortingProblemSolver): Promise<void> {
-        return solver.solve(this.bars, renderer);
+        return solver.solve(this.sortables, renderer);
     }
 
     render(renderer: Renderer): void {
         renderer.clear();
-        this.bars.forEach((v) => {
-            renderer.render(v);
-        });
+        this.sortables.render(renderer);
     }
 
     generate(): void {
@@ -33,11 +31,7 @@ export default class SortingProblem implements Problem<SortingProblem> {
         this.makeProblem();
     }
 
-    /**
-     * Transforms the generated numbers to the required problem format
-     */
     private makeProblem(): void {
-        this.bars = [];
-        this.numbers.forEach((value, index) => this.bars.push(new Bar(index, value)));
+        this.sortables = new SortableData(this.numbers);
     }
 }

@@ -1,16 +1,16 @@
 import SortingProblemSolver from '../SortingProblemSolver';
 import Renderer from '../../../renderer/Renderer';
-import Bar from '../Bar';
+import SortableData from '../SortableData';
 
 export default class QuickSort implements SortingProblemSolver {
-    private values!: Bar[];
+    private data!: SortableData;
     private renderer!: Renderer;
 
-    async solve(values: Bar[], renderer: Renderer): Promise<void> {
-        this.values = values;
+    async solve(data: SortableData, renderer: Renderer): Promise<void> {
+        this.data = data;
         this.renderer = renderer;
 
-        await this.quicksort(0, values.length - 1);
+        await this.quicksort(0, data.getSize() - 1);
     }
 
     private async quicksort(left: number, right: number): Promise<void> {
@@ -22,7 +22,7 @@ export default class QuickSort implements SortingProblemSolver {
 
         if (left === right) {
             await this.renderer.animate(() => {
-                this.values[left].setSorted();
+                this.data.getElement(left).setSorted();
             });
         }
     }
@@ -30,7 +30,7 @@ export default class QuickSort implements SortingProblemSolver {
     private async divide(left: number, right: number): Promise<number> {
         let i = left;
         let j = right - 1;
-        const pivot = this.values[right];
+        const pivot = this.data.getElement(right);
 
         // Visualize pivot element
         await this.renderer.animate(() => {
@@ -38,52 +38,49 @@ export default class QuickSort implements SortingProblemSolver {
         });
 
         while (i < j) {
-            await this.renderer.animate(() => this.values[i].markRed());
-            await this.renderer.animate(() => this.values[j].markRed());
+            await this.renderer.animate(() => {
+                this.data.getElement(i).markRed();
+                this.data.getElement(j).markRed();
+            });
 
-            while (i < right && this.values[i].getValue() < pivot.getValue()) {
-                await this.renderer.animate(() => this.values[i].unmark());
-                i++;
-                await this.renderer.animate(() => this.values[i].markRed());
+            while (i < right && this.data.getElement(i).getValue() < pivot.getValue()) {
+                await this.renderer.animate(() => {
+                    this.data.getElement(i).unmark();
+                    i++;
+                    this.data.getElement(i).markRed();
+                });
             }
-            while (j > left && this.values[j].getValue() >= pivot.getValue()) {
-                await this.renderer.animate(() => this.values[j].unmark());
-                j--;
-                await this.renderer.animate(() => this.values[j].markRed());
+            while (j > left && this.data.getElement(j).getValue() >= pivot.getValue()) {
+                await this.renderer.animate(() => {
+                    this.data.getElement(j).unmark();
+                    j--;
+                    this.data.getElement(j).markRed();
+                });
             }
 
             if (i < j) {
-                await this.swap(i, j);
+                await this.data.swap(i, j, this.renderer);
             } else {
                 await this.renderer.animate(() => {
-                    this.values[i].unmark();
-                    this.values[j].unmark();
+                    this.data.getElement(i).unmark();
+                    this.data.getElement(j).unmark();
                 });
             }
         }
 
-        if (this.values[i].getValue() > pivot.getValue()) {
-            await this.swap(i, right);
+        if (this.data.getElement(i).getValue() > pivot.getValue()) {
+            await this.data.swap(i, right, this.renderer);
 
             await this.renderer.animate(() => {
                 pivot.setSorted();
-                this.values[i].setSorted();
-                this.values[right].setSorted();
             });
         } else {
             await this.renderer.animate(() => {
                 pivot.unmark();
-                this.values[i].setSorted();
+                this.data.getElement(i).setSorted();
             });
         }
 
         return i;
-    }
-
-    private async swap(a: number, b: number) {
-        const temp = this.values[a];
-        this.values[a] = this.values[b];
-        this.values[b] = temp;
-        await this.renderer.swapElementsById(this.values[a].getId(), this.values[b].getId());
     }
 }
