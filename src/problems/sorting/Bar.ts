@@ -2,6 +2,7 @@ import Rectangle from '../../renderer/components/Rectangle';
 
 export default class Bar extends Rectangle {
     private readonly defaultColor = '#58B7FF';
+    private sorted = false;
 
     constructor(private readonly id: number, private readonly value: number) {
         super(100 + id * 25, 100, 20, value);
@@ -12,12 +13,17 @@ export default class Bar extends Rectangle {
         this.setColor('#FF4949');
     }
 
-    markGreen(): void {
+    setSorted(): void {
+        this.sorted = true;
         this.setColor('#13CE66');
     }
 
     unmark(): void {
-        this.setColor(this.defaultColor);
+        if (!this.sorted) {
+            this.setColor(this.defaultColor);
+        } else {
+            this.setSorted();
+        }
     }
 
     getId(): number {

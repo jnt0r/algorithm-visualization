@@ -1,42 +1,38 @@
 import SortingProblemSolver from '../SortingProblemSolver';
-import Bar from '../Bar';
 import Renderer from '../../../renderer/Renderer';
+import SortableData from '../SortableData';
 
 export default class SelectionSort implements SortingProblemSolver {
-    async solve(values: Bar[], renderer: Renderer): Promise<void> {
-        for (let i = 0; i < values.length; i++) {
+    async solve(data: SortableData, renderer: Renderer): Promise<void> {
+        for (let i = 0; i < data.getSize(); i++) {
             let smallestIndex = i;
             await renderer.animate(() => {
-                values[i].markRed();
+                data.getElement(i).markRed();
             });
 
-            for (let j = i + 1; j < values.length; j++) {
+            for (let j = i + 1; j < data.getSize(); j++) {
                 await renderer.animate(() => {
-                    values[j].markRed();
+                    data.getElement(j).markRed();
                 });
 
-                if (values[j].getValue() < values[smallestIndex].getValue()) {
+                if (data.getElement(j).getValue() < data.getElement(smallestIndex).getValue()) {
                     await renderer.animate(() => {
-                        if (smallestIndex !== i) values[smallestIndex].unmark();
+                        if (smallestIndex !== i) data.getElement(smallestIndex).unmark();
                         smallestIndex = j;
-                        values[smallestIndex].markGreen();
+                        data.getElement(smallestIndex).setColor('#7f00ff');
                     });
                 } else {
                     await renderer.animate(() => {
-                        values[j].unmark();
+                        data.getElement(j).unmark();
                     });
                 }
             }
 
-            const temp = values[i];
-            values[i] = values[smallestIndex];
-            values[smallestIndex] = temp;
-
-            await renderer.swapElementsById(values[i].getId(), values[smallestIndex].getId());
+            await data.swap(i, smallestIndex, renderer);
 
             await renderer.animate(() => {
-                values[smallestIndex].unmark();
-                values[i].markGreen();
+                data.getElement(smallestIndex).unmark();
+                data.getElement(i).setSorted();
             });
         }
     }
