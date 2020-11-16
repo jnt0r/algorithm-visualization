@@ -10,15 +10,16 @@ export default class QuickSort implements SortingProblemSolver {
         this.values = values;
         this.renderer = renderer;
 
-        await this.sort(0, values.length - 1);
+        await this.quicksort(0, values.length - 1);
     }
 
-    private async sort(left: number, right: number): Promise<void> {
+    private async quicksort(left: number, right: number): Promise<void> {
         if (left < right) {
             const divider = await this.divide(left, right);
-            await this.sort(left, divider - 1);
-            await this.sort(divider + 1, right);
+            await this.quicksort(left, divider - 1);
+            await this.quicksort(divider + 1, right);
         }
+
         if (left === right) {
             await this.renderer.animate(() => {
                 this.values[left].setSorted();
@@ -31,6 +32,7 @@ export default class QuickSort implements SortingProblemSolver {
         let j = right - 1;
         const pivot = this.values[right];
 
+        // Visualize pivot element
         await this.renderer.animate(() => {
             pivot.setColor('#7f00ff');
         });
@@ -51,10 +53,7 @@ export default class QuickSort implements SortingProblemSolver {
             }
 
             if (i < j) {
-                const temp = this.values[i];
-                this.values[i] = this.values[j];
-                this.values[j] = temp;
-                await this.renderer.swapElementsById(this.values[i].getId(), this.values[j].getId());
+                await this.swap(i, j);
             } else {
                 await this.renderer.animate(() => {
                     this.values[i].unmark();
@@ -64,10 +63,8 @@ export default class QuickSort implements SortingProblemSolver {
         }
 
         if (this.values[i].getValue() > pivot.getValue()) {
-            const temp = this.values[i];
-            this.values[i] = this.values[right];
-            this.values[right] = temp;
-            await this.renderer.swapElementsById(this.values[i].getId(), this.values[right].getId());
+            await this.swap(i, right);
+
             await this.renderer.animate(() => {
                 pivot.setSorted();
                 this.values[i].setSorted();
@@ -81,5 +78,12 @@ export default class QuickSort implements SortingProblemSolver {
         }
 
         return i;
+    }
+
+    private async swap(a: number, b: number) {
+        const temp = this.values[a];
+        this.values[a] = this.values[b];
+        this.values[b] = temp;
+        await this.renderer.swapElementsById(this.values[a].getId(), this.values[b].getId());
     }
 }
