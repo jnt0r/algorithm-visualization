@@ -24,7 +24,7 @@ export default class BubbleSort implements SortingProblemSolver {
                     values[j + 1].unmark();
                 });
             }
-            values[values.length - i - 1].markGreen();
+            values[values.length - i - 1].setSorted();
         }
     }
 }

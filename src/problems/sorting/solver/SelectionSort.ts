@@ -19,7 +19,7 @@ export default class SelectionSort implements SortingProblemSolver {
                     await renderer.animate(() => {
                         if (smallestIndex !== i) values[smallestIndex].unmark();
                         smallestIndex = j;
-                        values[smallestIndex].markGreen();
+                        values[smallestIndex].setColor('#7f00ff');
                     });
                 } else {
                     await renderer.animate(() => {
@@ -36,7 +36,7 @@ export default class SelectionSort implements SortingProblemSolver {
 
             await renderer.animate(() => {
                 values[smallestIndex].unmark();
-                values[i].markGreen();
+                values[i].setSorted();
             });
         }
     }
