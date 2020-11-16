@@ -3,17 +3,19 @@ import Renderer from '../../../renderer/Renderer';
 import SortableData from '../SortableData';
 
 export default class SelectionSort implements SortingProblemSolver {
+    private renderer!: Renderer;
+    private data!: SortableData;
+
     async solve(data: SortableData, renderer: Renderer): Promise<void> {
+        this.renderer = renderer;
+        this.data = data;
+
         for (let i = 0; i < data.getSize(); i++) {
             let smallestIndex = i;
-            await renderer.animate(() => {
-                data.getElement(i).markRed();
-            });
+            await this.markComparingElement(i);
 
             for (let j = i + 1; j < data.getSize(); j++) {
-                await renderer.animate(() => {
-                    data.getElement(j).markRed();
-                });
+                await this.markComparingElement(j);
 
                 if (data.getElement(j).getValue() < data.getElement(smallestIndex).getValue()) {
                     await renderer.animate(() => {
@@ -35,5 +37,11 @@ export default class SelectionSort implements SortingProblemSolver {
                 data.getElement(i).setSorted();
             });
         }
+    }
+
+    private markComparingElement(index: number): Promise<void> {
+        return this.renderer.animate(() => {
+            this.data.getElement(index).markRed();
+        });
     }
 }
