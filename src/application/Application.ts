@@ -12,6 +12,7 @@ import ProblemSolver from '../problems/ProblemSolver';
 import BubbleSort from '../problems/sorting/solver/BubbleSort';
 import PathFindingProblemSolver from '../problems/pathfinding/PathFindingProblemSolver';
 import SortingProblemSolver from '../problems/sorting/SortingProblemSolver';
+import QuickSort from '../problems/sorting/solver/QuickSort';
 
 export default class Application {
     private readonly renderer: Renderer = new Renderer();
@@ -38,6 +39,7 @@ export default class Application {
             new ProblemDisplay<SortingProblem, SortingProblemSolver>('Sorting', new SortingProblem(), [
                 new SolverDisplay('Bubblesort', new BubbleSort()),
                 new SolverDisplay('Selectionsort', new SelectionSort()),
+                new SolverDisplay('QuickSort', new QuickSort()),
             ]),
         );
 
