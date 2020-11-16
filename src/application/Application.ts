@@ -1,4 +1,4 @@
-import Renderer from '../renderer/Renderer';
+import Renderer, { SVGRenderer } from '../renderer/Renderer';
 import SortingProblem from '../problems/sorting/SortingProblem';
 import PathFindingProblem from '../problems/pathfinding/PathFindingProblem';
 import Problem from '../problems/Problem';
@@ -15,7 +15,7 @@ import SortingProblemSolver from '../problems/sorting/SortingProblemSolver';
 import QuickSort from '../problems/sorting/solver/QuickSort';
 
 export default class Application {
-    private readonly renderer: Renderer = new Renderer();
+    private readonly renderer: Renderer = new SVGRenderer();
     private problem!: Problem<never>;
 
     private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never>>>(

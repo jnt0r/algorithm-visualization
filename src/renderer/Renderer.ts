@@ -1,7 +1,19 @@
 import { SVG } from '@svgdotjs/svg.js';
 import Renderable from './Renderable';
 
-export default class Renderer {
+export default interface Renderer {
+    setAnimationSpeed(animationSpeed: number): void;
+
+    clear(): void;
+
+    render(renderable: Renderable): void;
+
+    swapElementsById(id1: number, id2: number): Promise<void>;
+
+    animate(func: () => void): Promise<void>;
+}
+
+export class SVGRenderer implements Renderer {
     private animationSpeed = 300;
     private readonly svg = SVG().addTo('.svg-wrapper').size('100%', '100%');
 
