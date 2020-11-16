@@ -5,12 +5,12 @@ import ProblemSolver from '../problems/ProblemSolver';
 export default class ProblemDisplay<T extends Problem<T>, S extends ProblemSolver<T>> {
     constructor(
         private readonly displayName: string,
-        private readonly problem: T,
+        private readonly problem: { new (): T },
         private readonly solvers: SolverDisplay<S>[],
     ) {}
 
     getProblem(): T {
-        return this.problem;
+        return new this.problem();
     }
 
     getSolvers(): SolverDisplay<S>[] {
