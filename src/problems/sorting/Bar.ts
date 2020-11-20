@@ -1,11 +1,12 @@
 import Rectangle from '../../renderer/components/Rectangle';
+import Point from '../../renderer/Point';
 
 export default class Bar extends Rectangle {
     private readonly defaultColor = '#58B7FF';
     private sorted = false;
 
     constructor(private readonly id: number, private readonly value: number) {
-        super(100 + id * 25, 100, 20, value);
+        super(Point.create(100 + id * 25, 100), 20, value);
         this.setColor(this.defaultColor);
     }
 

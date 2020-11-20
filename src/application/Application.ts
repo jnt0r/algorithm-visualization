@@ -21,15 +21,19 @@ export default class Application {
     private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never>>>(
         'problemSelect',
     );
+
     private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never>>>(
         'algorithmSelect',
     );
+
     private readonly animationSpeedSelect: HTMLInputElement = <HTMLInputElement>(
         document.getElementById('animationSpeedSelect')
     );
+
     private readonly animationSpeedOutput: HTMLOutputElement = <HTMLOutputElement>(
         document.getElementById('animationSpeedOutput')
     );
+
     private readonly solveBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('solveBtn');
     private readonly generateBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('generateBtn');
     private readonly resetBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('resetBtn');

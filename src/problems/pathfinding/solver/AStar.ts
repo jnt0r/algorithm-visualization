@@ -23,6 +23,7 @@ export default class AStar implements PathFindingProblemSolver {
 
             if (current === grid.goal) {
                 await this.constructPath();
+
                 return; // Path found. Stop execution
             }
 
@@ -54,6 +55,7 @@ export default class AStar implements PathFindingProblemSolver {
         this.openSet.sort(
             (a, b) => a.getCost() + this.getDistanceToGoal(a) - (b.getCost() + this.getDistanceToGoal(b)),
         );
+
         return this.openSet.splice(0, 1)[0];
     }
 
@@ -79,6 +81,7 @@ export default class AStar implements PathFindingProblemSolver {
         // Euclidean distance
         const dx = Math.pow(this.grid.goal.ax - element.ax, 2);
         const dy = Math.pow(this.grid.goal.ay - element.ay, 2);
+
         return Math.sqrt(dx + dy);
     }
 }

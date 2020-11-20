@@ -17,6 +17,7 @@ export default class Dijkstra implements PathFindingProblemSolver {
         while (lastLayer.length > 0) {
             if (lastLayer.indexOf(this.grid.goal) !== -1) {
                 await this.constructPath();
+
                 return;
             }
 
@@ -34,16 +35,6 @@ export default class Dijkstra implements PathFindingProblemSolver {
         throw new Error('No path found');
     }
 
-    private async constructPath() {
-        let current = this.grid.goal;
-        while (current.getCost() !== 1) {
-            await this.renderer.animate(() => {
-                current = this.getBestNeighbour(current.ax, current.ay);
-                current.markPartOfPath();
-            });
-        }
-    }
-
     processBox(o: Box[], x: number, y: number, cost: number): void {
         const element = this.grid.getElement(x, y);
         if (element && !element.isVisited()) {
@@ -56,12 +47,23 @@ export default class Dijkstra implements PathFindingProblemSolver {
         }
     }
 
+    private async constructPath() {
+        let current = this.grid.goal;
+        while (current.getCost() !== 1) {
+            await this.renderer.animate(() => {
+                current = this.getBestNeighbour(current.ax, current.ay);
+                current.markPartOfPath();
+            });
+        }
+    }
+
     private getBestNeighbour(x: number, y: number): Box {
         const neighbours: Box[] = [];
         if (this.grid.getElement(x + 1, y)) neighbours.push(<Box>this.grid.getElement(x + 1, y));
         if (this.grid.getElement(x - 1, y)) neighbours.push(<Box>this.grid.getElement(x - 1, y));
         if (this.grid.getElement(x, y - 1)) neighbours.push(<Box>this.grid.getElement(x, y - 1));
         if (this.grid.getElement(x, y + 1)) neighbours.push(<Box>this.grid.getElement(x, y + 1));
+
         return neighbours.filter((a) => a.getCost() != -1).sort((a, b) => (a.getCost() < b.getCost() ? -1 : 1))[0];
     }
 }

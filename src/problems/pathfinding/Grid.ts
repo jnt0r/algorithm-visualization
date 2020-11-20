@@ -35,6 +35,7 @@ export default class Grid {
         if (this.boxes[x] && this.boxes[x][y]) {
             return this.boxes[x][y];
         }
+
         return undefined;
     }
 

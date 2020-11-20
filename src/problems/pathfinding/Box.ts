@@ -1,4 +1,5 @@
 import Rectangle from '../../renderer/components/Rectangle';
+import Point from '../../renderer/Point';
 
 export default class Box extends Rectangle {
     private visited = false;
@@ -7,7 +8,7 @@ export default class Box extends Rectangle {
     private cost = Number.MAX_VALUE;
 
     constructor(readonly ax: number, readonly ay: number) {
-        super(ax * 21, ay * 21, 20, 20);
+        super(Point.create(ax * 21, ay * 21), 20, 20);
         this.setColor('#FFF');
         this.setBorderColor('#000');
 
