@@ -1,5 +1,6 @@
 import { SVG } from '@svgdotjs/svg.js';
 import Renderable from './Renderable';
+import Rectangle from './components/Rectangle';
 
 export default interface Renderer {
     setAnimationSpeed(animationSpeed: number): void;
@@ -39,6 +40,8 @@ export class SVGRenderer implements Renderer {
     }
 
     render(renderable: Renderable): void {
+        if (renderable instanceof Rectangle) {
+        }
         this.svg.add(renderable.getElement());
     }
 
