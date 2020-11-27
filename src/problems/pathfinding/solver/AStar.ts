@@ -1,6 +1,6 @@
 import PathFindingProblemSolver from '../PathFindingProblemSolver';
-import Grid from '../Grid';
 import Renderer from '../../../renderer/Renderer';
+import Grid from '../Grid';
 import Box from '../Box';
 
 export default class AStar implements PathFindingProblemSolver {

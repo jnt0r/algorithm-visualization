@@ -1,4 +1,3 @@
-import Renderer, { SVGRenderer } from '../renderer/Renderer';
 import SortingProblem from '../problems/sorting/SortingProblem';
 import PathFindingProblem from '../problems/pathfinding/PathFindingProblem';
 import Problem from '../problems/Problem';
@@ -13,6 +12,8 @@ import BubbleSort from '../problems/sorting/solver/BubbleSort';
 import PathFindingProblemSolver from '../problems/pathfinding/PathFindingProblemSolver';
 import SortingProblemSolver from '../problems/sorting/SortingProblemSolver';
 import QuickSort from '../problems/sorting/solver/QuickSort';
+import Renderer from '../renderer/Renderer';
+import SVGRenderer from './SVGRenderer';
 
 export default class Application {
     private readonly renderer: Renderer = new SVGRenderer();

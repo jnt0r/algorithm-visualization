@@ -1,5 +1,5 @@
-import { Element } from '@svgdotjs/svg.js';
+import Renderer from './Renderer';
 
 export default interface Renderable {
-    getElement(): Element;
+    render(renderer: Renderer): void;
 }
