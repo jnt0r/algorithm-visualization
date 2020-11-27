@@ -13,7 +13,7 @@ import PathFindingProblemSolver from '../problems/pathfinding/PathFindingProblem
 import SortingProblemSolver from '../problems/sorting/SortingProblemSolver';
 import QuickSort from '../problems/sorting/solver/QuickSort';
 import Renderer from '../renderer/Renderer';
-import SVGRenderer from './SVGRenderer';
+import SVGRenderer from './svgrenderer/SVGRenderer';
 
 export default class Application {
     private readonly renderer: Renderer = new SVGRenderer();
@@ -99,7 +99,7 @@ export default class Application {
     }
 
     private setProblem(problem: ProblemDisplay<Problem<never>, ProblemSolver<never>>): void {
-        this.problem = problem.getProblem();
+        this.problem = problem.getProblem(this.renderer);
 
         this.algorithmSelectElement.empty();
         problem.getSolvers().forEach((s) => this.algorithmSelectElement.addItem(s));

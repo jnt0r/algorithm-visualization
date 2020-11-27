@@ -6,6 +6,8 @@ import PathFindingProblemSolver from './PathFindingProblemSolver';
 export default class PathFindingProblem implements Problem<PathFindingProblem> {
     private grid!: Grid;
 
+    constructor(private readonly renderer: Renderer) {}
+
     async solve(renderer: Renderer, solver: PathFindingProblemSolver): Promise<void> {
         return solver.solve(this.grid, renderer);
     }
@@ -16,7 +18,7 @@ export default class PathFindingProblem implements Problem<PathFindingProblem> {
     }
 
     generate(): void {
-        this.grid = new Grid(1600 / 21, 800 / 21);
+        this.grid = new Grid(1600 / 21, 800 / 21, this.renderer);
     }
 
     reset(): void {

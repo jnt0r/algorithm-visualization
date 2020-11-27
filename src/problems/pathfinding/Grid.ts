@@ -6,11 +6,11 @@ export default class Grid {
     public start: Box;
     public goal: Box;
 
-    constructor(readonly width: number, readonly height: number) {
+    constructor(readonly width: number, readonly height: number, private readonly renderer: Renderer) {
         for (let x = 0; x < width; x++) {
             this.boxes[x] = [];
             for (let y = 0; y < height; y++) {
-                this.boxes[x][y] = new Box(x, y);
+                this.boxes[x][y] = new Box(x, y, renderer);
             }
         }
 
@@ -26,7 +26,7 @@ export default class Grid {
     render(renderer: Renderer): void {
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
-                renderer.render(this.boxes[x][y]);
+                this.boxes[x][y].render(renderer);
             }
         }
     }

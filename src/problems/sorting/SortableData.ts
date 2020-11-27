@@ -4,14 +4,12 @@ import Bar from './Bar';
 export default class SortableData {
     private readonly bars: Bar[] = [];
 
-    constructor(numbers: number[]) {
-        numbers.forEach((value, index) => this.bars.push(new Bar(index, value)));
+    constructor(numbers: number[], private readonly renderer: Renderer) {
+        numbers.forEach((value, index) => this.bars.push(new Bar(index, value, renderer)));
     }
 
     render(renderer: Renderer): void {
-        this.bars.forEach((v) => {
-            renderer.render(v);
-        });
+        this.bars.forEach((v) => v.render(renderer));
     }
 
     async swap(a: number, b: number, renderer: Renderer): Promise<void> {

@@ -7,6 +7,8 @@ export default class SortingProblem implements Problem<SortingProblem> {
     private sortables!: SortableData;
     private numbers: number[] = [];
 
+    constructor(private readonly renderer: Renderer) {}
+
     async solve(renderer: Renderer, solver: SortingProblemSolver): Promise<void> {
         return solver.solve(this.sortables, renderer);
     }
@@ -32,6 +34,6 @@ export default class SortingProblem implements Problem<SortingProblem> {
     }
 
     private makeProblem(): void {
-        this.sortables = new SortableData(this.numbers);
+        this.sortables = new SortableData(this.numbers, this.renderer);
     }
 }

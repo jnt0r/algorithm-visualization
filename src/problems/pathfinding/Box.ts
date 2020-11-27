@@ -1,18 +1,21 @@
 import Rectangle from '../../renderer/components/Rectangle';
 import Point from '../../renderer/Point';
+import Renderable from '../../renderer/Renderable';
+import Renderer from '../../renderer/Renderer';
 
-export default class Box extends Rectangle {
+export default class Box implements Renderable {
     private visited = false;
     private start = false;
     private goal = false;
     private cost = Number.MAX_VALUE;
+    private readonly rectangle: Rectangle;
 
-    constructor(readonly ax: number, readonly ay: number) {
-        super(Point.create(ax * 21, ay * 21), 20, 20);
+    constructor(readonly ax: number, readonly ay: number, private readonly renderer: Renderer) {
+        this.rectangle = renderer.createRectangle(new Point(ax * 21, ay * 21), 20, 20);
         this.setColor('#FFF');
-        this.setBorderColor('#000');
+        this.rectangle.setBorderColor('#000');
 
-        this.onMouseOver((ev) => {
+        this.rectangle.onMouseOver((ev) => {
             if (ev.buttons === 1) {
                 this.setWall();
             }
@@ -23,6 +26,10 @@ export default class Box extends Rectangle {
         });
     }
 
+    render(renderer: Renderer): void {
+        renderer.render(this.rectangle);
+    }
+
     setCost(cost: number): void {
         this.cost = cost;
     }
@@ -30,7 +37,7 @@ export default class Box extends Rectangle {
     // @Override
     setColor(hexCode: string): void {
         if (!this.start && !this.goal) {
-            super.setColor(hexCode);
+            this.rectangle.setColor(hexCode);
         }
     }
 
@@ -55,7 +62,7 @@ export default class Box extends Rectangle {
 
     unmark(): void {
         this.setColor('#FFF');
-        this.setBorderColor('#000');
+        this.rectangle.setBorderColor('#000');
     }
 
     setWall(): void {
