@@ -38,35 +38,39 @@ export default class SVGRenderer implements Renderer {
     }
 
     swapElementsById(elementId1: number, elementId2: number): Promise<void> {
-        return this.animate(() => {
-            const e1 = this.svg.get(elementId1);
-            const e2 = this.svg.get(elementId2);
-            e1.animate({ delay: 0, duration: this.animationSpeed }).move(e2.x(), e2.y());
-            e2.animate({ delay: 0, duration: this.animationSpeed }).move(e1.x(), e1.y());
-        });
+        const e1 = this.svg.get(elementId1);
+        const e2 = this.svg.get(elementId2);
+        e1.animate({ delay: 0, duration: this.animationSpeed }).move(e2.x(), e2.y());
+        e2.animate({ delay: 0, duration: this.animationSpeed }).move(e1.x(), e1.y());
+
+        return this.animate();
     }
 
-    async animate(func: () => void): Promise<void> {
+    async animate(): Promise<void> {
         return new Promise<void>((resolve) => {
-            func();
-            window.requestAnimationFrame(() => {
-                setTimeout(() => {
-                    resolve();
-                }, this.animationSpeed);
-            });
+            setTimeout(() => {
+                resolve();
+            }, this.animationSpeed);
         });
+        // return new Promise<void>((resolve) => {
+        //     window.requestAnimationFrame(() => {
+        //         setTimeout(() => {
+        //             resolve();
+        //         }, this.animationSpeed);
+        //     });
+        // });
     }
 
-    async swap(a: SVGRectangle, b: SVGRectangle): Promise<void> {
-        await this.animate(() => {
-            const x = a.getElement().x();
-            const y = a.getElement().y();
-            a.getElement()
-                .animate({ delay: 0, duration: this.animationSpeed })
-                .move(b.getElement().x(), b.getElement().y());
-            b.getElement().animate({ delay: 0, duration: this.animationSpeed }).move(x, y);
-        });
-    }
+    // async swap(a: SVGRectangle, b: SVGRectangle): Promise<void> {
+    //     await this.animate(() => {
+    //         const x = a.getElement().x();
+    //         const y = a.getElement().y();
+    //         a.getElement()
+    //             .animate({ delay: 0, duration: this.animationSpeed })
+    //             .move(b.getElement().x(), b.getElement().y());
+    //         b.getElement().animate({ delay: 0, duration: this.animationSpeed }).move(x, y);
+    //     });
+    // }
 
     createRectangle(point: Point, width: number, height: number): Rectangle {
         return new SVGRectangle(point, width, height);

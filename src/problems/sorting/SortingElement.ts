@@ -1,24 +1,28 @@
-import Rectangle from '../../renderer/components/Rectangle';
-import Point from '../../renderer/Point';
-import Renderable from '../../renderer/Renderable';
-import Renderer from '../../renderer/Renderer';
-
-export default class SortingElement implements Renderable {
+export default class SortingElement {
     private readonly defaultColor = '#58B7FF';
     private sorted = false;
-    private readonly rectangle: Rectangle;
+    private color = this.defaultColor;
 
-    constructor(private readonly id: number, private readonly value: number, private readonly renderer: Renderer) {
-        this.rectangle = renderer.createRectangle(new Point(100 + id * 25, 100), 20, value);
-        this.setColor(this.defaultColor);
+    constructor(private readonly value: number) {}
+
+    isSorted(): boolean {
+        return this.sorted;
+    }
+
+    getColor(): string {
+        return this.color;
     }
 
     setColor(hexCode: string): void {
-        this.rectangle.setColor(hexCode);
+        this.color = hexCode;
     }
 
     markComparing(): void {
         this.setColor('#FF4949');
+    }
+
+    markPivot(): void {
+        this.setColor('#7f00ff');
     }
 
     setSorted(): void {
@@ -34,15 +38,7 @@ export default class SortingElement implements Renderable {
         }
     }
 
-    getId(): number {
-        return this.id;
-    }
-
     getValue(): number {
         return this.value;
-    }
-
-    render(renderer: Renderer): void {
-        renderer.render(this.rectangle);
     }
 }

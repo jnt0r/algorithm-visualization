@@ -10,12 +10,12 @@ export default class SortingProblem implements Problem<SortingProblem> {
     constructor(private readonly renderer: Renderer) {}
 
     async solve(solver: SortingProblemSolver): Promise<void> {
-        return solver.solve(this.sortables, this.renderer);
+        return solver.solve(this.sortables);
     }
 
     render(): void {
         this.renderer.clear();
-        this.sortables.render(this.renderer);
+        this.sortables.render();
     }
 
     generate(): void {

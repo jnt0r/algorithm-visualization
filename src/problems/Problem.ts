@@ -1,4 +1,3 @@
-import Renderer from '../renderer/Renderer';
 import ProblemSolver from './ProblemSolver';
 
 export default interface Problem<T extends Problem<T>> {

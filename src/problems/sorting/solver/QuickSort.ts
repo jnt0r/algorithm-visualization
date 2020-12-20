@@ -4,11 +4,9 @@ import SortableData from '../SortableData';
 
 export default class QuickSort implements SortingProblemSolver {
     private data!: SortableData;
-    private renderer!: Renderer;
 
-    async solve(data: SortableData, renderer: Renderer): Promise<void> {
+    async solve(data: SortableData): Promise<void> {
         this.data = data;
-        this.renderer = renderer;
 
         return this.quicksort(0, data.getSize() - 1);
     }
@@ -16,14 +14,14 @@ export default class QuickSort implements SortingProblemSolver {
     private async quicksort(left: number, right: number): Promise<void> {
         if (left < right) {
             const divider = await this.divide(left, right);
-            await this.quicksort(left, divider - 1);
-            await this.quicksort(divider + 1, right);
+            // Process left and right part simultaneously
+            await Promise.all([this.quicksort(left, divider - 1), this.quicksort(divider + 1, right)]);
         }
 
         if (left === right) {
-            await this.renderer.animate(() => {
-                this.data.getElement(left).setSorted();
-            });
+            this.data.getElement(left).setSorted();
+            this.data.render();
+            // await this.data.renderAnimated();
         }
     }
 
@@ -33,52 +31,38 @@ export default class QuickSort implements SortingProblemSolver {
         const pivot = this.data.getElement(right);
 
         // Visualize pivot element
-        await this.renderer.animate(() => {
-            pivot.setColor('#7f00ff');
-        });
+        pivot.markPivot();
+        this.data.render();
 
         while (i < j) {
-            await this.renderer.animate(() => {
-                this.data.getElement(i).markComparing();
-                this.data.getElement(j).markComparing();
-            });
+            await this.data.markComparingElements(i, j);
 
             while (i < right && this.data.getElement(i).getValue() < pivot.getValue()) {
-                await this.renderer.animate(() => {
-                    this.data.getElement(i).unmark();
-                    i++;
-                    this.data.getElement(i).markComparing();
-                });
+                this.data.getElement(i).unmark();
+                i++;
+                await this.data.markComparingElements(i);
             }
             while (j > left && this.data.getElement(j).getValue() >= pivot.getValue()) {
-                await this.renderer.animate(() => {
-                    this.data.getElement(j).unmark();
-                    j--;
-                    this.data.getElement(j).markComparing();
-                });
+                this.data.getElement(j).unmark();
+                j--;
+                await this.data.markComparingElements(i);
             }
 
             if (i < j) {
                 await this.data.swap(i, j);
             } else {
-                await this.renderer.animate(() => {
-                    this.data.getElement(i).unmark();
-                    this.data.getElement(j).unmark();
-                });
+                this.data.resetComparingElements(i, j);
             }
         }
 
         if (this.data.getElement(i).getValue() > pivot.getValue()) {
             await this.data.swap(i, right);
-
-            await this.renderer.animate(() => {
-                pivot.setSorted();
-            });
+            pivot.setSorted();
+            this.data.render();
         } else {
-            await this.renderer.animate(() => {
-                pivot.unmark();
-                this.data.getElement(i).setSorted();
-            });
+            pivot.unmark();
+            this.data.getElement(i).setSorted();
+            this.data.render();
         }
 
         return i;

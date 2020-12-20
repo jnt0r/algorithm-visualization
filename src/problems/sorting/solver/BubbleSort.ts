@@ -1,13 +1,10 @@
 import SortingProblemSolver from '../SortingProblemSolver';
-import Renderer from '../../../renderer/Renderer';
 import SortableData from '../SortableData';
 
 export default class BubbleSort implements SortingProblemSolver {
-    private renderer!: Renderer;
     private data!: SortableData;
 
-    async solve(data: SortableData, renderer: Renderer): Promise<void> {
-        this.renderer = renderer;
+    async solve(data: SortableData): Promise<void> {
         this.data = data;
 
         for (let i = 0; i < data.getSize(); i++) {
@@ -19,7 +16,7 @@ export default class BubbleSort implements SortingProblemSolver {
                     await data.swap(j, j + 1);
                 }
 
-                await data.resetComparingElements(j, j + 1);
+                data.resetComparingElements(j, j + 1);
             }
 
             // Mark mark last moved element as sorted

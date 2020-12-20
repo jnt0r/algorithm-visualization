@@ -1,13 +1,10 @@
 import SortingProblemSolver from '../SortingProblemSolver';
-import Renderer from '../../../renderer/Renderer';
 import SortableData from '../SortableData';
 
 export default class SelectionSort implements SortingProblemSolver {
-    private renderer!: Renderer;
     private data!: SortableData;
 
-    async solve(data: SortableData, renderer: Renderer): Promise<void> {
-        this.renderer = renderer;
+    async solve(data: SortableData): Promise<void> {
         this.data = data;
 
         for (let i = 0; i < data.getSize(); i++) {
@@ -18,24 +15,20 @@ export default class SelectionSort implements SortingProblemSolver {
                 await data.markComparingElements(j);
 
                 if (data.getElement(j).getValue() < data.getElement(smallestIndex).getValue()) {
-                    await renderer.animate(() => {
-                        if (smallestIndex !== i) data.getElement(smallestIndex).unmark();
-                        smallestIndex = j;
-                        data.getElement(smallestIndex).setColor('#7f00ff');
-                    });
+                    if (smallestIndex !== i) data.getElement(smallestIndex).unmark();
+                    smallestIndex = j;
+                    data.getElement(smallestIndex).markPivot();
+                    data.render();
                 } else {
-                    await renderer.animate(() => {
-                        data.getElement(j).unmark();
-                    });
+                    data.resetComparingElements(j);
                 }
             }
 
             await data.swap(i, smallestIndex);
 
-            await renderer.animate(() => {
-                data.getElement(smallestIndex).unmark();
-                data.getElement(i).setSorted();
-            });
+            data.getElement(smallestIndex).unmark();
+            data.getElement(i).setSorted();
+            data.render();
         }
     }
 }
