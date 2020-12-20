@@ -1,16 +1,17 @@
-import Box from './Box';
+import GridBox from './GridBox';
 import Renderer from '../../renderer/Renderer';
+import Point from '../../renderer/Point';
 
 export default class Grid {
-    private readonly boxes: Box[][] = [];
-    public start: Box;
-    public goal: Box;
+    private readonly boxes: GridBox[][] = [];
+    public start: GridBox;
+    public goal: GridBox;
 
-    constructor(readonly width: number, readonly height: number) {
+    constructor(readonly width: number, readonly height: number, private readonly renderer: Renderer) {
         for (let x = 0; x < width; x++) {
             this.boxes[x] = [];
             for (let y = 0; y < height; y++) {
-                this.boxes[x][y] = new Box(x, y);
+                this.boxes[x][y] = new GridBox(x, y);
             }
         }
 
@@ -23,15 +24,23 @@ export default class Grid {
         this.goal.setGoal();
     }
 
-    render(renderer: Renderer): void {
+    render(): void {
+        this.renderer.clear();
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
-                renderer.render(this.boxes[x][y]);
+                const component = this.renderer.createRectangle(
+                    new Point(this.boxes[x][y].ax * 21, this.boxes[x][y].ay * 21),
+                    20,
+                    20,
+                );
+                component.setColor(this.boxes[x][y].getColor());
+                component.setBorderColor(this.boxes[x][y].getBorderColor());
+                this.renderer.render(component);
             }
         }
     }
 
-    getElement(x: number, y: number): Box | undefined {
+    getElement(x: number, y: number): GridBox | undefined {
         if (this.boxes[x] && this.boxes[x][y]) {
             return this.boxes[x][y];
         }
@@ -49,5 +58,11 @@ export default class Grid {
                 box.reset();
             }
         }
+    }
+
+    async renderAnimated(): Promise<void> {
+        this.render();
+
+        return this.renderer.animate();
     }
 }

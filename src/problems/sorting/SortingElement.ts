@@ -1,17 +1,28 @@
-import Rectangle from '../../renderer/components/Rectangle';
-import Point from '../../renderer/Point';
-
-export default class Bar extends Rectangle {
+export default class SortingElement {
     private readonly defaultColor = '#58B7FF';
     private sorted = false;
+    private color = this.defaultColor;
 
-    constructor(private readonly id: number, private readonly value: number) {
-        super(Point.create(100 + id * 25, 100), 20, value);
-        this.setColor(this.defaultColor);
+    constructor(private readonly value: number) {}
+
+    isSorted(): boolean {
+        return this.sorted;
     }
 
-    markRed(): void {
+    getColor(): string {
+        return this.color;
+    }
+
+    setColor(hexCode: string): void {
+        this.color = hexCode;
+    }
+
+    markComparing(): void {
         this.setColor('#FF4949');
+    }
+
+    markPivot(): void {
+        this.setColor('#7f00ff');
     }
 
     setSorted(): void {
@@ -25,10 +36,6 @@ export default class Bar extends Rectangle {
         } else {
             this.setSorted();
         }
-    }
-
-    getId(): number {
-        return this.id;
     }
 
     getValue(): number {

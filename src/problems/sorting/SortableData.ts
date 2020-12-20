@@ -1,31 +1,51 @@
 import Renderer from '../../renderer/Renderer';
-import Bar from './Bar';
+import SortingElement from './SortingElement';
+import Point from '../../renderer/Point';
 
 export default class SortableData {
-    private readonly bars: Bar[] = [];
+    private readonly bars: SortingElement[] = [];
 
-    constructor(numbers: number[]) {
-        numbers.forEach((value, index) => this.bars.push(new Bar(index, value)));
+    constructor(numbers: number[], private readonly renderer: Renderer) {
+        numbers.forEach((value) => this.bars.push(new SortingElement(value)));
     }
 
-    render(renderer: Renderer): void {
-        this.bars.forEach((v) => {
-            renderer.render(v);
+    render(): void {
+        this.renderer.clear();
+        this.bars.forEach((el, index) => {
+            const component = this.renderer.createRectangle(new Point(100 + index * 25, 100), 20, el.getValue());
+            component.setColor(el.getColor());
+            this.renderer.render(component);
         });
     }
 
-    async swap(a: number, b: number, renderer: Renderer): Promise<void> {
+    async renderAnimated(): Promise<void> {
+        this.render();
+        await this.renderer.animate();
+    }
+
+    async swap(a: number, b: number): Promise<void> {
         const temp = this.bars[a];
         this.bars[a] = this.bars[b];
         this.bars[b] = temp;
-        await renderer.swapElementsById(this.bars[a].getId(), this.bars[b].getId());
+        await this.renderer.swapElementsById(a, b);
+    }
+
+    markComparingElements(...indexes: number[]): Promise<void> {
+        indexes.forEach((i) => this.getElement(i).markComparing());
+
+        return this.renderAnimated();
+    }
+
+    resetComparingElements(...indexes: number[]): void {
+        indexes.forEach((i) => this.getElement(i).unmark());
+        this.render();
     }
 
     getSize(): number {
         return this.bars.length;
     }
 
-    getElement(index: number): Bar {
+    getElement(index: number): SortingElement {
         return this.bars[index];
     }
 }

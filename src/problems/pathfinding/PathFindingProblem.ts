@@ -6,17 +6,19 @@ import PathFindingProblemSolver from './PathFindingProblemSolver';
 export default class PathFindingProblem implements Problem<PathFindingProblem> {
     private grid!: Grid;
 
-    async solve(renderer: Renderer, solver: PathFindingProblemSolver): Promise<void> {
-        return solver.solve(this.grid, renderer);
+    constructor(private readonly renderer: Renderer) {}
+
+    async solve(solver: PathFindingProblemSolver): Promise<void> {
+        return solver.solve(this.grid);
     }
 
-    render(renderer: Renderer): void {
-        renderer.clear();
-        this.grid.render(renderer);
+    render(): void {
+        this.renderer.clear();
+        this.grid.render();
     }
 
     generate(): void {
-        this.grid = new Grid(1600 / 21, 800 / 21);
+        this.grid = new Grid(1600 / 21, 800 / 21, this.renderer);
     }
 
     reset(): void {

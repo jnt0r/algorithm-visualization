@@ -1,36 +1,40 @@
-import Rectangle from '../../renderer/components/Rectangle';
-import Point from '../../renderer/Point';
+export default class GridBox {
+    private readonly borderColor = '#000';
+    private readonly defaultColor = '#FFF';
+    private color = this.defaultColor;
 
-export default class Box extends Rectangle {
+    private cost = Number.MAX_VALUE;
     private visited = false;
     private start = false;
     private goal = false;
-    private cost = Number.MAX_VALUE;
 
     constructor(readonly ax: number, readonly ay: number) {
-        super(Point.create(ax * 21, ay * 21), 20, 20);
-        this.setColor('#FFF');
-        this.setBorderColor('#000');
+        // this.rectangle.onMouseOver((ev) => {
+        //     if (ev.buttons === 1) {
+        //         this.setWall();
+        //     }
+        //     if (ev.buttons === 2) {
+        //         this.visited = false;
+        //         this.unmark();
+        //     }
+        // });
+    }
 
-        this.onMouseOver((ev) => {
-            if (ev.buttons === 1) {
-                this.setWall();
-            }
-            if (ev.buttons === 2) {
-                this.visited = false;
-                this.unmark();
-            }
-        });
+    getColor(): string {
+        return this.color;
+    }
+
+    getBorderColor(): string {
+        return this.borderColor;
     }
 
     setCost(cost: number): void {
         this.cost = cost;
     }
 
-    // @Override
     setColor(hexCode: string): void {
         if (!this.start && !this.goal) {
-            super.setColor(hexCode);
+            this.color = hexCode;
         }
     }
 
@@ -55,7 +59,7 @@ export default class Box extends Rectangle {
 
     unmark(): void {
         this.setColor('#FFF');
-        this.setBorderColor('#000');
+        // this.setBorderColor('#000');
     }
 
     setWall(): void {

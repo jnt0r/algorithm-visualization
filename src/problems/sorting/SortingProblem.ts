@@ -7,13 +7,15 @@ export default class SortingProblem implements Problem<SortingProblem> {
     private sortables!: SortableData;
     private numbers: number[] = [];
 
-    async solve(renderer: Renderer, solver: SortingProblemSolver): Promise<void> {
-        return solver.solve(this.sortables, renderer);
+    constructor(private readonly renderer: Renderer) {}
+
+    async solve(solver: SortingProblemSolver): Promise<void> {
+        return solver.solve(this.sortables);
     }
 
-    render(renderer: Renderer): void {
-        renderer.clear();
-        this.sortables.render(renderer);
+    render(): void {
+        this.renderer.clear();
+        this.sortables.render();
     }
 
     generate(): void {
@@ -32,6 +34,6 @@ export default class SortingProblem implements Problem<SortingProblem> {
     }
 
     private makeProblem(): void {
-        this.sortables = new SortableData(this.numbers);
+        this.sortables = new SortableData(this.numbers, this.renderer);
     }
 }

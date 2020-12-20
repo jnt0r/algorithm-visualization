@@ -1,4 +1,3 @@
-import Renderer, { SVGRenderer } from '../renderer/Renderer';
 import SortingProblem from '../problems/sorting/SortingProblem';
 import PathFindingProblem from '../problems/pathfinding/PathFindingProblem';
 import Problem from '../problems/Problem';
@@ -13,6 +12,8 @@ import BubbleSort from '../problems/sorting/solver/BubbleSort';
 import PathFindingProblemSolver from '../problems/pathfinding/PathFindingProblemSolver';
 import SortingProblemSolver from '../problems/sorting/SortingProblemSolver';
 import QuickSort from '../problems/sorting/solver/QuickSort';
+import Renderer from '../renderer/Renderer';
+import SVGRenderer from './svgrenderer/SVGRenderer';
 
 export default class Application {
     private readonly renderer: Renderer = new SVGRenderer();
@@ -55,7 +56,7 @@ export default class Application {
         );
 
         this.setProblem(this.problemSelectElement.getSelectedItem());
-        this.setAnimationSpeed(300);
+        this.setAnimationSpeed(500);
     }
 
     run(): void {
@@ -81,7 +82,7 @@ export default class Application {
             this.showErrorMessage('No Algorithm selected');
         } else {
             this.problem
-                .solve(this.renderer, solver.getSolver())
+                .solve(solver.getSolver())
                 .then(() => console.log('solved'))
                 .catch((error) => this.showErrorMessage(error));
         }
@@ -89,16 +90,16 @@ export default class Application {
 
     private regenerateProblem(): void {
         this.problem.generate();
-        this.problem.render(this.renderer);
+        this.problem.render();
     }
 
     private resetProblem() {
         this.problem.reset();
-        this.problem.render(this.renderer);
+        this.problem.render();
     }
 
     private setProblem(problem: ProblemDisplay<Problem<never>, ProblemSolver<never>>): void {
-        this.problem = problem.getProblem();
+        this.problem = problem.getProblem(this.renderer);
 
         this.algorithmSelectElement.empty();
         problem.getSolvers().forEach((s) => this.algorithmSelectElement.addItem(s));
@@ -112,7 +113,7 @@ export default class Application {
     }
 
     private setAnimationSpeed(animationSpeed: number): void {
-        this.renderer.setAnimationSpeed(animationSpeed);
+        this.renderer.setAnimationSpeed(1000 - animationSpeed);
         this.animationSpeedOutput.value = '' + animationSpeed;
         this.animationSpeedSelect.valueAsNumber = animationSpeed;
     }

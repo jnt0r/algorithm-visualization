@@ -1,4 +1,3 @@
-import Renderer from '../renderer/Renderer';
 import ProblemSolver from './ProblemSolver';
 
 export default interface Problem<T extends Problem<T>> {
@@ -6,7 +5,7 @@ export default interface Problem<T extends Problem<T>> {
 
     reset(): void;
 
-    solve(renderer: Renderer, solver: ProblemSolver<T>): Promise<void>;
+    solve(solver: ProblemSolver<T>): Promise<void>;
 
-    render(renderer: Renderer): void;
+    render(): void;
 }
