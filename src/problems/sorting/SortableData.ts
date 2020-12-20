@@ -12,7 +12,11 @@ export default class SortableData {
     render(): void {
         this.renderer.clear();
         this.bars.forEach((el, index) => {
-            const component = this.renderer.createRectangle(new Point(100 + index * 25, 100), 20, el.getValue());
+            const component = this.renderer.createRectangle(
+                new Point(100 + index * (this.renderer.getWidth() / 50 + 5), 100),
+                this.renderer.getWidth() / 50,
+                el.getValue(),
+            );
             component.setColor(el.getColor());
             this.renderer.render(component);
         });

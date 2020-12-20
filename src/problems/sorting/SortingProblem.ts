@@ -23,7 +23,7 @@ export default class SortingProblem implements Problem<SortingProblem> {
         this.numbers = [];
 
         for (let i = 0; i < 20; i++) {
-            this.numbers.push(Math.random() * 500);
+            this.numbers.push(Math.random() * (this.renderer.getHeight() - 200));
         }
 
         this.makeProblem();
