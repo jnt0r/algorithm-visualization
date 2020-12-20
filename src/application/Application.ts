@@ -81,9 +81,14 @@ export default class Application {
         if (!solver) {
             this.showErrorMessage('No Algorithm selected');
         } else {
+            this.disableAllInputs();
+            this.problem.reset();
             this.problem
                 .solve(solver.getSolver())
-                .then(() => console.log('solved'))
+                .then(() => {
+                    console.log('solved');
+                    this.enableAllInputs();
+                })
                 .catch((error) => this.showErrorMessage(error));
         }
     }
@@ -116,5 +121,21 @@ export default class Application {
         this.renderer.setAnimationSpeed(1000 - animationSpeed);
         this.animationSpeedOutput.value = '' + animationSpeed;
         this.animationSpeedSelect.valueAsNumber = animationSpeed;
+    }
+
+    private disableAllInputs() {
+        this.problemSelectElement.disable();
+        this.algorithmSelectElement.disable();
+        this.resetBtn.disabled = true;
+        this.generateBtn.disabled = true;
+        this.solveBtn.disabled = true;
+    }
+
+    private enableAllInputs() {
+        this.problemSelectElement.enable();
+        this.algorithmSelectElement.enable();
+        this.resetBtn.disabled = false;
+        this.generateBtn.disabled = false;
+        this.solveBtn.disabled = false;
     }
 }
