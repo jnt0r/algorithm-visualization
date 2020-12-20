@@ -29,9 +29,9 @@ export default class Grid {
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
                 const component = this.renderer.createRectangle(
-                    new Point(this.boxes[x][y].ax * 21, this.boxes[x][y].ay * 21),
-                    20,
-                    20,
+                    new Point(this.boxes[x][y].ax * 20, this.boxes[x][y].ay * 20),
+                    19,
+                    19,
                 );
                 component.setColor(this.boxes[x][y].getColor());
                 component.setBorderColor(this.boxes[x][y].getBorderColor());
