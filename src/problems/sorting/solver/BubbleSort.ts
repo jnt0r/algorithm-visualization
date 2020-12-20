@@ -22,5 +22,6 @@ export default class BubbleSort implements SortingProblemSolver {
             // Mark mark last moved element as sorted
             data.getElement(data.getSize() - i - 1).setSorted();
         }
+        await this.data.renderAnimated();
     }
 }
