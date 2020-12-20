@@ -7,6 +7,10 @@ import Circle from './components/Circle';
 export default interface Renderer {
     setAnimationSpeed(animationSpeed: number): void;
 
+    getHeight(): number;
+
+    getWidth(): number;
+
     clear(): void;
 
     render(component: Component): void;

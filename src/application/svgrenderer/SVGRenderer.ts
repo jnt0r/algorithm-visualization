@@ -26,6 +26,14 @@ export default class SVGRenderer implements Renderer {
         this.animationSpeed = animationSpeed;
     }
 
+    getHeight(): number {
+        return document.getElementsByClassName('svg-wrapper')[0].clientHeight;
+    }
+
+    getWidth(): number {
+        return document.getElementsByClassName('svg-wrapper')[0].clientWidth;
+    }
+
     /**
      * Clear the whole animation area
      */
