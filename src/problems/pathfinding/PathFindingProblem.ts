@@ -18,7 +18,7 @@ export default class PathFindingProblem implements Problem<PathFindingProblem> {
     }
 
     generate(): void {
-        this.grid = new Grid(1600 / 21, 800 / 21, this.renderer);
+        this.grid = new Grid(this.renderer.getWidth() / 20, this.renderer.getHeight() / 20, this.renderer);
     }
 
     reset(): void {

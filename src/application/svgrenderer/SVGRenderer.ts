@@ -13,17 +13,21 @@ export default class SVGRenderer implements Renderer {
     private readonly svg = SVG().addTo('.svg-wrapper').size('100%', '100%');
 
     constructor() {
-        // Wrong types. @See documentation svgjs.com
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         this.svg.transform({
-            origin: 'bottom left',
             flip: 'y',
         });
     }
 
     setAnimationSpeed(animationSpeed: number): void {
         this.animationSpeed = animationSpeed;
+    }
+
+    getHeight(): number {
+        return document.getElementsByClassName('svg-wrapper')[0].clientHeight;
+    }
+
+    getWidth(): number {
+        return document.getElementsByClassName('svg-wrapper')[0].clientWidth;
     }
 
     /**
