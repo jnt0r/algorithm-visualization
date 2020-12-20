@@ -56,7 +56,7 @@ export default class Application {
         );
 
         this.setProblem(this.problemSelectElement.getSelectedItem());
-        this.setAnimationSpeed(300);
+        this.setAnimationSpeed(500);
     }
 
     run(): void {
@@ -113,7 +113,7 @@ export default class Application {
     }
 
     private setAnimationSpeed(animationSpeed: number): void {
-        this.renderer.setAnimationSpeed(animationSpeed);
+        this.renderer.setAnimationSpeed(1000 - animationSpeed);
         this.animationSpeedOutput.value = '' + animationSpeed;
         this.animationSpeedSelect.valueAsNumber = animationSpeed;
     }
