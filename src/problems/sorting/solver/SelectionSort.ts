@@ -12,10 +12,10 @@ export default class SelectionSort implements SortingProblemSolver {
 
         for (let i = 0; i < data.getSize(); i++) {
             let smallestIndex = i;
-            await this.markComparingElement(i);
+            await data.markComparingElements(i);
 
             for (let j = i + 1; j < data.getSize(); j++) {
-                await this.markComparingElement(j);
+                await data.markComparingElements(j);
 
                 if (data.getElement(j).getValue() < data.getElement(smallestIndex).getValue()) {
                     await renderer.animate(() => {
@@ -30,18 +30,12 @@ export default class SelectionSort implements SortingProblemSolver {
                 }
             }
 
-            await data.swap(i, smallestIndex, renderer);
+            await data.swap(i, smallestIndex);
 
             await renderer.animate(() => {
                 data.getElement(smallestIndex).unmark();
                 data.getElement(i).setSorted();
             });
         }
-    }
-
-    private markComparingElement(index: number): Promise<void> {
-        return this.renderer.animate(() => {
-            this.data.getElement(index).markRed();
-        });
     }
 }

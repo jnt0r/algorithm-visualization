@@ -3,7 +3,7 @@ import Point from '../../renderer/Point';
 import Renderable from '../../renderer/Renderable';
 import Renderer from '../../renderer/Renderer';
 
-export default class Bar implements Renderable {
+export default class SortingElement implements Renderable {
     private readonly defaultColor = '#58B7FF';
     private sorted = false;
     private readonly rectangle: Rectangle;
@@ -17,7 +17,7 @@ export default class Bar implements Renderable {
         this.rectangle.setColor(hexCode);
     }
 
-    markRed(): void {
+    markComparing(): void {
         this.setColor('#FF4949');
     }
 

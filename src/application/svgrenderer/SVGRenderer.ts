@@ -65,7 +65,6 @@ export default class SVGRenderer implements Renderer {
                 .animate({ delay: 0, duration: this.animationSpeed })
                 .move(b.getElement().x(), b.getElement().y());
             b.getElement().animate({ delay: 0, duration: this.animationSpeed }).move(x, y);
-            console.log('inside');
         });
     }
 

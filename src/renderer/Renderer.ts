@@ -11,11 +11,11 @@ export default interface Renderer {
 
     render(component: Component): void;
 
-    swapElementsById(id1: number, id2: number): Promise<void>;
+    // swapElementsById(id1: number, id2: number): Promise<void>;
 
     animate(func: () => void): Promise<void>;
 
-    swap(a: Component, b: Component): Promise<void>;
+    // swap(a: Component, b: Component): Promise<void>;
 
     createRectangle(point: Point, width: number, height: number): Rectangle;
 

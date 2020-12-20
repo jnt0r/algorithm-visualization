@@ -82,7 +82,7 @@ export default class Application {
             this.showErrorMessage('No Algorithm selected');
         } else {
             this.problem
-                .solve(this.renderer, solver.getSolver())
+                .solve(solver.getSolver())
                 .then(() => console.log('solved'))
                 .catch((error) => this.showErrorMessage(error));
         }
@@ -90,12 +90,12 @@ export default class Application {
 
     private regenerateProblem(): void {
         this.problem.generate();
-        this.problem.render(this.renderer);
+        this.problem.render();
     }
 
     private resetProblem() {
         this.problem.reset();
-        this.problem.render(this.renderer);
+        this.problem.render();
     }
 
     private setProblem(problem: ProblemDisplay<Problem<never>, ProblemSolver<never>>): void {

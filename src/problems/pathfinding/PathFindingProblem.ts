@@ -8,13 +8,13 @@ export default class PathFindingProblem implements Problem<PathFindingProblem> {
 
     constructor(private readonly renderer: Renderer) {}
 
-    async solve(renderer: Renderer, solver: PathFindingProblemSolver): Promise<void> {
-        return solver.solve(this.grid, renderer);
+    async solve(solver: PathFindingProblemSolver): Promise<void> {
+        return solver.solve(this.grid, this.renderer);
     }
 
-    render(renderer: Renderer): void {
-        renderer.clear();
-        this.grid.render(renderer);
+    render(): void {
+        this.renderer.clear();
+        this.grid.render(this.renderer);
     }
 
     generate(): void {

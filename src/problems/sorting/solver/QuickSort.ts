@@ -10,7 +10,7 @@ export default class QuickSort implements SortingProblemSolver {
         this.data = data;
         this.renderer = renderer;
 
-        await this.quicksort(0, data.getSize() - 1);
+        return this.quicksort(0, data.getSize() - 1);
     }
 
     private async quicksort(left: number, right: number): Promise<void> {
@@ -39,27 +39,27 @@ export default class QuickSort implements SortingProblemSolver {
 
         while (i < j) {
             await this.renderer.animate(() => {
-                this.data.getElement(i).markRed();
-                this.data.getElement(j).markRed();
+                this.data.getElement(i).markComparing();
+                this.data.getElement(j).markComparing();
             });
 
             while (i < right && this.data.getElement(i).getValue() < pivot.getValue()) {
                 await this.renderer.animate(() => {
                     this.data.getElement(i).unmark();
                     i++;
-                    this.data.getElement(i).markRed();
+                    this.data.getElement(i).markComparing();
                 });
             }
             while (j > left && this.data.getElement(j).getValue() >= pivot.getValue()) {
                 await this.renderer.animate(() => {
                     this.data.getElement(j).unmark();
                     j--;
-                    this.data.getElement(j).markRed();
+                    this.data.getElement(j).markComparing();
                 });
             }
 
             if (i < j) {
-                await this.data.swap(i, j, this.renderer);
+                await this.data.swap(i, j);
             } else {
                 await this.renderer.animate(() => {
                     this.data.getElement(i).unmark();
@@ -69,7 +69,7 @@ export default class QuickSort implements SortingProblemSolver {
         }
 
         if (this.data.getElement(i).getValue() > pivot.getValue()) {
-            await this.data.swap(i, right, this.renderer);
+            await this.data.swap(i, right);
 
             await this.renderer.animate(() => {
                 pivot.setSorted();

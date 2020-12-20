@@ -9,13 +9,13 @@ export default class SortingProblem implements Problem<SortingProblem> {
 
     constructor(private readonly renderer: Renderer) {}
 
-    async solve(renderer: Renderer, solver: SortingProblemSolver): Promise<void> {
-        return solver.solve(this.sortables, renderer);
+    async solve(solver: SortingProblemSolver): Promise<void> {
+        return solver.solve(this.sortables, this.renderer);
     }
 
-    render(renderer: Renderer): void {
-        renderer.clear();
-        this.sortables.render(renderer);
+    render(): void {
+        this.renderer.clear();
+        this.sortables.render(this.renderer);
     }
 
     generate(): void {
