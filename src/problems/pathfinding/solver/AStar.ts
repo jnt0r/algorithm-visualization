@@ -16,7 +16,6 @@ export default class AStar implements PathFindingProblemSolver {
 
         while (this.openSet.length !== 0) {
             const current: GridBox = this.getBestBoxFromOpenSet();
-            current.setVisited();
             await grid.renderAnimated();
 
             if (current === grid.goal) {
@@ -47,7 +46,7 @@ export default class AStar implements PathFindingProblemSolver {
     }
 
     private getBestBoxFromOpenSet(): GridBox {
-        this.openSet.sort(
+        this.openSet = this.openSet.sort(
             (a, b) => a.getCost() + this.getDistanceToGoal(a) - (b.getCost() + this.getDistanceToGoal(b)),
         );
 
@@ -57,7 +56,6 @@ export default class AStar implements PathFindingProblemSolver {
     private processNeighbour(neighbour: GridBox | undefined, current: GridBox) {
         if (neighbour && !neighbour.isVisited()) {
             neighbour.markVisited();
-
             const costFromStart = current.getCost() + 1;
             if (costFromStart < neighbour.getCost()) {
                 if (!this.cameFrom[neighbour.ax]) {
@@ -77,6 +75,6 @@ export default class AStar implements PathFindingProblemSolver {
         const dx = Math.pow(this.grid.goal.ax - element.ax, 2);
         const dy = Math.pow(this.grid.goal.ay - element.ay, 2);
 
-        return Math.sqrt(dx + dy);
+        return dx + dy;
     }
 }
