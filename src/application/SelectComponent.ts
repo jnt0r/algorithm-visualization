@@ -27,4 +27,12 @@ export default class SelectComponent<T extends Object> {
         this.items = [];
         this.select.options.length = 0;
     }
+
+    disable(): void {
+        this.select.disabled = true;
+    }
+
+    enable(): void {
+        this.select.disabled = false;
+    }
 }
