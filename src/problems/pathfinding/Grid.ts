@@ -1,9 +1,11 @@
 import GridBox from './GridBox';
 import Renderer from '../../renderer/Renderer';
 import Point from '../../renderer/Point';
+import PathFindingProblemStats from './PathFindingProblemStats';
 
 export default class Grid {
     private readonly boxes: GridBox[][] = [];
+    private stats = new PathFindingProblemStats();
     public start: GridBox;
     public goal: GridBox;
 
@@ -50,6 +52,8 @@ export default class Grid {
 
     getElement(x: number, y: number): GridBox | undefined {
         if (this.boxes[x] && this.boxes[x][y]) {
+            this.stats.addCheckedField();
+
             return this.boxes[x][y];
         }
 
@@ -57,6 +61,7 @@ export default class Grid {
     }
 
     reset(): void {
+        this.stats = new PathFindingProblemStats();
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
                 const box = this.boxes[x][y];
@@ -68,7 +73,11 @@ export default class Grid {
         }
     }
 
-    async renderAnimated(): Promise<void> {
+    getStats(): PathFindingProblemStats {
+        return this.stats;
+    }
+
+    renderAnimated(): Promise<void> {
         this.render();
 
         return this.renderer.animate();

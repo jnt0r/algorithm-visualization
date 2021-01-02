@@ -27,6 +27,6 @@ export default class PathFindingProblem implements Problem<PathFindingProblem> {
     }
 
     getStats(): ProblemStats {
-        return new ProblemStats();
+        return this.grid.getStats();
     }
 }

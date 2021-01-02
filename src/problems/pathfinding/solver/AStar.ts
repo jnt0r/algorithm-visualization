@@ -19,9 +19,7 @@ export default class AStar implements PathFindingProblemSolver {
             await grid.renderAnimated();
 
             if (current === grid.goal) {
-                await this.constructPath();
-
-                return; // Path found. Stop execution
+                return this.constructPath();
             }
 
             const x = current.ax;
