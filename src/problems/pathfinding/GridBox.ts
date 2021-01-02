@@ -8,17 +8,7 @@ export default class GridBox {
     private start = false;
     private goal = false;
 
-    constructor(readonly ax: number, readonly ay: number) {
-        // this.rectangle.onMouseOver((ev) => {
-        //     if (ev.buttons === 1) {
-        //         this.setWall();
-        //     }
-        //     if (ev.buttons === 2) {
-        //         this.visited = false;
-        //         this.unmark();
-        //     }
-        // });
-    }
+    constructor(readonly ax: number, readonly ay: number) {}
 
     getColor(): string {
         return this.color;
@@ -58,7 +48,7 @@ export default class GridBox {
     }
 
     unmark(): void {
-        this.setColor('#FFF');
+        this.setColor(this.defaultColor);
         // this.setBorderColor('#000');
     }
 
