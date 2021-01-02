@@ -1,6 +1,5 @@
 import SortingProblemSolver from '../SortingProblemSolver';
-import Renderer from '../../../renderer/Renderer';
-import SortableData from '../SortableData';
+import SortableData, { CompareType } from '../SortableData';
 
 export default class QuickSort implements SortingProblemSolver {
     private data!: SortableData;
@@ -21,28 +20,27 @@ export default class QuickSort implements SortingProblemSolver {
         if (left === right) {
             this.data.getElement(left).setSorted();
             this.data.render();
-            // await this.data.renderAnimated();
         }
     }
 
     private async divide(left: number, right: number): Promise<number> {
         let i = left;
         let j = right - 1;
-        const pivot = this.data.getElement(right);
+        const pivot = right;
 
         // Visualize pivot element
-        pivot.markPivot();
+        this.data.getElement(pivot).markPivot();
         this.data.render();
 
         while (i < j) {
             await this.data.markComparingElements(i, j);
 
-            while (i < right && this.data.getElement(i).getValue() < pivot.getValue()) {
+            while (i < right && this.data.compareElements(i, pivot, CompareType['<'])) {
                 this.data.getElement(i).unmark();
                 i++;
                 await this.data.markComparingElements(i);
             }
-            while (j > left && this.data.getElement(j).getValue() >= pivot.getValue()) {
+            while (j > left && this.data.compareElements(j, pivot, CompareType['>='])) {
                 this.data.getElement(j).unmark();
                 j--;
                 await this.data.markComparingElements(i);
@@ -55,12 +53,12 @@ export default class QuickSort implements SortingProblemSolver {
             }
         }
 
-        if (this.data.getElement(i).getValue() > pivot.getValue()) {
+        if (this.data.compareElements(i, pivot, CompareType['>'])) {
             await this.data.swap(i, right);
-            pivot.setSorted();
+            this.data.getElement(pivot).setSorted();
             this.data.render();
         } else {
-            pivot.unmark();
+            this.data.getElement(pivot).unmark();
             this.data.getElement(i).setSorted();
             this.data.render();
         }

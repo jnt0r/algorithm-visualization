@@ -1,6 +1,7 @@
 import Problem from '../problems/Problem';
 import ProblemSolver from '../problems/ProblemSolver';
 import Renderer from '../renderer/Renderer';
+import ProblemStats from '../problems/ProblemStats';
 
 export default class Controller {
     private problem!: Problem<never>;
@@ -11,10 +12,10 @@ export default class Controller {
         this.problem = problem;
     }
 
-    solveProblem(solver: ProblemSolver<never>): Promise<void> {
+    solveProblem(solver: ProblemSolver<never>): Promise<ProblemStats> {
         this.problem.reset();
 
-        return this.problem.solve(solver);
+        return this.problem.solve(solver).then(() => this.problem.getStats());
     }
 
     resetProblem(): void {

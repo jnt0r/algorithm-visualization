@@ -1,4 +1,5 @@
 import ProblemSolver from './ProblemSolver';
+import ProblemStats from './ProblemStats';
 
 export default interface Problem<T extends Problem<T>> {
     generate(): void;
@@ -8,4 +9,6 @@ export default interface Problem<T extends Problem<T>> {
     solve(solver: ProblemSolver<T>): Promise<void>;
 
     render(): void;
+
+    getStats(): ProblemStats;
 }

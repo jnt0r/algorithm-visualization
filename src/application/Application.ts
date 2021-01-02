@@ -7,6 +7,7 @@ import Controller from './Controller';
 import Configuration from './Configuration';
 import SelectComponent from './components/SelectComponent';
 import SolverDisplay from './components/SolverDisplay';
+import ProblemStats from '../problems/ProblemStats';
 
 /**
  * @class Application
@@ -24,6 +25,7 @@ export default class Application {
     private readonly solveBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('solveBtn');
     private readonly generateBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('generateBtn');
     private readonly resetBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('resetBtn');
+    private readonly statsDiv: HTMLDivElement = <HTMLDivElement>document.getElementsByClassName('stats')[0];
     /* eslint-enable */
 
     private readonly controller: Controller;
@@ -65,8 +67,9 @@ export default class Application {
             this.disableAllInputs();
             this.controller
                 .solveProblem(solver.getSolver())
-                .then(() => {
+                .then((stats) => {
                     console.log('solved');
+                    this.displayStats(stats);
                 })
                 .catch((error) => this.showErrorMessage(error))
                 .finally(() => {
@@ -76,21 +79,23 @@ export default class Application {
     }
 
     private onAnimationSpeedSelectInput() {
-        // Invert animationSpeed as display in frontend is misleading
-        const animationSpeed = 1000 - this.animationSpeedSelect.valueAsNumber;
-        this.controller.setAnimationSpeed(animationSpeed);
+        const animationSpeed = this.animationSpeedSelect.valueAsNumber;
+        this.controller.setAnimationSpeed(1000 - animationSpeed);
         this.animationSpeedOutput.value = '' + animationSpeed;
         this.animationSpeedSelect.valueAsNumber = animationSpeed;
     }
 
-    private onProblemSelectUpdate(problem: ProblemDisplay<Problem<never>, ProblemSolver<never>> | undefined) {
-        if (!problem) {
+    private onProblemSelectUpdate(problemDisplay: ProblemDisplay<Problem<never>, ProblemSolver<never>> | undefined) {
+        if (!problemDisplay) {
             this.showErrorMessage('No Problem selected!');
         } else {
-            this.controller.setProblem(problem.getProblem(this.renderer));
+            const problem = problemDisplay.getProblem(this.renderer);
+
+            this.controller.setProblem(problem);
             this.algorithmSelectElement.empty();
-            problem.getSolvers().forEach((s) => this.algorithmSelectElement.addItem(s));
+            problemDisplay.getSolvers().forEach((s) => this.algorithmSelectElement.addItem(s));
             this.controller.regenerateProblem();
+            this.displayStats(problem.getStats());
         }
     }
 
@@ -118,5 +123,14 @@ export default class Application {
     private showErrorMessage(message: string): void {
         console.log(message);
         alert(message);
+    }
+
+    private displayStats(stats: ProblemStats): void {
+        this.statsDiv.innerHTML = '';
+        stats.getStats().forEach((value, key) => {
+            const span = document.createElement('span');
+            span.innerHTML = `${key}: ${value}`;
+            this.statsDiv.appendChild(span);
+        });
     }
 }

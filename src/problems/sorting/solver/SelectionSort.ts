@@ -1,5 +1,5 @@
 import SortingProblemSolver from '../SortingProblemSolver';
-import SortableData from '../SortableData';
+import SortableData, { CompareType } from '../SortableData';
 
 export default class SelectionSort implements SortingProblemSolver {
     private data!: SortableData;
@@ -14,7 +14,7 @@ export default class SelectionSort implements SortingProblemSolver {
             for (let j = i + 1; j < data.getSize(); j++) {
                 await data.markComparingElements(j);
 
-                if (data.getElement(j).getValue() < data.getElement(smallestIndex).getValue()) {
+                if (data.compareElements(j, smallestIndex, CompareType['<'])) {
                     if (smallestIndex !== i) data.getElement(smallestIndex).unmark();
                     smallestIndex = j;
                     data.getElement(smallestIndex).markPivot();

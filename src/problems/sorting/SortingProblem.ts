@@ -2,6 +2,7 @@ import Renderer from '../../renderer/Renderer';
 import Problem from '../Problem';
 import SortingProblemSolver from './SortingProblemSolver';
 import SortableData from './SortableData';
+import ProblemStats from '../ProblemStats';
 
 export default class SortingProblem implements Problem<SortingProblem> {
     private sortables!: SortableData;
@@ -31,6 +32,10 @@ export default class SortingProblem implements Problem<SortingProblem> {
 
     reset(): void {
         this.makeProblem();
+    }
+
+    getStats(): ProblemStats {
+        return this.sortables.getStats();
     }
 
     private makeProblem(): void {
