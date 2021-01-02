@@ -2,6 +2,7 @@ import Renderer from '../../renderer/Renderer';
 import Problem from '../Problem';
 import Grid from './Grid';
 import PathFindingProblemSolver from './PathFindingProblemSolver';
+import ProblemStats from '../ProblemStats';
 
 export default class PathFindingProblem implements Problem<PathFindingProblem> {
     private grid!: Grid;
@@ -23,5 +24,9 @@ export default class PathFindingProblem implements Problem<PathFindingProblem> {
 
     reset(): void {
         this.grid.reset();
+    }
+
+    getStats(): ProblemStats {
+        return new ProblemStats();
     }
 }

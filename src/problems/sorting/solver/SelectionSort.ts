@@ -2,11 +2,7 @@ import SortingProblemSolver from '../SortingProblemSolver';
 import SortableData, { CompareType } from '../SortableData';
 
 export default class SelectionSort implements SortingProblemSolver {
-    private data!: SortableData;
-
     async solve(data: SortableData): Promise<void> {
-        this.data = data;
-
         for (let i = 0; i < data.getSize(); i++) {
             let smallestIndex = i;
             await data.markComparingElements(i);

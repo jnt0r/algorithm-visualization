@@ -33,35 +33,38 @@ export default class SortableData {
         });
     }
 
-    async renderAnimated(): Promise<void> {
+    renderAnimated(): Promise<void> {
         this.render();
-        await this.renderer.animate();
+
+        return this.renderer.animate();
     }
 
-    async swap(a: number, b: number): Promise<void> {
+    swap(a: number, b: number): Promise<void> {
+        this.stats.addSwap();
         const temp = this.bars[a];
         this.bars[a] = this.bars[b];
         this.bars[b] = temp;
-        this.stats.addSwap();
-        console.log('swapped');
-        await this.renderer.swapElementsById(a, b);
+
+        return this.renderer.swapElementsById(a, b);
     }
 
     compareElements(a: number, b: number, compareType: CompareType): boolean {
+        const e1 = this.getElement(a).getValue();
+        const e2 = this.getElement(b).getValue();
         this.stats.addComparison();
         switch (compareType) {
             case CompareType['>']:
-                return a > b;
+                return e1 > e2;
             case CompareType['>=']:
-                return a >= b;
+                return e1 >= e2;
             case CompareType['<']:
-                return a < b;
+                return e1 < e2;
             case CompareType['<=']:
-                return a <= b;
+                return e1 <= e2;
             case CompareType['===']:
-                return a === b;
+                return e1 === e2;
             case CompareType['==']:
-                return a == b;
+                return e1 == e2;
         }
     }
 

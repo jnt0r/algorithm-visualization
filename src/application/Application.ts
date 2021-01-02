@@ -44,7 +44,7 @@ export default class Application {
 
         // Initial values
         this.setProblems(this.configuration.getProblems());
-        this.controller.setAnimationSpeed(500);
+        this.onAnimationSpeedSelectInput();
     }
 
     private onAlgorithmSelectUpdate() {
