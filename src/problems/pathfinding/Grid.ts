@@ -28,13 +28,21 @@ export default class Grid {
         this.renderer.clear();
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
-                const component = this.renderer.createRectangle(
-                    new Point(this.boxes[x][y].ax * 20, this.boxes[x][y].ay * 20),
-                    19,
-                    19,
-                );
-                component.setColor(this.boxes[x][y].getColor());
-                component.setBorderColor(this.boxes[x][y].getBorderColor());
+                const box = this.boxes[x][y];
+                const component = this.renderer.createRectangle(new Point(box.ax * 20, box.ay * 20), 19, 19);
+                component.onMouseOver(({ buttons }) => {
+                    if (buttons === 1) {
+                        box.setWall();
+                    }
+                    if (buttons === 2) {
+                        box.setVisited();
+                        box.unmark();
+                    }
+                    component.setColor(box.getColor());
+                    component.setBorderColor(box.getBorderColor());
+                });
+                component.setColor(box.getColor());
+                component.setBorderColor(box.getBorderColor());
                 this.renderer.render(component);
             }
         }
