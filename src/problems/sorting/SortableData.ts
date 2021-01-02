@@ -2,15 +2,7 @@ import Renderer from '../../renderer/Renderer';
 import SortingElement from './SortingElement';
 import Point from '../../renderer/Point';
 import SortingProblemStats from './SortingProblemStats';
-
-export enum CompareType {
-    '>',
-    '>=',
-    '<',
-    '<=',
-    '===',
-    '==',
-}
+import { CompareType } from '../CompareType';
 
 export default class SortableData {
     private readonly bars: SortingElement[] = [];
@@ -48,24 +40,14 @@ export default class SortableData {
         return this.renderer.swapElementsById(a, b);
     }
 
-    compareElements(a: number, b: number, compareType: CompareType): boolean {
-        const e1 = this.getElement(a).getValue();
-        const e2 = this.getElement(b).getValue();
+    compareElements(a: number, compareType: '<' | '<=' | '>' | '>=' | '=', b: number): boolean {
         this.stats.addComparison();
-        switch (compareType) {
-            case CompareType['>']:
-                return e1 > e2;
-            case CompareType['>=']:
-                return e1 >= e2;
-            case CompareType['<']:
-                return e1 < e2;
-            case CompareType['<=']:
-                return e1 <= e2;
-            case CompareType['===']:
-                return e1 === e2;
-            case CompareType['==']:
-                return e1 == e2;
-        }
+
+        return CompareType.compare(
+            this.getElement(a).getValue(),
+            this.getElement(b).getValue(),
+            CompareType[compareType],
+        );
     }
 
     markComparingElements(...indexes: number[]): Promise<void> {

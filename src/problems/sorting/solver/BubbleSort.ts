@@ -1,5 +1,5 @@
 import SortingProblemSolver from '../SortingProblemSolver';
-import SortableData, { CompareType } from '../SortableData';
+import SortableData from '../SortableData';
 
 export default class BubbleSort implements SortingProblemSolver {
     async solve(data: SortableData): Promise<void> {
@@ -8,7 +8,7 @@ export default class BubbleSort implements SortingProblemSolver {
                 await data.markComparingElements(j, j + 1);
 
                 // Swap elements if value of j is greater than value of j+1
-                if (data.compareElements(j, j + 1, CompareType['>'])) {
+                if (data.compareElements(j, '>', j + 1)) {
                     await data.swap(j, j + 1);
                 }
 

@@ -1,5 +1,5 @@
 import SortingProblemSolver from '../SortingProblemSolver';
-import SortableData, { CompareType } from '../SortableData';
+import SortableData from '../SortableData';
 
 export default class QuickSort implements SortingProblemSolver {
     private data!: SortableData;
@@ -30,20 +30,20 @@ export default class QuickSort implements SortingProblemSolver {
 
         // Visualize pivot element
         this.data.getElement(pivot).markPivot();
-        this.data.render();
+        await this.data.renderAnimated();
 
         while (i < j) {
             await this.data.markComparingElements(i, j);
 
-            while (i < right && this.data.compareElements(i, pivot, CompareType['<'])) {
+            while (i < right && this.data.compareElements(i, '<', pivot)) {
                 this.data.getElement(i).unmark();
                 i++;
                 await this.data.markComparingElements(i);
             }
-            while (j > left && this.data.compareElements(j, pivot, CompareType['>='])) {
+            while (j > left && this.data.compareElements(j, '>=', pivot)) {
                 this.data.getElement(j).unmark();
                 j--;
-                await this.data.markComparingElements(i);
+                await this.data.markComparingElements(j);
             }
 
             if (i < j) {
@@ -53,15 +53,15 @@ export default class QuickSort implements SortingProblemSolver {
             }
         }
 
-        if (this.data.compareElements(i, pivot, CompareType['>'])) {
-            await this.data.swap(i, right);
+        if (this.data.compareElements(i, '>', pivot)) {
+            await this.data.swap(i, pivot);
             this.data.getElement(pivot).setSorted();
-            this.data.render();
         } else {
             this.data.getElement(pivot).unmark();
             this.data.getElement(i).setSorted();
-            this.data.render();
         }
+
+        await this.data.renderAnimated();
 
         return i;
     }

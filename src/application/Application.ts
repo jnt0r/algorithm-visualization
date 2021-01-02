@@ -80,7 +80,7 @@ export default class Application {
 
     private onAnimationSpeedSelectInput() {
         const animationSpeed = this.animationSpeedSelect.valueAsNumber;
-        this.controller.setAnimationSpeed(10000 - 100 * animationSpeed);
+        this.controller.setAnimationSpeed(1000 - 10 * animationSpeed);
         this.animationSpeedOutput.value = '' + animationSpeed;
         this.animationSpeedSelect.valueAsNumber = animationSpeed;
     }
