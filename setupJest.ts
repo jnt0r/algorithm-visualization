@@ -11,7 +11,9 @@ import Component from './src/renderer/Component';
 import CustomMatcherResult = jest.CustomMatcherResult;
 
 const renderer: Renderer = {
-    animate(): void {},
+    animate(): Promise<void> {
+        return Promise.resolve();
+    },
     clear(): void {},
     createCircle(position: Point, radius: number): Circle {
         return new SVGCircle(position, radius);
@@ -30,7 +32,9 @@ const renderer: Renderer = {
     },
     render(component: Component): void {},
     setAnimationSpeed(animationSpeed: number): void {},
-    swapElementsById(id1: number, id2: number): void {},
+    swapElementsById(id1: number, id2: number): Promise<void> {
+        return Promise.resolve();
+    },
 };
 const sortedData = new SortableData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], renderer);
 expect.extend({
