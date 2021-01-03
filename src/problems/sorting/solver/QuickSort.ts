@@ -55,7 +55,8 @@ export default class QuickSort implements SortingProblemSolver {
 
         if (this.data.compareElements(i, '>', pivot)) {
             await this.data.swap(i, pivot);
-            this.data.getElement(pivot).setSorted();
+            // Pivot is now element with index i. Mark this element as sorted
+            this.data.getElement(i).setSorted();
         } else {
             this.data.getElement(pivot).unmark();
             this.data.getElement(i).setSorted();
