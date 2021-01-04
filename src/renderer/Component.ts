@@ -1,6 +1,3 @@
-import Renderable from './Renderable';
-import { Element } from '@svgdotjs/svg.js';
-
 export default interface Component {
     // protected element: Element;
     //
