@@ -42,8 +42,8 @@ export default class Grid {
                 const box = this.boxes[x][y];
                 const component = this.renderer.createRectangle(
                     new Point(box.point.getX() * 20, box.point.getY() * 20),
-                    19,
-                    19,
+                    20,
+                    20,
                 );
                 component.onMouseOver(({ buttons }) => {
                     if (buttons === 1) {
