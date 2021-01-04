@@ -2,7 +2,6 @@ import GridBox from './GridBox';
 import Renderer from '../../renderer/Renderer';
 import Point from '../../renderer/Point';
 import PathFindingProblemStats from './PathFindingProblemStats';
-import Rectangle from '../../renderer/components/Rectangle';
 
 export default class Grid {
     private readonly boxes: GridBox[][] = [];
@@ -14,7 +13,7 @@ export default class Grid {
         for (let x = 0; x < width; x++) {
             this.boxes[x] = [];
             for (let y = 0; y < height; y++) {
-                this.boxes[x][y] = new GridBox(x, y);
+                this.boxes[x][y] = new GridBox(new Point(x, y));
             }
         }
 
@@ -41,7 +40,11 @@ export default class Grid {
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
                 const box = this.boxes[x][y];
-                const component = this.renderer.createRectangle(new Point(box.ax * 20, box.ay * 20), 19, 19);
+                const component = this.renderer.createRectangle(
+                    new Point(box.point.getX() * 20, box.point.getY() * 20),
+                    19,
+                    19,
+                );
                 component.onMouseOver(({ buttons }) => {
                     if (buttons === 1) {
                         box.setWall();
@@ -86,10 +89,11 @@ export default class Grid {
      */
     getNeighboursOfElement(element: GridBox): GridBox[] {
         const neighbours: GridBox[] = [];
-        this.addElementIfExistsAndValid(element.ax + 1, element.ay, neighbours);
-        this.addElementIfExistsAndValid(element.ax - 1, element.ay, neighbours);
-        this.addElementIfExistsAndValid(element.ax, element.ay - 1, neighbours);
-        this.addElementIfExistsAndValid(element.ax, element.ay + 1, neighbours);
+        const point = element.point;
+        this.addElementIfExistsAndValid(point.getX() + 1, point.getY(), neighbours);
+        this.addElementIfExistsAndValid(point.getX() - 1, point.getY(), neighbours);
+        this.addElementIfExistsAndValid(point.getX(), point.getY() - 1, neighbours);
+        this.addElementIfExistsAndValid(point.getX(), point.getY() + 1, neighbours);
 
         return neighbours;
     }

@@ -30,11 +30,11 @@ export default class AStar implements PathFindingProblemSolver {
 
     private async constructPath(): Promise<void> {
         let current = this.grid.goal;
-        current = this.cameFrom[current.ax][current.ay];
+        current = this.cameFrom[current.point.getX()][current.point.getY()];
         while (current !== this.grid.start) {
             current.markPartOfPath();
             await this.grid.renderAnimated();
-            current = this.cameFrom[current.ax][current.ay];
+            current = this.cameFrom[current.point.getX()][current.point.getY()];
         }
     }
 
@@ -51,10 +51,10 @@ export default class AStar implements PathFindingProblemSolver {
             neighbour.markVisited();
             const costFromStart = current.getCost() + 1;
             if (costFromStart < neighbour.getCost()) {
-                if (!this.cameFrom[neighbour.ax]) {
-                    this.cameFrom[neighbour.ax] = [];
+                if (!this.cameFrom[neighbour.point.getX()]) {
+                    this.cameFrom[neighbour.point.getX()] = [];
                 }
-                this.cameFrom[neighbour.ax][neighbour.ay] = current;
+                this.cameFrom[neighbour.point.getX()][neighbour.point.getY()] = current;
                 neighbour.setCost(costFromStart);
                 if (this.openSet.indexOf(neighbour) === -1) {
                     this.openSet.push(neighbour);
@@ -64,10 +64,6 @@ export default class AStar implements PathFindingProblemSolver {
     }
 
     private getDistanceToGoal(element: GridBox): number {
-        // Euclidean distance
-        const dx = Math.pow(this.grid.goal.ax - element.ax, 2);
-        const dy = Math.pow(this.grid.goal.ay - element.ay, 2);
-
-        return dx + dy;
+        return element.point.distanceTo(this.grid.goal.point);
     }
 }

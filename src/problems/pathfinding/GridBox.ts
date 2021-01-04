@@ -1,3 +1,5 @@
+import Point from '../../renderer/Point';
+
 export default class GridBox {
     private readonly defaultColor = '#FFF';
     private readonly defaultBorderColor = '#000';
@@ -10,7 +12,7 @@ export default class GridBox {
     private _isStart = false;
     private _isGoal = false;
 
-    constructor(readonly ax: number, readonly ay: number) {}
+    constructor(readonly point: Point) {}
 
     getColor(): string {
         return this.color;
