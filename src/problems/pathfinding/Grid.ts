@@ -2,9 +2,12 @@ import GridBox from './GridBox';
 import Renderer from '../../renderer/Renderer';
 import Point from '../../renderer/Point';
 import PathFindingProblemStats from './PathFindingProblemStats';
+import Rectangle from '../../renderer/components/Rectangle';
 
 export default class Grid {
     private readonly boxes: GridBox[][] = [];
+    private readonly components: Rectangle[][] = [];
+    private firstTimeRendering = true;
     private stats = new PathFindingProblemStats();
     public start: GridBox;
     public goal: GridBox;
@@ -36,30 +39,42 @@ export default class Grid {
     }
 
     render(): void {
-        this.renderer.clear();
         for (let x = 0; x < this.width; x++) {
+            if (this.firstTimeRendering) {
+                this.components[x] = [];
+            }
+
             for (let y = 0; y < this.height; y++) {
                 const box = this.boxes[x][y];
-                const component = this.renderer.createRectangle(
-                    new Point(box.point.getX() * 20, box.point.getY() * 20),
-                    20,
-                    20,
-                );
-                component.onMouseOver(({ buttons }) => {
-                    if (buttons === 1) {
-                        box.setWall();
-                    }
-                    if (buttons === 2) {
-                        box.removeWall();
-                    }
-                    component.setColor(box.getColor());
-                    component.setBorderColor(box.getBorderColor());
-                });
+
+                let component: Rectangle;
+                if (this.firstTimeRendering) {
+                    component = this.renderer.createRectangle(
+                        new Point(box.point.getX() * 20, box.point.getY() * 20),
+                        20,
+                        20,
+                    );
+                    component.onMouseOver(({ buttons }) => {
+                        if (buttons === 1) {
+                            box.setWall();
+                        }
+                        if (buttons === 2) {
+                            box.removeWall();
+                        }
+                        component.setColor(box.getColor());
+                        component.setBorderColor(box.getBorderColor());
+                    });
+                    this.components[x].push(component);
+                } else {
+                    component = this.components[x][y];
+                }
+
                 component.setColor(box.getColor());
                 component.setBorderColor(box.getBorderColor());
                 this.renderer.render(component);
             }
         }
+        this.firstTimeRendering = false;
     }
 
     renderAnimated(): Promise<void> {
