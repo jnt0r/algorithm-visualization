@@ -22,12 +22,7 @@ export default class AStar implements PathFindingProblemSolver {
                 return this.constructPath();
             }
 
-            const x = current.ax;
-            const y = current.ay;
-            this.processNeighbour(grid.getElement(x, y + 1), current);
-            this.processNeighbour(grid.getElement(x + 1, y), current);
-            this.processNeighbour(grid.getElement(x, y - 1), current);
-            this.processNeighbour(grid.getElement(x - 1, y), current);
+            grid.getNeighboursOfElement(current).forEach((neighbour) => this.processNeighbour(neighbour, current));
         }
         // No path has been found
         throw new Error('No path found');
@@ -51,8 +46,8 @@ export default class AStar implements PathFindingProblemSolver {
         return this.openSet.splice(0, 1)[0];
     }
 
-    private processNeighbour(neighbour: GridBox | undefined, current: GridBox) {
-        if (neighbour && !neighbour.isVisited()) {
+    private processNeighbour(neighbour: GridBox, current: GridBox) {
+        if (!neighbour.isVisited()) {
             neighbour.markVisited();
             const costFromStart = current.getCost() + 1;
             if (costFromStart < neighbour.getCost()) {

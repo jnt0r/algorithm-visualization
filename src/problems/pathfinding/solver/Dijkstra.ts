@@ -19,10 +19,9 @@ export default class Dijkstra implements PathFindingProblemSolver {
 
             const nextLayer: GridBox[] = [];
             for (const box of lastLayer) {
-                this.processBox(nextLayer, box.ax + 1, box.ay, box.getCost() + 1);
-                this.processBox(nextLayer, box.ax - 1, box.ay, box.getCost() + 1);
-                this.processBox(nextLayer, box.ax, box.ay + 1, box.getCost() + 1);
-                this.processBox(nextLayer, box.ax, box.ay - 1, box.getCost() + 1);
+                grid.getNeighboursOfElement(box).forEach((neighbour) =>
+                    this.processBox(nextLayer, neighbour, box.getCost() + 1),
+                );
             }
             await this.grid.renderAnimated();
             lastLayer = nextLayer;
@@ -31,9 +30,8 @@ export default class Dijkstra implements PathFindingProblemSolver {
         throw new Error('No path found');
     }
 
-    processBox(o: GridBox[], x: number, y: number, cost: number): void {
-        const element = this.grid.getElement(x, y);
-        if (element && !element.isVisited()) {
+    processBox(o: GridBox[], element: GridBox, cost: number): void {
+        if (!element.isVisited()) {
             element.markVisited();
             element.setCost(cost);
 
@@ -57,12 +55,5 @@ export default class Dijkstra implements PathFindingProblemSolver {
             .getNeighboursOfElement(element)
             .filter((a) => a.getCost() != -1)
             .sort((a, b) => (a.getCost() < b.getCost() ? -1 : 1))[0];
-    }
-
-    private addElementIfExists(x: number, y: number, neighbours: GridBox[]): void {
-        const element = this.grid.getElement(x, y);
-        if (element) {
-            neighbours.push(element);
-        }
     }
 }

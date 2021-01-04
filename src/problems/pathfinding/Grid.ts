@@ -79,6 +79,11 @@ export default class Grid {
         return undefined;
     }
 
+    /**
+     * Returns all <b>valid</b> Neighbours of the given element.
+     *
+     * @param element
+     */
     getNeighboursOfElement(element: GridBox): GridBox[] {
         const neighbours: GridBox[] = [];
         this.addElementIfExistsAndValid(element.ax + 1, element.ay, neighbours);
