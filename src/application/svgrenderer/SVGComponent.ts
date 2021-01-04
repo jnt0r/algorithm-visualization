@@ -17,7 +17,7 @@ export class SVGComponent implements Component {
     }
 
     setBorderColor(hexCode: string): void {
-        this.element.stroke(hexCode);
+        this.element.stroke({ color: hexCode });
     }
 
     onClick(func: () => void): void {
