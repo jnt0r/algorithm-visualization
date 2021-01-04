@@ -2,6 +2,7 @@ import GridBox from './GridBox';
 import Renderer from '../../renderer/Renderer';
 import Point from '../../renderer/Point';
 import PathFindingProblemStats from './PathFindingProblemStats';
+import Rectangle from '../../renderer/components/Rectangle';
 
 export default class Grid {
     private readonly boxes: GridBox[][] = [];
@@ -19,11 +20,11 @@ export default class Grid {
 
         // Set start
         this.start = this.boxes[Math.floor(Math.random() * width)][Math.floor(Math.random() * height)];
-        this.start.setStart();
+        this.start.markStart();
 
         // Set goal
         this.goal = this.boxes[Math.floor(Math.random() * width)][Math.floor(Math.random() * height)];
-        this.goal.setGoal();
+        this.goal.markGoal();
     }
 
     render(): void {
@@ -37,8 +38,7 @@ export default class Grid {
                         box.setWall();
                     }
                     if (buttons === 2) {
-                        box.setVisited();
-                        box.unmark();
+                        box.removeWall();
                     }
                     component.setColor(box.getColor());
                     component.setBorderColor(box.getBorderColor());
@@ -64,11 +64,7 @@ export default class Grid {
         this.stats = new PathFindingProblemStats();
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
-                const box = this.boxes[x][y];
-                if (box !== this.start && box !== this.goal) {
-                    box.unmark();
-                }
-                box.reset();
+                this.boxes[x][y].reset();
             }
         }
     }

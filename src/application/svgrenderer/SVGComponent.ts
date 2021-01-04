@@ -32,6 +32,9 @@ export class SVGComponent implements Component {
     }
 
     onMouseOver(func: (ev: { buttons: number }) => void): void {
-        this.element.on('mouseover mousedown', func);
+        this.element.on('mouseover mousedown', (e: MouseEvent) => {
+            e.preventDefault();
+            func(e);
+        });
     }
 }

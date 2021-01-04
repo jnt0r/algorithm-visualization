@@ -1,12 +1,14 @@
 export default class GridBox {
-    private readonly borderColor = '#000';
     private readonly defaultColor = '#FFF';
+    private readonly defaultBorderColor = '#000';
+    private borderColor = this.defaultBorderColor;
     private color = this.defaultColor;
 
     private cost = Number.MAX_VALUE;
-    private visited = false;
-    private start = false;
-    private goal = false;
+    private _isVisited = false;
+    private _isWall = false;
+    private _isStart = false;
+    private _isGoal = false;
 
     constructor(readonly ax: number, readonly ay: number) {}
 
@@ -18,33 +20,53 @@ export default class GridBox {
         return this.borderColor;
     }
 
-    setCost(cost: number): void {
-        this.cost = cost;
-    }
-
     setColor(hexCode: string): void {
-        if (!this.start && !this.goal) {
+        if (!this._isStart && !this._isGoal) {
             this.color = hexCode;
         }
     }
 
+    setBorderColor(hexCode: string): void {
+        this.borderColor = hexCode;
+    }
+
+    setCost(cost: number): void {
+        this.cost = cost;
+    }
+
+    getCost(): number {
+        return this.cost;
+    }
+
     markVisited(): void {
-        this.visited = true;
+        this._isVisited = true;
         this.setColor('#0FF');
+    }
+
+    markStart(): void {
+        this.setColor('#F00');
+        this._isStart = true;
+    }
+
+    markGoal(): void {
+        this.setColor('#0F0');
+        this._isGoal = true;
     }
 
     markPartOfPath(): void {
         this.setColor('#00F');
     }
 
-    setStart(): void {
-        this.setColor('#F00');
-        this.start = true;
+    setWall(): void {
+        this._isWall = true;
+        this._isVisited = true;
+        this.setColor('#000');
     }
 
-    setGoal(): void {
-        this.setColor('#0F0');
-        this.goal = true;
+    removeWall(): void {
+        this._isWall = false;
+        this._isVisited = false;
+        this.unmark();
     }
 
     unmark(): void {
@@ -52,25 +74,21 @@ export default class GridBox {
         // this.setBorderColor('#000');
     }
 
-    setWall(): void {
-        this.visited = true;
-        this.setColor('#000');
+    reset(): void {
+        if (this._isWall) {
+            return;
+        }
+        this.cost = Number.MAX_VALUE;
+        this._isVisited = false;
+        this.setColor(this.defaultColor);
+        this.setBorderColor(this.defaultBorderColor);
     }
 
     isVisited(): boolean {
-        return this.visited;
+        return this._isVisited;
     }
 
-    getCost(): number {
-        return this.cost;
-    }
-
-    setVisited(): void {
-        this.visited = true;
-    }
-
-    reset(): void {
-        this.cost = Number.MAX_VALUE;
-        this.visited = false;
+    isWall(): boolean {
+        return this._isWall;
     }
 }

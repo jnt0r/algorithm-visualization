@@ -8,14 +8,12 @@ export default class Dijkstra implements PathFindingProblemSolver {
     async solve(grid: Grid): Promise<void> {
         this.grid = grid;
         grid.start.setCost(0);
-        grid.start.setVisited();
+        grid.start.markVisited();
 
         let lastLayer: GridBox[] = [this.grid.start];
         while (lastLayer.length > 0) {
             if (lastLayer.indexOf(this.grid.goal) !== -1) {
-                await this.constructPath();
-
-                return;
+                return this.constructPath();
             }
 
             const nextLayer: GridBox[] = [];
