@@ -21,7 +21,7 @@ export default class LabyrinthProblem extends PathFindingProblem {
     private generateMaze(): void {
         const sets: GridBox[][] = [];
         const map: Map<number, number> = new Map();
-        const borders: { box: GridBox; index1: number; index2: number }[] = [];
+        const borders: { box: GridBox; set1: number; set2: number }[] = [];
 
         for (let x = 0; x < this.grid.width; x++) {
             for (let y = 0; y < this.grid.height; y++) {
@@ -38,8 +38,8 @@ export default class LabyrinthProblem extends PathFindingProblem {
                 if (x % 2 === 0 && y % 2 != 0) {
                     borders.push({
                         box: gridBox,
-                        index1: sets.length - 1,
-                        index2: sets.length,
+                        set1: sets.length - 1,
+                        set2: sets.length,
                     });
                 }
                 if (x % 2 != 0 && y % 2 === 0) {
@@ -47,38 +47,46 @@ export default class LabyrinthProblem extends PathFindingProblem {
                     const index1 = Math.floor(x / 2) * dx + Math.floor(y / 2);
                     borders.push({
                         box: gridBox,
-                        index1: index1,
-                        index2: index1 + dx,
+                        set1: index1,
+                        set2: index1 + dx,
                     });
                 }
             }
         }
 
         while (sets[map.get(0)!].length < sets.length) {
-            const index = Math.floor(Math.random() * (borders.length - 1));
-            const current = borders.splice(index, 1)[0];
+            const randomBorderIndex = Math.floor(Math.random() * (borders.length - 1));
+            const border = borders.splice(randomBorderIndex, 1)[0];
 
-            const i1 = map.get(current.index1)!;
-            const i2 = map.get(current.index2)!;
+            const i1 = map.get(border.set1)!;
+            const i2 = map.get(border.set2)!;
             if (i1 !== i2) {
-                current.box.removeWall();
+                border.box.removeWall();
+
                 const set1 = sets[i1];
                 const set2 = sets[i2];
-                this.merge(set1, set2);
+                this.mergeSets(set1, set2);
+
                 for (let i = 0; i < map.size; i++) {
                     if (map.get(i) === i2) {
                         map.set(i, i1);
-                        // console.log('set', i, i1);
                     }
                 }
             }
         }
     }
 
-    private merge(a1: GridBox[], a2: GridBox[]): void {
-        for (const a of a2) {
-            if (a1.findIndex((v) => v.point.getX() === a.point.getX() && v.point.getY() === a.point.getY()) === -1) {
-                a1.push(a);
+    /**
+     * Adds elements of set2 to set1 that not exist in set1.
+     *
+     * @param set1
+     * @param set2
+     * @private
+     */
+    private mergeSets(set1: GridBox[], set2: GridBox[]): void {
+        for (const a of set2) {
+            if (set1.findIndex((v) => v.point.getX() === a.point.getX() && v.point.getY() === a.point.getY()) === -1) {
+                set1.push(a);
             }
         }
     }
