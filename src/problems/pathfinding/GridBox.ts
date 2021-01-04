@@ -29,7 +29,9 @@ export default class GridBox {
     }
 
     setBorderColor(hexCode: string): void {
-        this.borderColor = hexCode;
+        if (!this._isStart && !this._isGoal) {
+            this.borderColor = hexCode;
+        }
     }
 
     setCost(cost: number): void {
@@ -42,7 +44,7 @@ export default class GridBox {
 
     markVisited(): void {
         this._isVisited = true;
-        this.setColor('#0FF');
+        this.setColor('#FF0');
     }
 
     markStart(): void {
@@ -58,7 +60,8 @@ export default class GridBox {
     }
 
     markPartOfPath(): void {
-        this.setColor('#00F');
+        this.setColor('#04d9ff');
+        this.setBorderColor('#04d9ff');
     }
 
     setWall(): void {
