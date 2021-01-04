@@ -6,23 +6,28 @@ export default class AStar implements PathFindingProblemSolver {
     private grid!: Grid;
 
     private openSet: GridBox[] = [];
+    private closedSet: GridBox[] = [];
     private cameFrom: GridBox[][] = [];
 
     async solve(grid: Grid): Promise<void> {
         this.grid = grid;
         this.openSet = [grid.start];
+        this.closedSet = [];
         this.cameFrom = [];
         grid.start.setCost(0);
 
         while (this.openSet.length !== 0) {
-            const current: GridBox = this.getBestBoxFromOpenSet();
-            await grid.renderAnimated();
+            const current: GridBox = this.getBestFromOpenSet();
+            current.markVisited();
 
             if (current === grid.goal) {
                 return this.constructPath();
             }
 
+            this.closedSet.push(current);
+
             grid.getNeighboursOfElement(current).forEach((neighbour) => this.processNeighbour(neighbour, current));
+            await grid.renderAnimated();
         }
         // No path has been found
         throw new Error('No path found');
@@ -38,29 +43,32 @@ export default class AStar implements PathFindingProblemSolver {
         }
     }
 
-    private getBestBoxFromOpenSet(): GridBox {
-        this.openSet = this.openSet.sort(
-            (a, b) => a.getCost() + this.getDistanceToGoal(a) - (b.getCost() + this.getDistanceToGoal(b)),
-        );
-
-        return this.openSet.splice(0, 1)[0];
+    private getBestFromOpenSet(): GridBox {
+        return this.openSet
+            .sort((a, b) => a.getCost() + this.getDistanceToGoal(a) - (b.getCost() + this.getDistanceToGoal(b)))
+            .splice(0, 1)[0];
     }
 
-    private processNeighbour(neighbour: GridBox, current: GridBox) {
-        if (!neighbour.isVisited()) {
-            neighbour.markVisited();
-            const costFromStart = current.getCost() + 1;
-            if (costFromStart < neighbour.getCost()) {
-                if (!this.cameFrom[neighbour.point.getX()]) {
-                    this.cameFrom[neighbour.point.getX()] = [];
-                }
-                this.cameFrom[neighbour.point.getX()][neighbour.point.getY()] = current;
-                neighbour.setCost(costFromStart);
-                if (this.openSet.indexOf(neighbour) === -1) {
-                    this.openSet.push(neighbour);
-                }
-            }
+    private processNeighbour(neighbour: GridBox, current: GridBox): void {
+        if (this.closedSet.indexOf(neighbour) !== -1) {
+            return;
         }
+        // if (!neighbour.isVisited()) {
+        //     neighbour.markVisited();
+        const costFromStart = current.getCost() + 1;
+        if (this.openSet.indexOf(neighbour) !== -1 && costFromStart >= neighbour.getCost()) {
+            return;
+        }
+
+        if (!this.cameFrom[neighbour.point.getX()]) {
+            this.cameFrom[neighbour.point.getX()] = [];
+        }
+        this.cameFrom[neighbour.point.getX()][neighbour.point.getY()] = current;
+        neighbour.setCost(costFromStart);
+        if (this.openSet.indexOf(neighbour) === -1) {
+            this.openSet.push(neighbour);
+        }
+        // }
     }
 
     private getDistanceToGoal(element: GridBox): number {
