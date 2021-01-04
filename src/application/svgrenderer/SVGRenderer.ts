@@ -52,29 +52,13 @@ export default class SVGRenderer implements Renderer {
 
     async animate(): Promise<void> {
         return new Promise<void>((resolve) => {
-            setTimeout(() => {
-                resolve();
-            }, this.animationSpeed);
+            window.requestAnimationFrame(() => {
+                setTimeout(() => {
+                    resolve();
+                }, this.animationSpeed);
+            });
         });
-        // return new Promise<void>((resolve) => {
-        //     window.requestAnimationFrame(() => {
-        //         setTimeout(() => {
-        //             resolve();
-        //         }, this.animationSpeed);
-        //     });
-        // });
     }
-
-    // async swap(a: SVGRectangle, b: SVGRectangle): Promise<void> {
-    //     await this.animate(() => {
-    //         const x = a.getElement().x();
-    //         const y = a.getElement().y();
-    //         a.getElement()
-    //             .animate({ delay: 0, duration: this.animationSpeed })
-    //             .move(b.getElement().x(), b.getElement().y());
-    //         b.getElement().animate({ delay: 0, duration: this.animationSpeed }).move(x, y);
-    //     });
-    // }
 
     createRectangle(point: Point, width: number, height: number): Rectangle {
         return new SVGRectangle(point, width, height);
