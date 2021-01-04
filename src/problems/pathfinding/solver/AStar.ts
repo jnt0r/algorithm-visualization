@@ -16,7 +16,9 @@ export default class AStar implements PathFindingProblemSolver {
         this.cameFrom = [];
         grid.start.setCost(0);
 
+        let count = 0;
         while (this.openSet.length !== 0) {
+            count++;
             const current: GridBox = this.getBestFromOpenSet();
             current.markVisited();
 
@@ -27,7 +29,10 @@ export default class AStar implements PathFindingProblemSolver {
             this.closedSet.push(current);
 
             grid.getNeighboursOfElement(current).forEach((neighbour) => this.processNeighbour(neighbour, current));
-            await grid.renderAnimated();
+            if (count === 5) {
+                count = 0;
+                await grid.renderAnimated();
+            }
         }
         // No path has been found
         throw new Error('No path found');
