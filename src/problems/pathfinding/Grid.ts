@@ -27,6 +27,15 @@ export default class Grid {
         this.goal.markGoal();
     }
 
+    reset(): void {
+        this.stats = new PathFindingProblemStats();
+        for (let x = 0; x < this.width; x++) {
+            for (let y = 0; y < this.height; y++) {
+                this.boxes[x][y].reset();
+            }
+        }
+    }
+
     render(): void {
         this.renderer.clear();
         for (let x = 0; x < this.width; x++) {
@@ -50,6 +59,16 @@ export default class Grid {
         }
     }
 
+    renderAnimated(): Promise<void> {
+        this.render();
+
+        return this.renderer.animate();
+    }
+
+    getStats(): PathFindingProblemStats {
+        return this.stats;
+    }
+
     getElement(x: number, y: number): GridBox | undefined {
         if (this.boxes[x] && this.boxes[x][y]) {
             this.stats.addCheckedField();
@@ -60,22 +79,20 @@ export default class Grid {
         return undefined;
     }
 
-    reset(): void {
-        this.stats = new PathFindingProblemStats();
-        for (let x = 0; x < this.width; x++) {
-            for (let y = 0; y < this.height; y++) {
-                this.boxes[x][y].reset();
-            }
+    getNeighboursOfElement(element: GridBox): GridBox[] {
+        const neighbours: GridBox[] = [];
+        this.addElementIfExistsAndValid(element.ax + 1, element.ay, neighbours);
+        this.addElementIfExistsAndValid(element.ax - 1, element.ay, neighbours);
+        this.addElementIfExistsAndValid(element.ax, element.ay - 1, neighbours);
+        this.addElementIfExistsAndValid(element.ax, element.ay + 1, neighbours);
+
+        return neighbours;
+    }
+
+    private addElementIfExistsAndValid(x: number, y: number, neighbours: GridBox[]): void {
+        const element = this.getElement(x, y);
+        if (element && !element.isWall()) {
+            neighbours.push(element);
         }
-    }
-
-    getStats(): PathFindingProblemStats {
-        return this.stats;
-    }
-
-    renderAnimated(): Promise<void> {
-        this.render();
-
-        return this.renderer.animate();
     }
 }

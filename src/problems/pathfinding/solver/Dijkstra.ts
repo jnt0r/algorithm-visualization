@@ -12,6 +12,7 @@ export default class Dijkstra implements PathFindingProblemSolver {
 
         let lastLayer: GridBox[] = [this.grid.start];
         while (lastLayer.length > 0) {
+            // If goal element was checked in last iteration, draw path
             if (lastLayer.indexOf(this.grid.goal) !== -1) {
                 return this.constructPath();
             }
@@ -26,6 +27,7 @@ export default class Dijkstra implements PathFindingProblemSolver {
             await this.grid.renderAnimated();
             lastLayer = nextLayer;
         }
+        // When reaching here, there was no path found
         throw new Error('No path found');
     }
 
@@ -44,19 +46,23 @@ export default class Dijkstra implements PathFindingProblemSolver {
     private async constructPath() {
         let current = this.grid.goal;
         while (current.getCost() !== 1) {
-            current = this.getBestNeighbour(current.ax, current.ay);
+            current = this.getBestNeighbour(current);
             current.markPartOfPath();
             await this.grid.renderAnimated();
         }
     }
 
-    private getBestNeighbour(x: number, y: number): GridBox {
-        const neighbours: GridBox[] = [];
-        if (this.grid.getElement(x + 1, y)) neighbours.push(<GridBox>this.grid.getElement(x + 1, y));
-        if (this.grid.getElement(x - 1, y)) neighbours.push(<GridBox>this.grid.getElement(x - 1, y));
-        if (this.grid.getElement(x, y - 1)) neighbours.push(<GridBox>this.grid.getElement(x, y - 1));
-        if (this.grid.getElement(x, y + 1)) neighbours.push(<GridBox>this.grid.getElement(x, y + 1));
+    private getBestNeighbour(element: GridBox): GridBox {
+        return this.grid
+            .getNeighboursOfElement(element)
+            .filter((a) => a.getCost() != -1)
+            .sort((a, b) => (a.getCost() < b.getCost() ? -1 : 1))[0];
+    }
 
-        return neighbours.filter((a) => a.getCost() != -1).sort((a, b) => (a.getCost() < b.getCost() ? -1 : 1))[0];
+    private addElementIfExists(x: number, y: number, neighbours: GridBox[]): void {
+        const element = this.grid.getElement(x, y);
+        if (element) {
+            neighbours.push(element);
+        }
     }
 }

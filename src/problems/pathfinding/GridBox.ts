@@ -60,6 +60,7 @@ export default class GridBox {
     setWall(): void {
         this._isWall = true;
         this._isVisited = true;
+        this.cost = Number.MAX_VALUE;
         this.setColor('#000');
     }
 
