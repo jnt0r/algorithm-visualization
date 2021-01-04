@@ -5,7 +5,7 @@ import PathFindingProblemSolver from './PathFindingProblemSolver';
 import ProblemStats from '../ProblemStats';
 
 export default class PathFindingProblem implements Problem<PathFindingProblem> {
-    private grid!: Grid;
+    protected grid!: Grid;
 
     constructor(private readonly renderer: Renderer) {}
 

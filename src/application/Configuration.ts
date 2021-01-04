@@ -11,6 +11,7 @@ import PathFindingProblem from '../problems/pathfinding/PathFindingProblem';
 import PathFindingProblemSolver from '../problems/pathfinding/PathFindingProblemSolver';
 import Dijkstra from '../problems/pathfinding/solver/Dijkstra';
 import AStar from '../problems/pathfinding/solver/AStar';
+import LabyrinthProblem from '../problems/labyrinth/LabyrinthProblem';
 
 export default class Configuration {
     getProblems(): ProblemDisplay<Problem<never>, ProblemSolver<never>>[] {
@@ -21,6 +22,10 @@ export default class Configuration {
                 new SolverDisplay('QuickSort', QuickSort),
             ]),
             new ProblemDisplay<PathFindingProblem, PathFindingProblemSolver>('Pathfinding', PathFindingProblem, [
+                new SolverDisplay('Dijkstra', Dijkstra),
+                new SolverDisplay('A*', AStar),
+            ]),
+            new ProblemDisplay<LabyrinthProblem, PathFindingProblemSolver>('Labyrinth', LabyrinthProblem, [
                 new SolverDisplay('Dijkstra', Dijkstra),
                 new SolverDisplay('A*', AStar),
             ]),
