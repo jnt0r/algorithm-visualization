@@ -44,8 +44,6 @@ export default class AStar implements PathFindingProblemSolver {
         current = this.cameFrom[current.point.getX()][current.point.getY()];
         while (current !== this.grid.start) {
             path.push(current);
-            // current.markPartOfPath();
-            // await this.grid.renderAnimated();
             current = this.cameFrom[current.point.getX()][current.point.getY()];
         }
 

@@ -47,8 +47,6 @@ export default class Dijkstra implements PathFindingProblemSolver {
         while (current.getCost() !== 1) {
             current = this.getBestNeighbour(current);
             path.push(current);
-            // current.markPartOfPath();
-            // await this.grid.renderAnimated();
         }
 
         return path;

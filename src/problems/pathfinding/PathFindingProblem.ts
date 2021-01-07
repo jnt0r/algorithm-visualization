@@ -3,6 +3,7 @@ import Problem from '../Problem';
 import Grid from './Grid';
 import PathFindingProblemSolver from './PathFindingProblemSolver';
 import ProblemStats from '../ProblemStats';
+import GridBox from './GridBox';
 
 export default class PathFindingProblem implements Problem<PathFindingProblem> {
     protected grid!: Grid;
@@ -10,14 +11,7 @@ export default class PathFindingProblem implements Problem<PathFindingProblem> {
     constructor(private readonly renderer: Renderer) {}
 
     async solve(solver: PathFindingProblemSolver): Promise<void> {
-        return solver.solve(this.grid).then(async (path) => {
-            for (const part of path) {
-                this.grid.getStats().addPathField();
-                part.markPartOfPath();
-
-                await this.grid.renderAnimated();
-            }
-        });
+        return solver.solve(this.grid).then((path) => this.constructPath(path));
     }
 
     render(): void {
@@ -35,5 +29,14 @@ export default class PathFindingProblem implements Problem<PathFindingProblem> {
 
     getStats(): ProblemStats {
         return this.grid.getStats();
+    }
+
+    private async constructPath(path: GridBox[]): Promise<void> {
+        for (const part of path) {
+            this.grid.getStats().addPathField();
+            part.markPartOfPath();
+
+            await this.grid.renderAnimated();
+        }
     }
 }
