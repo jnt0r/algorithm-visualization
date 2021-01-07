@@ -54,11 +54,11 @@ export default class Grid {
                         20,
                         20,
                     );
-                    component.onMouseOver(({ buttons }) => {
-                        if (buttons === 1) {
+                    component.onMouseOver(({ leftMouseButton, rightMouseButton }) => {
+                        if (leftMouseButton) {
                             box.setWall();
                         }
-                        if (buttons === 2) {
+                        if (rightMouseButton) {
                             box.removeWall();
                         }
                         component.setColor(box.getColor());

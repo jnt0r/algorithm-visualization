@@ -17,5 +17,5 @@ export default interface Component {
 
     onRightClick(func: () => void): void;
 
-    onMouseOver(func: (ev: { buttons: number }) => void): void;
+    onMouseOver(func: (ev: { leftMouseButton: boolean; rightMouseButton: boolean }) => void): void;
 }
