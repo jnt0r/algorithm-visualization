@@ -9,7 +9,7 @@ export default class AStar implements PathFindingProblemSolver {
     private closedSet: GridBox[] = [];
     private cameFrom: GridBox[][] = [];
 
-    async solve(grid: Grid): Promise<void> {
+    async solve(grid: Grid): Promise<GridBox[]> {
         this.grid = grid;
         this.openSet = [grid.start];
         this.closedSet = [];
@@ -38,14 +38,18 @@ export default class AStar implements PathFindingProblemSolver {
         throw new Error('No path found');
     }
 
-    private async constructPath(): Promise<void> {
+    private async constructPath(): Promise<GridBox[]> {
+        const path: GridBox[] = [];
         let current = this.grid.goal;
         current = this.cameFrom[current.point.getX()][current.point.getY()];
         while (current !== this.grid.start) {
-            current.markPartOfPath();
-            await this.grid.renderAnimated();
+            path.push(current);
+            // current.markPartOfPath();
+            // await this.grid.renderAnimated();
             current = this.cameFrom[current.point.getX()][current.point.getY()];
         }
+
+        return path;
     }
 
     private getBestFromOpenSet(): GridBox {

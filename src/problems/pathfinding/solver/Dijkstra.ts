@@ -5,7 +5,7 @@ import GridBox from '../GridBox';
 export default class Dijkstra implements PathFindingProblemSolver {
     private grid!: Grid;
 
-    async solve(grid: Grid): Promise<void> {
+    async solve(grid: Grid): Promise<GridBox[]> {
         this.grid = grid;
         grid.start.setCost(0);
         grid.start.markVisited();
@@ -41,13 +41,17 @@ export default class Dijkstra implements PathFindingProblemSolver {
         }
     }
 
-    private async constructPath() {
+    private async constructPath(): Promise<GridBox[]> {
+        const path: GridBox[] = [];
         let current = this.grid.goal;
         while (current.getCost() !== 1) {
             current = this.getBestNeighbour(current);
-            current.markPartOfPath();
-            await this.grid.renderAnimated();
+            path.push(current);
+            // current.markPartOfPath();
+            // await this.grid.renderAnimated();
         }
+
+        return path;
     }
 
     private getBestNeighbour(element: GridBox): GridBox {

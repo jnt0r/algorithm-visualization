@@ -89,7 +89,7 @@ export default class Grid {
 
     getElement(x: number, y: number): GridBox | undefined {
         if (this.boxes[x] && this.boxes[x][y]) {
-            this.stats.addCheckedField();
+            this.stats.addVisitedField();
 
             return this.boxes[x][y];
         }
