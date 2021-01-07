@@ -73,9 +73,11 @@ export default class GridBox {
     }
 
     removeWall(): void {
-        this._isWall = false;
-        this._isVisited = false;
-        this.unmark();
+        if (this.isWall()) {
+            this._isWall = false;
+            this._isVisited = false;
+            this.unmark();
+        }
     }
 
     unmark(): void {
