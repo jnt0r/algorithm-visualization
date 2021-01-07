@@ -65,11 +65,13 @@ export default class GridBox {
     }
 
     setWall(): void {
-        this._isWall = true;
-        this._isVisited = true;
-        this.cost = Number.MAX_VALUE;
-        this.setColor('#000');
-        this.setBorderColor('#000');
+        if (!this._isGoal && !this._isStart) {
+            this._isWall = true;
+            this._isVisited = true;
+            this.cost = Number.MAX_VALUE;
+            this.setColor('#000');
+            this.setBorderColor('#000');
+        }
     }
 
     removeWall(): void {
@@ -83,7 +85,6 @@ export default class GridBox {
     unmark(): void {
         this.setColor(this.defaultColor);
         this.setBorderColor(this.defaultBorderColor);
-        // this.setBorderColor('#000');
     }
 
     reset(): void {
