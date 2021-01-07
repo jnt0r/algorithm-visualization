@@ -15,7 +15,7 @@
     "devDependencies": {
         "@types/jest": "^26.0.19",
         "@typescript-eslint/eslint-plugin": "^4.11.1",
-        "@typescript-eslint/parser": "^4.11.1",
+        "@typescript-eslint/parser": "^4.12.0",
         "awesome-typescript-loader": "^5.2.1",
         "clean-webpack-plugin": "^3.0.0",
         "eslint": "^7.17.0",
