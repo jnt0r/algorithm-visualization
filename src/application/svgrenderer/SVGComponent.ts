@@ -26,15 +26,15 @@ export class SVGComponent implements Component {
 
     onRightClick(func: () => void): void {
         this.element.on('contextmenu', (ev: Event) => {
-            ev.preventDefault(); // prevent contextmenu to open
+            ev.preventDefault();
             func();
         });
     }
 
-    onMouseOver(func: (ev: { buttons: number }) => void): void {
+    onMouseOver(func: (ev: { leftMouseButton: boolean; rightMouseButton: boolean }) => void): void {
         this.element.on('mouseover mousedown', (e: MouseEvent) => {
             e.preventDefault();
-            func(e);
+            func({ leftMouseButton: e.buttons === 1, rightMouseButton: e.buttons === 2 });
         });
     }
 }
