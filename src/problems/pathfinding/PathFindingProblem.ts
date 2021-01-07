@@ -20,7 +20,11 @@ export default class PathFindingProblem implements Problem<PathFindingProblem> {
     }
 
     generate(): void {
-        this.grid = new Grid(this.renderer.getWidth() / 20, this.renderer.getHeight() / 20, this.renderer);
+        this.grid = new Grid(
+            Math.floor(this.renderer.getWidth() / 20),
+            Math.floor(this.renderer.getHeight() / 20),
+            this.renderer,
+        );
     }
 
     reset(): void {
