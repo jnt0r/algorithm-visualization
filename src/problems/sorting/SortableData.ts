@@ -2,7 +2,7 @@ import Renderer from '../../renderer/Renderer';
 import SortingElement from './SortingElement';
 import Point from '../../renderer/Point';
 import SortingProblemStats from './SortingProblemStats';
-import { CompareType } from '../CompareType';
+import CompareType from '../CompareType';
 
 export default class SortableData {
     private readonly bars: SortingElement[] = [];
@@ -40,14 +40,10 @@ export default class SortableData {
         return this.renderer.swapElementsById(a, b);
     }
 
-    compareElements(a: number, compareType: '<' | '<=' | '>' | '>=' | '=', b: number): boolean {
+    compareElements(a: number, compareType: CompareType, b: number): boolean {
         this.stats.addComparison();
 
-        return CompareType.compare(
-            this.getElement(a).getValue(),
-            this.getElement(b).getValue(),
-            CompareType[compareType],
-        );
+        return compareType.compare(this.getElement(a).getValue(), this.getElement(b).getValue());
     }
 
     markComparingElements(...indexes: number[]): Promise<void> {

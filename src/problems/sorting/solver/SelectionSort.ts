@@ -1,5 +1,6 @@
 import SortingProblemSolver from '../SortingProblemSolver';
 import SortableData from '../SortableData';
+import { LESS } from '../../CompareType';
 
 export default class SelectionSort implements SortingProblemSolver {
     async solve(data: SortableData): Promise<void> {
@@ -10,7 +11,7 @@ export default class SelectionSort implements SortingProblemSolver {
             for (let j = i + 1; j < data.getSize(); j++) {
                 await data.markComparingElements(j);
 
-                if (data.compareElements(j, '<', smallestIndex)) {
+                if (data.compareElements(j, LESS, smallestIndex)) {
                     if (smallestIndex !== i) data.getElement(smallestIndex).unmark();
                     smallestIndex = j;
                     data.getElement(smallestIndex).markPivot();

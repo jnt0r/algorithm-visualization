@@ -1,5 +1,6 @@
 import SortingProblemSolver from '../SortingProblemSolver';
 import SortableData from '../SortableData';
+import { GREATER, GREATER_EQUAL, LESS } from '../../CompareType';
 
 export default class QuickSort implements SortingProblemSolver {
     private data!: SortableData;
@@ -35,12 +36,12 @@ export default class QuickSort implements SortingProblemSolver {
         while (i < j) {
             await this.data.markComparingElements(i, j);
 
-            while (i < right && this.data.compareElements(i, '<', pivot)) {
+            while (i < right && this.data.compareElements(i, LESS, pivot)) {
                 this.data.getElement(i).unmark();
                 i++;
                 await this.data.markComparingElements(i);
             }
-            while (j > left && this.data.compareElements(j, '>=', pivot)) {
+            while (j > left && this.data.compareElements(j, GREATER_EQUAL, pivot)) {
                 this.data.getElement(j).unmark();
                 j--;
                 await this.data.markComparingElements(j);
@@ -53,7 +54,7 @@ export default class QuickSort implements SortingProblemSolver {
             }
         }
 
-        if (this.data.compareElements(i, '>', pivot)) {
+        if (this.data.compareElements(i, GREATER, pivot)) {
             await this.data.swap(i, pivot);
             // Pivot is now element with index i. Mark this element as sorted
             this.data.getElement(i).setSorted();
