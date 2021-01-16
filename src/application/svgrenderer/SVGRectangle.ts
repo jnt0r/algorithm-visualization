@@ -8,5 +8,11 @@ export class SVGRectangle extends SVGComponent implements Rectangle {
         super(new Rect().move(position.getX(), position.getY()).size(width, height));
     }
 
-    test(): void {}
+    setHeight(height: number): void {
+        this.element.size(this.element.width(), height);
+    }
+
+    setWidth(width: number): void {
+        this.element.size(width);
+    }
 }

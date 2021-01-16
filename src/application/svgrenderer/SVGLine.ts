@@ -8,7 +8,7 @@ export class SVGLine extends SVGComponent implements Line {
         super(new SvgLine().plot(a.getX(), a.getY(), b.getX(), b.getY()).stroke('#000'));
     }
 
-    setStrokeWidth(width: number) {
+    setStrokeWidth(width: number): void {
         this.element.stroke({ width: width });
     }
 }

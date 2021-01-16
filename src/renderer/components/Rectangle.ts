@@ -1,5 +1,7 @@
 import Component from '../Component';
 
 export default interface Rectangle extends Component {
-    test(): void;
+    setHeight(height: number): void;
+
+    setWidth(width: number): void;
 }

@@ -68,7 +68,7 @@ export default class Application {
             this.controller
                 .solveProblem(solver.getSolver())
                 .then((stats) => {
-                    console.log('solved');
+                    alert('solved');
                     this.displayStats(stats);
                 })
                 .catch((error) => this.showErrorMessage(error))
