@@ -1,6 +1,6 @@
 import { SVGComponent } from './SVGComponent';
-import Rectangle from '../../renderer/components/Rectangle';
-import Point from '../../renderer/Point';
+import Rectangle from '../../../renderer/components/Rectangle';
+import Point from '../../../renderer/Point';
 import { Rect } from '@svgdotjs/svg.js';
 
 export class SVGRectangle extends SVGComponent implements Rectangle {

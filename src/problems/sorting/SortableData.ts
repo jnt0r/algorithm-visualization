@@ -21,6 +21,7 @@ export default class SortableData {
                 el.getValue(),
             );
             component.setColor(el.getColor());
+            component.setBorderColor(el.getColor());
             this.renderer.render(component);
         });
     }

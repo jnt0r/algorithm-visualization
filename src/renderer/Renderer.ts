@@ -3,6 +3,7 @@ import Point from './Point';
 import Rectangle from './components/Rectangle';
 import Line from './components/Line';
 import Circle from './components/Circle';
+import Text from './components/Text';
 
 export default interface Renderer {
     setAnimationSpeed(animationSpeed: number): void;
@@ -26,4 +27,6 @@ export default interface Renderer {
     createLine(a: Point, b: Point): Line;
 
     createCircle(position: Point, radius: number): Circle;
+
+    createText(position: Point, text: string): Text;
 }

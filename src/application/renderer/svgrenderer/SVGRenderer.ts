@@ -1,12 +1,15 @@
 import { SVG } from '@svgdotjs/svg.js';
-import Renderer from '../../renderer/Renderer';
-import Point from '../../renderer/Point';
-import Rectangle from '../../renderer/components/Rectangle';
-import Line from '../../renderer/components/Line';
-import Circle from '../../renderer/components/Circle';
+import Renderer from '../../../renderer/Renderer';
+import Point from '../../../renderer/Point';
+import Rectangle from '../../../renderer/components/Rectangle';
+import Line from '../../../renderer/components/Line';
+import Circle from '../../../renderer/components/Circle';
 import { SVGRectangle } from './SVGRectangle';
 import { SVGLine } from './SVGLine';
 import { SVGCircle } from './SVGCircle';
+import SVGText from './SVGText';
+import Text from '../../../renderer/components/Text';
+import { SVGComponent } from './SVGComponent';
 
 export default class SVGRenderer implements Renderer {
     private animationSpeed = 10;
@@ -37,7 +40,7 @@ export default class SVGRenderer implements Renderer {
         this.svg.clear();
     }
 
-    render(component: SVGRectangle): void {
+    render(component: SVGComponent): void {
         this.svg.add(component.getElement());
     }
 
@@ -70,5 +73,9 @@ export default class SVGRenderer implements Renderer {
 
     createCircle(position: Point, radius: number): Circle {
         return new SVGCircle(position, radius);
+    }
+
+    createText(position: Point, text: string): Text {
+        return new SVGText(text, position);
     }
 }

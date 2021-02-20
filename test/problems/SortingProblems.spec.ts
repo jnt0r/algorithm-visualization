@@ -4,27 +4,40 @@ import SortingProblemSolver from '../../src/problems/sorting/SortingProblemSolve
 import SelectionSort from '../../src/problems/sorting/solver/SelectionSort';
 import QuickSort from '../../src/problems/sorting/solver/QuickSort';
 import { TestRenderer } from '../TestRenderer';
+import { EQUAL, GREATER, GREATER_EQUAL, LESS, LESS_EQUAL } from '../../src/problems/CompareType';
 
 const renderer = new TestRenderer();
 
 describe('stats', () => {
     test('Comparisons is initialized with 0', () => {
         const data = new SortableData([1, 2, 3, 4, 5], renderer);
-        expect(data.getStats().getStats().get('comparisons')).toEqual(0);
+
+        const comparisons = data.getStats().getStats().get('comparisons');
+
+        expect(comparisons).toEqual(0);
     });
     test('Comparisons is increased by 1 on compare', () => {
         const data = new SortableData([1, 2, 3, 4, 5], renderer);
-        data.compareElements(1, '=', 2);
-        expect(data.getStats().getStats().get('comparisons')).toEqual(1);
+
+        data.compareElements(1, EQUAL, 2);
+        const comparisons = data.getStats().getStats().get('comparisons');
+
+        expect(comparisons).toEqual(1);
     });
     test('Swaps is initialized with 0', () => {
         const data = new SortableData([1, 2, 3, 4, 5], renderer);
-        expect(data.getStats().getStats().get('swaps')).toEqual(0);
+
+        const swaps = data.getStats().getStats().get('swaps');
+
+        expect(swaps).toEqual(0);
     });
     test('Swaps is increased by 1 on swap', () => {
         const data = new SortableData([1, 2, 3, 4, 5], renderer);
+
         data.swap(1, 2);
-        expect(data.getStats().getStats().get('swaps')).toEqual(1);
+        const swaps = data.getStats().getStats().get('swaps');
+
+        expect(swaps).toEqual(1);
     });
 });
 
@@ -32,50 +45,50 @@ describe('Compare', () => {
     const data = new SortableData([0, 1, 2, 3, 4], renderer);
 
     test('1 = 2 is false', () => {
-        expect(data.compareElements(1, '=', 2)).toBeFalsy();
+        expect(data.compareElements(1, EQUAL, 2)).toBeFalsy();
     });
     test('1 = 1 is true', () => {
-        expect(data.compareElements(1, '=', 1)).toBeTruthy();
+        expect(data.compareElements(1, EQUAL, 1)).toBeTruthy();
     });
 
     test('1 < 2 is true', () => {
-        expect(data.compareElements(1, '<', 2)).toBeTruthy();
+        expect(data.compareElements(1, LESS, 2)).toBeTruthy();
     });
     test('2 < 1 is false', () => {
-        expect(data.compareElements(2, '<', 1)).toBeFalsy();
+        expect(data.compareElements(2, LESS, 1)).toBeFalsy();
     });
     test('1 < 1 is false', () => {
-        expect(data.compareElements(1, '<', 1)).toBeFalsy();
+        expect(data.compareElements(1, LESS, 1)).toBeFalsy();
     });
 
     test('1 <= 2 is true', () => {
-        expect(data.compareElements(1, '<=', 2)).toBeTruthy();
+        expect(data.compareElements(1, LESS_EQUAL, 2)).toBeTruthy();
     });
     test('2 <= 1 is false', () => {
-        expect(data.compareElements(2, '<=', 1)).toBeFalsy();
+        expect(data.compareElements(2, LESS_EQUAL, 1)).toBeFalsy();
     });
     test('1 <= 1 is true', () => {
-        expect(data.compareElements(1, '<=', 1)).toBeTruthy();
+        expect(data.compareElements(1, LESS_EQUAL, 1)).toBeTruthy();
     });
 
     test('2 > 1 is true', () => {
-        expect(data.compareElements(2, '>', 1)).toBeTruthy();
+        expect(data.compareElements(2, GREATER, 1)).toBeTruthy();
     });
     test('1 > 2 is false', () => {
-        expect(data.compareElements(1, '>', 2)).toBeFalsy();
+        expect(data.compareElements(1, GREATER, 2)).toBeFalsy();
     });
     test('1 > 1 is false', () => {
-        expect(data.compareElements(1, '>', 1)).toBeFalsy();
+        expect(data.compareElements(1, GREATER, 1)).toBeFalsy();
     });
 
     test('2 >= 1 is true', () => {
-        expect(data.compareElements(2, '>=', 1)).toBeTruthy();
+        expect(data.compareElements(2, GREATER_EQUAL, 1)).toBeTruthy();
     });
     test('1 >= 2 is false', () => {
-        expect(data.compareElements(1, '>=', 2)).toBeFalsy();
+        expect(data.compareElements(1, GREATER_EQUAL, 2)).toBeFalsy();
     });
     test('1 >= 1 is true', () => {
-        expect(data.compareElements(1, '>=', 1)).toBeTruthy();
+        expect(data.compareElements(1, GREATER_EQUAL, 1)).toBeTruthy();
     });
 });
 

@@ -4,13 +4,14 @@
     "description": "A tool to visualize different algorithms",
     "private": true,
     "scripts": {
-        "test": "jest",
+        "test": "jest --coverage",
         "build": "webpack",
         "watch": "webpack --watch",
         "serve": "webpack serve"
     },
     "dependencies": {
-        "@svgdotjs/svg.js": "^3.0.16"
+        "@svgdotjs/svg.js": "^3.0.16",
+        "konva": "^7.2.3"
     },
     "devDependencies": {
         "@types/jest": "^26.0.20",

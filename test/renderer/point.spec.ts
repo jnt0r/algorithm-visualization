@@ -13,7 +13,7 @@ describe('Point', () => {
         const pointA = new Point(15, 3);
         const pointB = new Point(9, 21);
 
-        expect(pointA.distanceTo(pointB)).toBe(18.973665961010276);
-        expect(pointB.distanceTo(pointA)).toBe(18.973665961010276);
+        expect(pointA.distanceTo(pointB)).toBeCloseTo(18.97, 2);
+        expect(pointB.distanceTo(pointA)).toBeCloseTo(18.97, 2);
     });
 });

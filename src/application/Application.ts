@@ -2,12 +2,12 @@ import Problem from '../problems/Problem';
 import ProblemDisplay from './components/ProblemDisplay';
 import ProblemSolver from '../problems/ProblemSolver';
 import Renderer from '../renderer/Renderer';
-import SVGRenderer from './svgrenderer/SVGRenderer';
 import Controller from './Controller';
 import Configuration from './Configuration';
 import SelectComponent from './components/SelectComponent';
 import SolverDisplay from './components/SolverDisplay';
 import ProblemStats from '../problems/ProblemStats';
+import Point from '../renderer/Point';
 
 /**
  * @class Application
@@ -15,8 +15,6 @@ import ProblemStats from '../problems/ProblemStats';
  * handles the user interactions and sends the required actions to the controller.
  */
 export default class Application {
-    private readonly renderer: Renderer = new SVGRenderer();
-
     /* eslint-disable  */
     private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never>>>('problemSelect');
     private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never>>>('algorithmSelect');
@@ -31,7 +29,7 @@ export default class Application {
     private readonly controller: Controller;
     private readonly configuration: Configuration;
 
-    constructor() {
+    constructor(private readonly renderer: Renderer) {
         this.configuration = new Configuration();
         this.controller = new Controller(this.renderer);
 
@@ -69,6 +67,7 @@ export default class Application {
                 .solveProblem(solver.getSolver())
                 .then((stats) => {
                     alert('solved');
+                    this.renderer.render(this.renderer.createText(new Point(100, 100), 'Hallo Welt'));
                     this.displayStats(stats);
                 })
                 .catch((error) => this.showErrorMessage(error))

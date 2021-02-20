@@ -2,11 +2,11 @@ import GridBox from './GridBox';
 import Renderer from '../../renderer/Renderer';
 import Point from '../../renderer/Point';
 import PathFindingProblemStats from './PathFindingProblemStats';
-import Rectangle from '../../renderer/components/Rectangle';
+import Component from '../../renderer/Component';
 
 export default class Grid {
     private readonly boxes: GridBox[][] = [];
-    private readonly components: Rectangle[][] = [];
+    private readonly components: Component[][] = [];
     private firstTimeRendering = true;
     private stats = new PathFindingProblemStats();
     public start: GridBox;
@@ -47,7 +47,7 @@ export default class Grid {
             for (let y = 0; y < this.height; y++) {
                 const box = this.boxes[x][y];
 
-                let component: Rectangle;
+                let component: Component;
                 if (this.firstTimeRendering) {
                     component = this.renderer.createRectangle(
                         new Point(box.point.getX() * 20, box.point.getY() * 20),
