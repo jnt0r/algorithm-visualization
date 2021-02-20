@@ -1,14 +1,25 @@
-export default class ProblemStats {
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    private readonly stats: Map<string, Object> = new Map<string, Object>();
+export interface ProblemStatsObserver {
+    update(stats: ProblemStats): void;
+}
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    setStat(key: string, value: Object): void {
+export default class ProblemStats {
+    private readonly observers: ProblemStatsObserver[] = [];
+    private readonly stats: Map<string, unknown> = new Map<string, unknown>();
+
+    setStat(key: string, value: unknown): void {
         this.stats.set(key, value);
+        this.notify();
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    getStat(key: string): Object | undefined {
+    subscribe(observer: ProblemStatsObserver): void {
+        this.observers.push(observer);
+    }
+
+    unsubscribe(observer: ProblemStatsObserver): void {
+        this.observers.splice(this.observers.indexOf(observer), 1);
+    }
+
+    getStat(key: string): unknown | undefined {
         return this.stats.get(key);
     }
 
@@ -21,10 +32,14 @@ export default class ProblemStats {
             );
         }
         this.stats.set(key, (this.stats.get(key) as number) + value);
+        this.notify();
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    getStats(): Map<string, Object> {
+    getStats(): Map<string, unknown> {
         return this.stats;
+    }
+
+    private notify() {
+        this.observers.forEach((subscriber) => subscriber.update(this));
     }
 }

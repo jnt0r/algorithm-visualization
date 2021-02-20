@@ -1,4 +1,4 @@
-import ProblemStats from '../../src/problems/ProblemStats';
+import ProblemStats, { ProblemStatsObserver } from '../../src/problems/ProblemStats';
 
 describe('ProblemStats', () => {
     const stats = new ProblemStats();
@@ -43,5 +43,32 @@ describe('ProblemStats', () => {
         expect(() => stats.add('notExistingStat', 2)).toThrow();
         expect(() => stats.add('testString', 2)).toThrow();
         expect(() => stats.add('testBoolean', 2)).toThrow();
+    });
+
+    describe('Subscribe', () => {
+        test('subscriber should get notified when setting stat', () => {
+            const stats = new ProblemStats();
+            const subscriber: ProblemStatsObserver = {
+                update: jest.fn(),
+            };
+
+            stats.subscribe(subscriber);
+            stats.setStat('testStat', 0);
+
+            expect(subscriber.update).toHaveBeenCalledWith(stats);
+        });
+
+        test('subscriber should get notified when adding to stat', () => {
+            const stats = new ProblemStats();
+            const subscriber: ProblemStatsObserver = {
+                update: jest.fn(),
+            };
+
+            stats.subscribe(subscriber);
+            stats.setStat('anotherTestStat', 2);
+            stats.add('anotherTestStat', 5);
+
+            expect(subscriber.update).toHaveBeenCalledWith(stats);
+        });
     });
 });

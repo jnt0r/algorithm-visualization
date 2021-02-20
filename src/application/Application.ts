@@ -6,7 +6,7 @@ import Controller from './Controller';
 import Configuration from './Configuration';
 import SelectComponent from './components/SelectComponent';
 import SolverDisplay from './components/SolverDisplay';
-import ProblemStats from '../problems/ProblemStats';
+import ProblemStats, { ProblemStatsObserver } from '../problems/ProblemStats';
 import SuccessMessage from './components/SuccessMessage';
 import ErrorMessage from './components/ErrorMessage';
 import Message from './components/Message';
@@ -16,16 +16,16 @@ import Message from './components/Message';
  *
  * handles the user interactions and sends the required actions to the controller.
  */
-export default class Application {
+export default class Application implements ProblemStatsObserver {
     /* eslint-disable  */
-    private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never>>>('problemSelect');
-    private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never>>>('algorithmSelect');
-    private readonly animationSpeedSelect: HTMLInputElement = <HTMLInputElement>(document.getElementById('animationSpeedSelect'));
-    private readonly animationSpeedOutput: HTMLOutputElement = <HTMLOutputElement>(document.getElementById('animationSpeedOutput'));
-    private readonly solveBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('solveBtn');
-    private readonly generateBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('generateBtn');
-    private readonly resetBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById('resetBtn');
-    private readonly statsDiv: HTMLDivElement = <HTMLDivElement>document.getElementsByClassName('stats')[0];
+    private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never>>>("problemSelect");
+    private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never>>>("algorithmSelect");
+    private readonly animationSpeedSelect: HTMLInputElement = <HTMLInputElement>(document.getElementById("animationSpeedSelect"));
+    private readonly animationSpeedOutput: HTMLOutputElement = <HTMLOutputElement>(document.getElementById("animationSpeedOutput"));
+    private readonly solveBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("solveBtn");
+    private readonly generateBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("generateBtn");
+    private readonly resetBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("resetBtn");
+    private readonly statsDiv: HTMLDivElement = <HTMLDivElement>document.getElementsByClassName("stats")[0];
     /* eslint-enable */
 
     private readonly controller: Controller;
@@ -47,6 +47,14 @@ export default class Application {
         this.onAnimationSpeedSelectInput();
     }
 
+    /**
+     * Observer Method for receiving updated ProblemStats
+     * @param stats the new ProblemStats object
+     */
+    update(stats: ProblemStats): void {
+        this.displayStats(stats);
+    }
+
     private onAlgorithmSelectUpdate() {
         this.controller.resetProblem();
     }
@@ -66,10 +74,9 @@ export default class Application {
         } else {
             this.disableAllInputs();
             this.controller
-                .solveProblem(solver.getSolver())
-                .then((stats) => {
+                .solveProblem(solver.getSolver(), this)
+                .then(() => {
                     this.showSuccessMessage();
-                    this.displayStats(stats);
                 })
                 .catch((error) => this.showErrorMessage(error))
                 .finally(() => {
@@ -95,6 +102,7 @@ export default class Application {
             this.algorithmSelectElement.empty();
             problemDisplay.getSolvers().forEach((s) => this.algorithmSelectElement.addItem(s));
             this.controller.regenerateProblem();
+            problem.getStats().subscribe(this);
             this.displayStats(problem.getStats());
         }
     }
