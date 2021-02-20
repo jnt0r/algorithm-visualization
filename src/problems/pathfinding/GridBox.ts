@@ -49,19 +49,19 @@ export default class GridBox {
 
     markStart(): void {
         this.setColor('#F00');
-        this.setBorderColor('#F00');
+        // this.setBorderColor('#F00');
         this._isStart = true;
     }
 
     markGoal(): void {
         this.setColor('#0F0');
-        this.setBorderColor('#0F0');
+        // this.setBorderColor('#0F0');
         this._isGoal = true;
     }
 
     markPartOfPath(): void {
         this.setColor('#04d9ff');
-        this.setBorderColor('#04d9ff');
+        // this.setBorderColor('#04d9ff');
     }
 
     setWall(): void {
