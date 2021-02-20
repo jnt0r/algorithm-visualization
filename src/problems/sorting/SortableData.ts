@@ -14,10 +14,15 @@ export default class SortableData {
 
     render(): void {
         this.renderer.clear();
+
+        const barWidth = this.renderer.getWidth() / 50;
+        const barPadding = 5;
+        const offset = this.calculateRenderOffset(barWidth, barPadding);
+
         this.bars.forEach((el, index) => {
             const component = this.renderer.createRectangle(
-                new Point(100 + index * (this.renderer.getWidth() / 50 + 5), 100),
-                this.renderer.getWidth() / 50,
+                new Point(offset + index * (barWidth + barPadding), 100),
+                barWidth,
                 el.getValue(),
             );
             component.setColor(el.getColor());
@@ -68,5 +73,12 @@ export default class SortableData {
 
     getStats(): SortingProblemStats {
         return this.stats;
+    }
+
+    private calculateRenderOffset(barWidth: number, barOffset: number): number {
+        const centerOfRenderArea = this.renderer.getWidth() / 2;
+        const widthOfGraph = this.bars.length * (barWidth + barOffset);
+
+        return centerOfRenderArea - widthOfGraph / 2;
     }
 }
