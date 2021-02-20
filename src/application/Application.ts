@@ -7,7 +7,9 @@ import Configuration from './Configuration';
 import SelectComponent from './components/SelectComponent';
 import SolverDisplay from './components/SolverDisplay';
 import ProblemStats from '../problems/ProblemStats';
-import Point from '../renderer/Point';
+import SuccessMessage from './components/SuccessMessage';
+import ErrorMessage from './components/ErrorMessage';
+import Message from './components/Message';
 
 /**
  * @class Application
@@ -66,8 +68,7 @@ export default class Application {
             this.controller
                 .solveProblem(solver.getSolver())
                 .then((stats) => {
-                    alert('solved');
-                    this.renderer.render(this.renderer.createText(new Point(100, 100), 'Hallo Welt'));
+                    this.showSuccessMessage();
                     this.displayStats(stats);
                 })
                 .catch((error) => this.showErrorMessage(error))
@@ -120,8 +121,21 @@ export default class Application {
     }
 
     private showErrorMessage(message: string): void {
-        console.log(message);
-        alert(message);
+        const errorMessage = new ErrorMessage(message);
+        this.showMessageWithFading(errorMessage, 5000);
+    }
+
+    private showSuccessMessage(): void {
+        const successMessage = new SuccessMessage();
+        this.showMessageWithFading(successMessage, 3000);
+    }
+
+    private showMessageWithFading(message: Message, delay: number): void {
+        message.display();
+        // Display message for amount of delay and then remove it
+        setTimeout(() => {
+            message.remove();
+        }, delay);
     }
 
     private displayStats(stats: ProblemStats): void {
