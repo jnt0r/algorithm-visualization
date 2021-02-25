@@ -24,6 +24,11 @@ export default class ProblemStats {
     }
 
     add(key: string, value: number): void {
+        if (!this.stats.has(key)) {
+            throw new Error(
+                `IllegalArgumentError: Stat with key '${key}' does not exist. Can only add number to existing stat of type 'number'`,
+            );
+        }
         if (typeof this.getStat(key) !== 'number') {
             throw new Error(
                 `IllegalArgumentError: Can only add number to stat that is of type 'number'. Stat with key '${key}' is of type '${typeof this.getStat(

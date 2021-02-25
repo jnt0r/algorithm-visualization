@@ -37,8 +37,8 @@ export default class PathFindingProblem implements Problem<PathFindingProblem> {
 
     private async constructPath(path: GridBox[]): Promise<void> {
         for (const part of path) {
-            this.grid.getStats().addPathField();
             part.markPartOfPath();
+            this.grid.getStats().addPathField();
 
             await this.grid.renderAnimated();
         }

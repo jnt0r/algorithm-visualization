@@ -1,7 +1,11 @@
 import ProblemStats, { ProblemStatsObserver } from '../../src/problems/ProblemStats';
 
 describe('ProblemStats', () => {
-    const stats = new ProblemStats();
+    let stats: ProblemStats;
+
+    beforeEach(() => {
+        stats = new ProblemStats();
+    });
 
     test('should create', () => {
         expect(stats).toBeDefined();
@@ -39,36 +43,65 @@ describe('ProblemStats', () => {
         expect(stats.getStat('numberStat')).toEqual(9);
     });
 
-    test('add should throw error on non number stats', () => {
-        expect(() => stats.add('notExistingStat', 2)).toThrow();
-        expect(() => stats.add('testString', 2)).toThrow();
-        expect(() => stats.add('testBoolean', 2)).toThrow();
+    test('add should throw error on not existing stat', () => {
+        expect(() => stats.add('notExistingStat', 2)).toThrow(
+            new Error(
+                "IllegalArgumentError: Stat with key 'notExistingStat' does not exist. Can only add number to existing stat of type 'number'",
+            ),
+        );
+    });
+
+    test('add should throw error on string stat', () => {
+        stats.setStat('testString', 'someValue');
+
+        expect(() => stats.add('testString', 2)).toThrow(
+            new Error(
+                "IllegalArgumentError: Can only add number to stat that is of type 'number'. Stat with key 'testString' is of type 'string'",
+            ),
+        );
+    });
+
+    test('add should throw error on boolean stat', () => {
+        stats.setStat('testBoolean', true);
+
+        expect(() => stats.add('testBoolean', 2)).toThrow(
+            new Error(
+                "IllegalArgumentError: Can only add number to stat that is of type 'number'. Stat with key 'testBoolean' is of type 'boolean'",
+            ),
+        );
     });
 
     describe('Subscribe', () => {
-        test('subscriber should get notified when setting stat', () => {
-            const stats = new ProblemStats();
-            const subscriber: ProblemStatsObserver = {
-                update: jest.fn(),
-            };
+        let stats: ProblemStats;
+        const subscriber: ProblemStatsObserver = {
+            update: jest.fn(),
+        };
 
+        beforeEach(() => {
+            jest.resetAllMocks();
+            stats = new ProblemStats();
             stats.subscribe(subscriber);
+        });
+
+        test('subscriber should get notified when setting stat', () => {
             stats.setStat('testStat', 0);
 
             expect(subscriber.update).toHaveBeenCalledWith(stats);
         });
 
         test('subscriber should get notified when adding to stat', () => {
-            const stats = new ProblemStats();
-            const subscriber: ProblemStatsObserver = {
-                update: jest.fn(),
-            };
-
-            stats.subscribe(subscriber);
             stats.setStat('anotherTestStat', 2);
             stats.add('anotherTestStat', 5);
 
+            expect(subscriber.update).toHaveBeenCalledTimes(2);
             expect(subscriber.update).toHaveBeenCalledWith(stats);
+        });
+
+        test('subscriber should not get notified after unsubscribed', () => {
+            stats.unsubscribe(subscriber);
+            stats.setStat('anotherTestStat', 10);
+
+            expect(subscriber.update).not.toHaveBeenCalled();
         });
     });
 });

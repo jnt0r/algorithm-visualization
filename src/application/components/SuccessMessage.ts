@@ -1,8 +1,8 @@
 import Message from './Message';
 
 export default class SuccessMessage extends Message {
-    constructor() {
-        super('Problem solved');
+    constructor(message: string) {
+        super(message);
 
         this.addClassName('success');
     }

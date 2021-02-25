@@ -31,4 +31,12 @@ export default class Message {
             document.body.removeChild(this.wrapperElement);
         }, 500);
     }
+
+    displayWithFading(delay: number): void {
+        this.display();
+        // Display message for amount of delay and then remove it
+        setTimeout(() => {
+            this.remove();
+        }, delay);
+    }
 }

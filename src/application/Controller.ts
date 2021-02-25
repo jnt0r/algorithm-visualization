@@ -1,7 +1,6 @@
 import Problem from '../problems/Problem';
 import ProblemSolver from '../problems/ProblemSolver';
 import Renderer from '../renderer/Renderer';
-import ProblemStats from '../problems/ProblemStats';
 import Application from './Application';
 
 export default class Controller {
@@ -13,9 +12,12 @@ export default class Controller {
         this.problem = problem;
     }
 
+    getProblem(): Problem<never> {
+        return this.problem;
+    }
+
     solveProblem(solver: ProblemSolver<never>, app: Application): Promise<void> {
         this.problem.reset();
-        this.problem.getStats().subscribe(app);
 
         return this.problem.solve(solver);
     }

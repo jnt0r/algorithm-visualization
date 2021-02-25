@@ -8,5 +8,5 @@ module.exports = {
     },
     setupFilesAfterEnv: ['./setupJest.ts'],
     collectCoverage: true,
-    collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+    collectCoverageFrom: ['<rootDir>/src/**/*.ts', '!<rootDir>/src/application/**/*.ts', '!<rootDir>/src/index.ts'],
 };

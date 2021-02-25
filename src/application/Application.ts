@@ -6,17 +6,16 @@ import Controller from './Controller';
 import Configuration from './Configuration';
 import SelectComponent from './components/SelectComponent';
 import SolverDisplay from './components/SolverDisplay';
-import ProblemStats, { ProblemStatsObserver } from '../problems/ProblemStats';
 import SuccessMessage from './components/SuccessMessage';
 import ErrorMessage from './components/ErrorMessage';
-import Message from './components/Message';
+import StatsComponent from './components/StatsComponent';
 
 /**
  * @class Application
  *
  * handles the user interactions and sends the required actions to the controller.
  */
-export default class Application implements ProblemStatsObserver {
+export default class Application {
     /* eslint-disable  */
     private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never>>>("problemSelect");
     private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never>>>("algorithmSelect");
@@ -25,15 +24,16 @@ export default class Application implements ProblemStatsObserver {
     private readonly solveBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("solveBtn");
     private readonly generateBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("generateBtn");
     private readonly resetBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("resetBtn");
-    private readonly statsDiv: HTMLDivElement = <HTMLDivElement>document.getElementsByClassName("stats")[0];
     /* eslint-enable */
 
+    private readonly statsComponent: StatsComponent;
     private readonly controller: Controller;
     private readonly configuration: Configuration;
 
     constructor(private readonly renderer: Renderer) {
         this.configuration = new Configuration();
         this.controller = new Controller(this.renderer);
+        this.statsComponent = new StatsComponent();
 
         this.problemSelectElement.onUpdate((problem) => this.onProblemSelectUpdate(problem));
         this.algorithmSelectElement.onUpdate(() => this.onAlgorithmSelectUpdate());
@@ -45,14 +45,6 @@ export default class Application implements ProblemStatsObserver {
         // Initial values
         this.setProblems(this.configuration.getProblems());
         this.onAnimationSpeedSelectInput();
-    }
-
-    /**
-     * Observer Method for receiving updated ProblemStats
-     * @param stats the new ProblemStats object
-     */
-    update(stats: ProblemStats): void {
-        this.displayStats(stats);
     }
 
     private onAlgorithmSelectUpdate() {
@@ -73,9 +65,11 @@ export default class Application implements ProblemStatsObserver {
             this.showErrorMessage('No Algorithm selected');
         } else {
             this.disableAllInputs();
+            this.controller.getProblem().getStats().subscribe(this.statsComponent);
             this.controller
                 .solveProblem(solver.getSolver(), this)
                 .then(() => {
+                    this.controller.getProblem().getStats().unsubscribe(this.statsComponent);
                     this.showSuccessMessage();
                 })
                 .catch((error) => this.showErrorMessage(error))
@@ -102,8 +96,6 @@ export default class Application implements ProblemStatsObserver {
             this.algorithmSelectElement.empty();
             problemDisplay.getSolvers().forEach((s) => this.algorithmSelectElement.addItem(s));
             this.controller.regenerateProblem();
-            problem.getStats().subscribe(this);
-            this.displayStats(problem.getStats());
         }
     }
 
@@ -130,28 +122,11 @@ export default class Application implements ProblemStatsObserver {
 
     private showErrorMessage(message: string): void {
         const errorMessage = new ErrorMessage(message);
-        this.showMessageWithFading(errorMessage, 5000);
+        errorMessage.displayWithFading(5000);
     }
 
     private showSuccessMessage(): void {
-        const successMessage = new SuccessMessage();
-        this.showMessageWithFading(successMessage, 3000);
-    }
-
-    private showMessageWithFading(message: Message, delay: number): void {
-        message.display();
-        // Display message for amount of delay and then remove it
-        setTimeout(() => {
-            message.remove();
-        }, delay);
-    }
-
-    private displayStats(stats: ProblemStats): void {
-        this.statsDiv.innerHTML = '';
-        stats.getStats().forEach((value, key) => {
-            const span = document.createElement('span');
-            span.innerHTML = `${key}: ${value}`;
-            this.statsDiv.appendChild(span);
-        });
+        const successMessage = new SuccessMessage('Problem solved');
+        successMessage.displayWithFading(3000);
     }
 }
