@@ -56,7 +56,7 @@ export default class Application {
     }
 
     private onGenerateBtnClick() {
-        this.controller.regenerateProblem();
+        this.controller.generateProblem();
     }
 
     private onSolveBtnClick() {
@@ -65,11 +65,9 @@ export default class Application {
             this.showErrorMessage('No Algorithm selected');
         } else {
             this.disableAllInputs();
-            this.controller.getProblem().getStats().subscribe(this.statsComponent);
             this.controller
-                .solveProblem(solver.getSolver(), this)
+                .solveProblem(solver.getSolver(), this.statsComponent)
                 .then(() => {
-                    this.controller.getProblem().getStats().unsubscribe(this.statsComponent);
                     this.showSuccessMessage();
                 })
                 .catch((error) => this.showErrorMessage(error))
@@ -80,8 +78,14 @@ export default class Application {
     }
 
     private onAnimationSpeedSelectInput() {
-        const animationSpeed = this.animationSpeedSelect.valueAsNumber;
-        this.controller.setAnimationSpeed(1000 - 10 * animationSpeed);
+        let animationSpeed = this.animationSpeedSelect.valueAsNumber;
+        if (animationSpeed < 1) {
+            animationSpeed = 1;
+        }
+        if (animationSpeed > 100) {
+            animationSpeed = 100;
+        }
+        this.controller.setAnimationSpeed(animationSpeed);
         this.animationSpeedOutput.value = '' + animationSpeed;
         this.animationSpeedSelect.valueAsNumber = animationSpeed;
     }
@@ -93,9 +97,8 @@ export default class Application {
             const problem = problemDisplay.getProblem(this.renderer);
 
             this.controller.setProblem(problem);
-            this.algorithmSelectElement.empty();
-            problemDisplay.getSolvers().forEach((s) => this.algorithmSelectElement.addItem(s));
-            this.controller.regenerateProblem();
+            this.setSolvers(problemDisplay.getSolvers());
+            this.controller.generateProblem();
         }
     }
 
@@ -118,6 +121,11 @@ export default class Application {
     private setProblems(problems: ProblemDisplay<Problem<never>, ProblemSolver<never>>[]): void {
         problems.forEach((problem) => this.problemSelectElement.addItem(problem));
         this.onProblemSelectUpdate(problems[0]);
+    }
+
+    private setSolvers(solvers: SolverDisplay<ProblemSolver<never>>[]) {
+        this.algorithmSelectElement.empty();
+        solvers.forEach((s) => this.algorithmSelectElement.addItem(s));
     }
 
     private showErrorMessage(message: string): void {

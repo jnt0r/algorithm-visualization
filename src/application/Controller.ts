@@ -1,7 +1,7 @@
 import Problem from '../problems/Problem';
 import ProblemSolver from '../problems/ProblemSolver';
 import Renderer from '../renderer/Renderer';
-import Application from './Application';
+import ProblemStatsObserver from '../problems/ProblemStatsObserver';
 
 export default class Controller {
     private problem!: Problem<never>;
@@ -12,14 +12,12 @@ export default class Controller {
         this.problem = problem;
     }
 
-    getProblem(): Problem<never> {
-        return this.problem;
-    }
-
-    solveProblem(solver: ProblemSolver<never>, app: Application): Promise<void> {
+    solveProblem(solver: ProblemSolver<never>, statsObserver: ProblemStatsObserver): Promise<void> {
         this.problem.reset();
 
-        return this.problem.solve(solver);
+        this.problem.getStats().subscribe(statsObserver);
+
+        return this.problem.solve(solver).then(() => this.problem.getStats().unsubscribe(statsObserver));
     }
 
     resetProblem(): void {
@@ -28,10 +26,14 @@ export default class Controller {
     }
 
     setAnimationSpeed(animationSpeed: number): void {
-        this.renderer.setAnimationSpeed(animationSpeed);
+        // Calculate animationSpeed for renderer
+        // Frontend and renderer have different interpretation of the animationSpeed
+        // frontend allows to select 1-100% speed
+        // Renderer takes it as duration in ms
+        this.renderer.setAnimationSpeed(1000 - 10 * animationSpeed);
     }
 
-    regenerateProblem(): void {
+    generateProblem(): void {
         this.problem.generate();
         this.problem.render();
     }

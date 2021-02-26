@@ -1,6 +1,4 @@
-export interface ProblemStatsObserver {
-    update(stats: ProblemStats): void;
-}
+import ProblemStatsObserver from './ProblemStatsObserver';
 
 export default class ProblemStats {
     private readonly observers: ProblemStatsObserver[] = [];

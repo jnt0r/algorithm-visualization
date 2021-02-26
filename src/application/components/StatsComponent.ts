@@ -1,4 +1,5 @@
-import ProblemStats, { ProblemStatsObserver } from '../../problems/ProblemStats';
+import ProblemStats from '../../problems/ProblemStats';
+import { ProblemStatsObserver } from '../../problems/ProblemStatsObserver';
 
 export default class StatsComponent implements ProblemStatsObserver {
     private readonly statsDiv: HTMLDivElement = <HTMLDivElement>document.getElementsByClassName('stats')[0];
@@ -8,6 +9,7 @@ export default class StatsComponent implements ProblemStatsObserver {
      * @param stats the new ProblemStats object
      */
     update(stats: ProblemStats): void {
+        console.log('update');
         this.statsDiv.innerHTML = '';
 
         stats.getStats().forEach((value, key) => {

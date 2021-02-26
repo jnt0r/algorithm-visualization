@@ -1,4 +1,5 @@
-import ProblemStats, { ProblemStatsObserver } from '../../src/problems/ProblemStats';
+import ProblemStats from '../../src/problems/ProblemStats';
+import { ProblemStatsObserver } from '../../src/problems/ProblemStatsObserver';
 
 describe('ProblemStats', () => {
     let stats: ProblemStats;

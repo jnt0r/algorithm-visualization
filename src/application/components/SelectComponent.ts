@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-types
-export default class SelectComponent<T extends Object> {
+export default class SelectComponent<T extends { toString(): string }> {
     private readonly select: HTMLSelectElement;
 
     private items: T[] = [];
@@ -8,9 +7,9 @@ export default class SelectComponent<T extends Object> {
         this.select = <HTMLSelectElement>document.getElementById(id);
     }
 
-    addItem(problem: T): void {
-        this.items.push(problem);
-        this.select.add(new Option(problem.toString(), problem.toString(), this.items.length === 0));
+    addItem(item: T): void {
+        this.items.push(item);
+        this.select.add(new Option(item.toString(), item.toString(), this.items.length === 0));
     }
 
     onUpdate(func: (selectedItem: T | undefined) => void): void {
