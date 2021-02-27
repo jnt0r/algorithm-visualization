@@ -1,11 +1,10 @@
 import SortableData from './src/problems/sorting/SortableData';
 import { TestRenderer } from './test/TestRenderer';
-import CustomMatcherResult = jest.CustomMatcherResult;
 
 const renderer = new TestRenderer();
 const sortedData = new SortableData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], renderer);
 expect.extend({
-    toBeSorted(received: SortableData): CustomMatcherResult {
+    toBeSorted(received: SortableData) {
         if (sortedData.getSize() != received.getSize())
             return {
                 pass: false,

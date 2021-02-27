@@ -1,6 +1,7 @@
 import SortableData from '../../../src/problems/sorting/SortableData';
 import CompareType, { EQUAL } from '../../../src/problems/CompareType';
 import { TestRenderer } from '../../TestRenderer';
+import { instance, mock, verify } from 'ts-mockito';
 
 describe('SortableData', () => {
     const renderer = new TestRenderer();
@@ -47,12 +48,10 @@ describe('SortableData', () => {
     });
 
     test('Compare should call CompareType.compare with elements at given indexes', () => {
-        const compareTypeMock: CompareType = {
-            compare: jest.fn(),
-        };
+        const compareTypeMock = mock<CompareType>();
 
-        data.compareElements(1, compareTypeMock, 2);
+        data.compareElements(1, instance(compareTypeMock), 2);
 
-        expect(compareTypeMock.compare).toHaveBeenCalledWith(2, 3);
+        verify(compareTypeMock.compare(2, 3)).once();
     });
 });

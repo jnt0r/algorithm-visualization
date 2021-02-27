@@ -6,7 +6,7 @@ export default interface Problem<T extends Problem<T>> {
 
     reset(): void;
 
-    solve(solver: ProblemSolver<T>): Promise<void>;
+    solve(solver: ProblemSolver<T, unknown, unknown>): Promise<void>;
 
     render(): void;
 

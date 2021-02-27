@@ -16,5 +16,5 @@
         "strictFunctionTypes": true,
         "noStrictGenericChecks": false
     },
-    "include": ["src/**/*"]
+    "include": ["src/**/*", "**/*.d.ts"]
 }

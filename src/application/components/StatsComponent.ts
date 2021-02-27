@@ -11,12 +11,10 @@ export default class StatsComponent implements ProblemStatsObserver {
     update(stats: ProblemStats): void {
         this.statsDiv.innerHTML = '';
 
-        stats.getStats().forEach(this.displayStat);
-    }
-
-    private displayStat(value: unknown, key: string): void {
-        const span = document.createElement('span');
-        span.innerHTML = `${key}: ${value}`;
-        this.statsDiv.appendChild(span);
+        stats.getStats().forEach((value, key) => {
+            const span = document.createElement('span');
+            span.innerHTML = `${key}: ${value}`;
+            this.statsDiv.appendChild(span);
+        });
     }
 }

@@ -2,17 +2,23 @@ import Problem from '../problems/Problem';
 import ProblemSolver from '../problems/ProblemSolver';
 import Renderer from '../renderer/Renderer';
 import ProblemStatsObserver from '../problems/ProblemStatsObserver';
+import { Configuration } from './Configuration';
+import ProblemDisplay from './components/ProblemDisplay';
 
 export default class Controller {
     private problem!: Problem<never>;
 
-    constructor(private readonly renderer: Renderer) {}
+    constructor(private readonly configuration: Configuration, private readonly renderer: Renderer) {}
 
-    setProblem(problem: Problem<never>): void {
-        this.problem = problem;
+    getProblems(): ProblemDisplay<Problem<never>, ProblemSolver<never, unknown, unknown>>[] {
+        return this.configuration.getProblems();
     }
 
-    solveProblem(solver: ProblemSolver<never>, statsObserver: ProblemStatsObserver): Promise<void> {
+    setProblem(problem: ProblemDisplay<Problem<never>, ProblemSolver<never, unknown, unknown>>): void {
+        this.problem = problem.getProblem(this.renderer);
+    }
+
+    solveProblem(solver: ProblemSolver<never, unknown, unknown>, statsObserver: ProblemStatsObserver): Promise<void> {
         this.problem.reset();
 
         this.problem.getStats().subscribe(statsObserver);

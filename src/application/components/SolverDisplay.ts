@@ -1,6 +1,6 @@
 import ProblemSolver from '../../problems/ProblemSolver';
 
-export default class SolverDisplay<T extends ProblemSolver<never>> {
+export default class SolverDisplay<T extends ProblemSolver<never, unknown, unknown>> {
     constructor(private readonly displayName: string, private readonly solver: { new (): T }) {}
 
     getSolver(): T {

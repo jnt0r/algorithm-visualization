@@ -1,54 +1,39 @@
 import BubbleSort from '../../../src/problems/sorting/solver/BubbleSort';
 import SortableData from '../../../src/problems/sorting/SortableData';
 import SortingProblemSolver from '../../../src/problems/sorting/SortingProblemSolver';
-import SelectionSort from '../../../src/problems/sorting/solver/SelectionSort';
-import QuickSort from '../../../src/problems/sorting/solver/QuickSort';
 import { TestRenderer } from '../../TestRenderer';
 import SortingProblem from '../../../src/problems/sorting/SortingProblem';
-
-const renderer = new TestRenderer();
+import { anyOfClass, anything, instance, mock, verify } from 'ts-mockito';
+import SelectionSort from '../../../src/problems/sorting/solver/SelectionSort';
+import QuickSort from '../../../src/problems/sorting/solver/QuickSort';
 
 describe('SortingProblem', () => {
-    test('solve should call solve on Solver with sortableData', () => {
-        const solverMock: SortingProblemSolver = {
-            solve: jest.fn(),
-        };
+    const renderer = new TestRenderer();
 
-        new SortingProblem(new TestRenderer()).solve(solverMock);
+    test('solve should call solver.solve with generated sortableData', async () => {
+        const sortingProblem = new SortingProblem(renderer);
+        const solverMock = mock<SortingProblemSolver>();
 
-        expect(solverMock.solve).toHaveBeenCalledWith(undefined);
+        sortingProblem.generate();
+        await sortingProblem.solve(instance(solverMock));
+
+        verify(solverMock.solve(anyOfClass(SortableData))).once();
     });
 
-    test('BubbleSort', async () => {
-        const sorter: SortingProblemSolver = new BubbleSort();
-        const data = new SortableData([9, 1, 4, 8, 10, 2, 3, 6, 5, 7], renderer);
+    describe('Solver', () => {
+        // Parameterized test for each SortingProblemSolver implementation
+        test.each([
+            ['BubbleSort', new BubbleSort()],
+            ['SelectionSort', new SelectionSort()],
+            ['QuickSort', new QuickSort()],
+        ])('%s', async (name: string, solver: SortingProblemSolver) => {
+            const data = new SortableData([9, 1, 4, 8, 10, 2, 3, 6, 5, 7], renderer);
 
-        await sorter.solve(data);
+            await solver.solve(data);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(data).toBeSorted();
-    });
-
-    test('SelectionSort', async () => {
-        const sorter: SortingProblemSolver = new SelectionSort();
-        const data = new SortableData([9, 1, 4, 8, 10, 2, 3, 6, 5, 7], renderer);
-
-        await sorter.solve(data);
-
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(data).toBeSorted();
-    });
-
-    test('QuickSort', async () => {
-        const sorter: SortingProblemSolver = new QuickSort();
-        const data = new SortableData([9, 1, 4, 8, 10, 2, 3, 6, 5, 7], renderer);
-
-        await sorter.solve(data);
-
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(data).toBeSorted();
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            expect(data).toBeSorted();
+        });
     });
 });

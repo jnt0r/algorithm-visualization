@@ -1,5 +1,6 @@
 import ProblemStats from '../../src/problems/ProblemStats';
-import { ProblemStatsObserver } from '../../src/problems/ProblemStatsObserver';
+import ProblemStatsObserver from '../../src/problems/ProblemStatsObserver';
+import { anything, deepEqual, instance, mock, reset, verify } from 'ts-mockito';
 
 describe('ProblemStats', () => {
     let stats: ProblemStats;
@@ -74,35 +75,32 @@ describe('ProblemStats', () => {
 
     describe('Subscribe', () => {
         let stats: ProblemStats;
-        const subscriber: ProblemStatsObserver = {
-            update: jest.fn(),
-        };
+        const subscriber: ProblemStatsObserver = mock<ProblemStatsObserver>();
 
         beforeEach(() => {
-            jest.resetAllMocks();
+            reset(subscriber);
             stats = new ProblemStats();
-            stats.subscribe(subscriber);
+            stats.subscribe(instance(subscriber));
         });
 
         test('subscriber should get notified when setting stat', () => {
             stats.setStat('testStat', 0);
 
-            expect(subscriber.update).toHaveBeenCalledWith(stats);
+            verify(subscriber.update(stats)).once();
         });
 
         test('subscriber should get notified when adding to stat', () => {
             stats.setStat('anotherTestStat', 2);
             stats.add('anotherTestStat', 5);
 
-            expect(subscriber.update).toHaveBeenCalledTimes(2);
-            expect(subscriber.update).toHaveBeenCalledWith(stats);
+            verify(subscriber.update(stats)).twice();
         });
 
         test('subscriber should not get notified after unsubscribed', () => {
             stats.unsubscribe(subscriber);
             stats.setStat('anotherTestStat', 10);
 
-            expect(subscriber.update).not.toHaveBeenCalled();
+            verify(subscriber.update(stats)).never();
         });
     });
 });

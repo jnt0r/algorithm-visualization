@@ -3,7 +3,14 @@ import { TestRenderer } from '../../TestRenderer';
 import Renderer from '../../../src/renderer/Renderer';
 import PathFindingProblem from '../../../src/problems/pathfinding/PathFindingProblem';
 import PathFindingProblemSolver from '../../../src/problems/pathfinding/PathFindingProblemSolver';
-import GridBox from '../../../src/problems/pathfinding/GridBox';
+import Path from '../../../src/problems/pathfinding/Path';
+import BubbleSort from '../../../src/problems/sorting/solver/BubbleSort';
+import SelectionSort from '../../../src/problems/sorting/solver/SelectionSort';
+import QuickSort from '../../../src/problems/sorting/solver/QuickSort';
+import SortingProblemSolver from '../../../src/problems/sorting/SortingProblemSolver';
+import SortableData from '../../../src/problems/sorting/SortableData';
+import Dijkstra from '../../../src/problems/pathfinding/solver/Dijkstra';
+import AStar from '../../../src/problems/pathfinding/solver/AStar';
 
 describe('PathFindingProblem', () => {
     const renderer: Renderer = new TestRenderer();
@@ -26,14 +33,15 @@ describe('PathFindingProblem', () => {
 
     test('Path fields stat should increase by 1 per returned Path field', async () => {
         const solverMock: PathFindingProblemSolver = {
-            solve(grid: Grid): Promise<GridBox[]> {
-                return Promise.resolve([
-                    grid.getElement(1, 1)!,
-                    grid.getElement(1, 2)!,
-                    grid.getElement(1, 3)!,
-                    grid.getElement(1, 4)!,
-                    grid.getElement(1, 5)!,
-                ]);
+            solve(grid: Grid): Promise<Path> {
+                const path = new Path();
+                path.addPartOfPath(grid.getElement(1, 1)!);
+                path.addPartOfPath(grid.getElement(1, 2)!);
+                path.addPartOfPath(grid.getElement(1, 3)!);
+                path.addPartOfPath(grid.getElement(1, 4)!);
+                path.addPartOfPath(grid.getElement(1, 5)!);
+
+                return Promise.resolve(path);
             },
         };
         const pathFindingProblem = new PathFindingProblem(new TestRenderer());
@@ -43,4 +51,18 @@ describe('PathFindingProblem', () => {
 
         expect(pathFindingProblem.getStats().getStats().get('Path fields')).toEqual(5);
     });
+
+    // describe('Solver', () => {
+    //     // Parameterized test for each SortingProblemSolver implementation
+    //     test.each([
+    //         ['Dijkstra', new Dijkstra()],
+    //         ['AStar', new AStar()],
+    //     ])('%s', async (name: string, solver: PathFindingProblemSolver) => {
+    //         const data = new Grid(10, 10, renderer);
+    //
+    //         const path = await solver.solve(data);
+    //
+    //         expect(path.getPath()).toEqual([data.getElement(0, 0)!]);
+    //     });
+    // });
 });

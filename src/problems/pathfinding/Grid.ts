@@ -7,30 +7,25 @@ import Component from '../../renderer/Component';
 export default class Grid {
     private readonly boxes: GridBox[][] = [];
     private readonly components: Component[][] = [];
-    private firstTimeRendering = true;
     private stats = new PathFindingProblemStats();
-    public start: GridBox;
-    public goal: GridBox;
+    private firstTimeRendering = true;
+
+    public readonly start: GridBox;
+    public readonly goal: GridBox;
 
     constructor(readonly width: number, readonly height: number, private readonly renderer: Renderer) {
-        for (let x = 0; x < width; x++) {
-            this.boxes[x] = [];
-            for (let y = 0; y < height; y++) {
-                this.boxes[x][y] = new GridBox(new Point(x, y));
-            }
-        }
+        this.generatePlainGrid();
 
-        // Set start
-        this.start = this.boxes[Math.floor(Math.random() * width)][Math.floor(Math.random() * height)];
+        this.start = this.getRandomElement();
         this.start.markStart();
 
-        // Set goal
-        this.goal = this.boxes[Math.floor(Math.random() * width)][Math.floor(Math.random() * height)];
+        this.goal = this.getRandomElement();
         this.goal.markGoal();
     }
 
     reset(): void {
         this.stats = new PathFindingProblemStats();
+
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
                 this.boxes[x][y].reset();
@@ -111,6 +106,19 @@ export default class Grid {
         this.addElementIfExistsAndValid(point.getX(), point.getY() + 1, neighbours);
 
         return neighbours;
+    }
+
+    private generatePlainGrid() {
+        for (let x = 0; x < this.width; x++) {
+            this.boxes[x] = [];
+            for (let y = 0; y < this.height; y++) {
+                this.boxes[x][y] = new GridBox(new Point(x, y));
+            }
+        }
+    }
+
+    private getRandomElement() {
+        return this.boxes[Math.floor(Math.random() * this.width)][Math.floor(Math.random() * this.height)];
     }
 
     private addElementIfExistsAndValid(x: number, y: number, neighbours: GridBox[]): void {

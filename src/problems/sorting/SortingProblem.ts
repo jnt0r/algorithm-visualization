@@ -15,7 +15,6 @@ export default class SortingProblem implements Problem<SortingProblem> {
     }
 
     render(): void {
-        this.renderer.clear();
         this.sortables.render();
     }
 

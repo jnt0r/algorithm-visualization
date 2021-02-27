@@ -1,9 +1,7 @@
 import Problem from '../problems/Problem';
 import ProblemDisplay from './components/ProblemDisplay';
 import ProblemSolver from '../problems/ProblemSolver';
-import Renderer from '../renderer/Renderer';
 import Controller from './Controller';
-import Configuration from './Configuration';
 import SelectComponent from './components/SelectComponent';
 import SolverDisplay from './components/SolverDisplay';
 import SuccessMessage from './components/SuccessMessage';
@@ -17,8 +15,8 @@ import StatsComponent from './components/StatsComponent';
  */
 export default class Application {
     /* eslint-disable  */
-    private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never>>>("problemSelect");
-    private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never>>>("algorithmSelect");
+    private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never, any, any>>>("problemSelect");
+    private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never, any, any>>>("algorithmSelect");
     private readonly animationSpeedSelect: HTMLInputElement = <HTMLInputElement>(document.getElementById("animationSpeedSelect"));
     private readonly animationSpeedOutput: HTMLOutputElement = <HTMLOutputElement>(document.getElementById("animationSpeedOutput"));
     private readonly solveBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("solveBtn");
@@ -26,15 +24,9 @@ export default class Application {
     private readonly resetBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("resetBtn");
     /* eslint-enable */
 
-    private readonly statsComponent: StatsComponent;
-    private readonly controller: Controller;
-    private readonly configuration: Configuration;
+    private readonly statsComponent = new StatsComponent();
 
-    constructor(private readonly renderer: Renderer) {
-        this.configuration = new Configuration();
-        this.controller = new Controller(this.renderer);
-        this.statsComponent = new StatsComponent();
-
+    constructor(private readonly controller: Controller) {
         this.problemSelectElement.onUpdate((problem) => this.onProblemSelectUpdate(problem));
         this.algorithmSelectElement.onUpdate(() => this.onAlgorithmSelectUpdate());
         this.animationSpeedSelect.oninput = () => this.onAnimationSpeedSelectInput();
@@ -43,7 +35,7 @@ export default class Application {
         this.resetBtn.onclick = () => this.onResetBtnClick();
 
         // Initial values
-        this.setProblems(this.configuration.getProblems());
+        this.setProblems(controller.getProblems());
         this.onAnimationSpeedSelectInput();
     }
 
@@ -70,7 +62,10 @@ export default class Application {
                 .then(() => {
                     this.showSuccessMessage();
                 })
-                .catch((error) => this.showErrorMessage(error))
+                .catch((error) => {
+                    console.error(error);
+                    this.showErrorMessage(error);
+                })
                 .finally(() => {
                     this.enableAllInputs();
                 });
@@ -90,13 +85,13 @@ export default class Application {
         this.animationSpeedSelect.valueAsNumber = animationSpeed;
     }
 
-    private onProblemSelectUpdate(problemDisplay: ProblemDisplay<Problem<never>, ProblemSolver<never>> | undefined) {
+    private onProblemSelectUpdate(
+        problemDisplay: ProblemDisplay<Problem<never>, ProblemSolver<never, unknown, unknown>> | undefined,
+    ) {
         if (!problemDisplay) {
             this.showErrorMessage('No Problem selected!');
         } else {
-            const problem = problemDisplay.getProblem(this.renderer);
-
-            this.controller.setProblem(problem);
+            this.controller.setProblem(problemDisplay);
             this.setSolvers(problemDisplay.getSolvers());
             this.controller.generateProblem();
         }
@@ -118,12 +113,12 @@ export default class Application {
         this.solveBtn.disabled = false;
     }
 
-    private setProblems(problems: ProblemDisplay<Problem<never>, ProblemSolver<never>>[]): void {
+    private setProblems(problems: ProblemDisplay<Problem<never>, ProblemSolver<never, unknown, unknown>>[]): void {
         problems.forEach((problem) => this.problemSelectElement.addItem(problem));
         this.onProblemSelectUpdate(problems[0]);
     }
 
-    private setSolvers(solvers: SolverDisplay<ProblemSolver<never>>[]) {
+    private setSolvers(solvers: SolverDisplay<ProblemSolver<never, unknown, unknown>>[]) {
         this.algorithmSelectElement.empty();
         solvers.forEach((s) => this.algorithmSelectElement.addItem(s));
     }

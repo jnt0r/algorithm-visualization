@@ -3,7 +3,6 @@ import Problem from '../Problem';
 import Grid from './Grid';
 import PathFindingProblemSolver from './PathFindingProblemSolver';
 import ProblemStats from '../ProblemStats';
-import GridBox from './GridBox';
 import Path from './Path';
 
 export default class PathFindingProblem implements Problem<PathFindingProblem> {
