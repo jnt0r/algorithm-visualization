@@ -1,11 +1,12 @@
 import PathFindingProblemSolver from '../PathFindingProblemSolver';
 import Grid from '../Grid';
 import GridBox from '../GridBox';
+import Path from '../Path';
 
 export default class Dijkstra implements PathFindingProblemSolver {
     private grid!: Grid;
 
-    async solve(grid: Grid): Promise<GridBox[]> {
+    async solve(grid: Grid): Promise<Path> {
         this.grid = grid;
         grid.start.setCost(0);
         grid.start.markVisited();
@@ -41,12 +42,12 @@ export default class Dijkstra implements PathFindingProblemSolver {
         }
     }
 
-    private async constructPath(): Promise<GridBox[]> {
-        const path: GridBox[] = [];
+    private async constructPath(): Promise<Path> {
+        const path = new Path();
         let current = this.grid.goal;
         while (current.getCost() !== 1) {
             current = this.getBestNeighbour(current);
-            path.push(current);
+            path.addPartOfPath(current);
         }
 
         return path;

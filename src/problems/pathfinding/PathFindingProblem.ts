@@ -4,6 +4,7 @@ import Grid from './Grid';
 import PathFindingProblemSolver from './PathFindingProblemSolver';
 import ProblemStats from '../ProblemStats';
 import GridBox from './GridBox';
+import Path from './Path';
 
 export default class PathFindingProblem implements Problem<PathFindingProblem> {
     protected grid!: Grid;
@@ -35,8 +36,8 @@ export default class PathFindingProblem implements Problem<PathFindingProblem> {
         return this.grid.getStats();
     }
 
-    private async constructPath(path: GridBox[]): Promise<void> {
-        for (const part of path) {
+    private async constructPath(path: Path): Promise<void> {
+        for (const part of path.getPath()) {
             part.markPartOfPath();
             this.grid.getStats().addPathField();
 

@@ -1,8 +1,8 @@
 import ProblemSolver from '../ProblemSolver';
 import Grid from './Grid';
 import PathFindingProblem from './PathFindingProblem';
-import GridBox from './GridBox';
+import Path from './Path';
 
-export default interface PathFindingProblemSolver extends ProblemSolver<PathFindingProblem, Grid, GridBox[]> {
-    solve(grid: Grid): Promise<GridBox[]>;
+export default interface PathFindingProblemSolver extends ProblemSolver<PathFindingProblem, Grid, Path> {
+    solve(grid: Grid): Promise<Path>;
 }

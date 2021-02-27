@@ -1,6 +1,7 @@
 import PathFindingProblemSolver from '../PathFindingProblemSolver';
 import Grid from '../Grid';
 import GridBox from '../GridBox';
+import Path from '../Path';
 
 export default class AStar implements PathFindingProblemSolver {
     private grid!: Grid;
@@ -9,7 +10,7 @@ export default class AStar implements PathFindingProblemSolver {
     private closedSet: GridBox[] = [];
     private cameFrom: GridBox[][] = [];
 
-    async solve(grid: Grid): Promise<GridBox[]> {
+    async solve(grid: Grid): Promise<Path> {
         this.grid = grid;
         this.openSet = [grid.start];
         this.closedSet = [];
@@ -38,12 +39,12 @@ export default class AStar implements PathFindingProblemSolver {
         throw new Error('No path found');
     }
 
-    private async constructPath(): Promise<GridBox[]> {
-        const path: GridBox[] = [];
+    private async constructPath(): Promise<Path> {
+        const path = new Path();
         let current = this.grid.goal;
         current = this.cameFrom[current.point.getX()][current.point.getY()];
         while (current !== this.grid.start) {
-            path.push(current);
+            path.addPartOfPath(current);
             current = this.cameFrom[current.point.getX()][current.point.getY()];
         }
 
