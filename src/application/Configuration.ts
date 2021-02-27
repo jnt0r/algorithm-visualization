@@ -12,19 +12,12 @@ import PathFindingProblemSolver from '../problems/pathfinding/PathFindingProblem
 import Dijkstra from '../problems/pathfinding/solver/Dijkstra';
 import AStar from '../problems/pathfinding/solver/AStar';
 import LabyrinthProblem from '../problems/labyrinth/LabyrinthProblem';
-import Renderer from '../renderer/Renderer';
-import CanvasRenderer from './renderer/canvasrenderer/CanvasRenderer';
 
 export interface Configuration {
-    getRenderer(): Renderer;
     getProblems(): ProblemDisplay<Problem<never>, ProblemSolver<never, unknown, unknown>>[];
 }
 
 export default class EnglishConfiguration implements Configuration {
-    getRenderer(): Renderer {
-        return new CanvasRenderer();
-    }
-
     getProblems(): ProblemDisplay<Problem<never>, ProblemSolver<never, unknown, unknown>>[] {
         return [
             new ProblemDisplay<SortingProblem, SortingProblemSolver>('Sorting', SortingProblem, [
