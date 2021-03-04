@@ -3,15 +3,16 @@ import SortableData from '../SortableData';
 import { GREATER } from '../../CompareType';
 
 export default class BubbleSort implements SortingProblemSolver {
+    private data!: SortableData;
+
     async solve(data: SortableData): Promise<void> {
+        this.data = data;
+
         for (let i = 0; i < data.getSize(); i++) {
             for (let j = 0; j < data.getSize() - i - 1; j++) {
                 await data.markComparingElements(j, j + 1);
 
-                // Swap elements if value of j is greater than value of j+1
-                if (data.compareElements(j, GREATER, j + 1)) {
-                    await data.swap(j, j + 1);
-                }
+                await this.swapElementsIfValueOfAGreaterB(j, j + 1);
 
                 data.resetComparingElements(j, j + 1);
             }
@@ -20,5 +21,11 @@ export default class BubbleSort implements SortingProblemSolver {
             data.getElement(data.getSize() - i - 1).setSorted();
         }
         await data.renderAnimated();
+    }
+
+    private async swapElementsIfValueOfAGreaterB(a: number, b: number): Promise<void> {
+        if (this.data.compareElements(a, GREATER, b)) {
+            return this.data.swap(a, b);
+        }
     }
 }

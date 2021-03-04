@@ -1,14 +1,12 @@
-import Renderer from '../../renderer/Renderer';
 import Problem from '../Problem';
 import SortingProblemSolver from './SortingProblemSolver';
 import SortableData from './SortableData';
 import ProblemStats from '../ProblemStats';
+import MustInitializeWithRenderer from '../MustInitializeWithRenderer';
 
-export default class SortingProblem implements Problem<SortingProblem> {
+export default class SortingProblem extends MustInitializeWithRenderer implements Problem<SortingProblem> {
     private sortables!: SortableData;
     private numbers: number[] = [];
-
-    constructor(private readonly renderer: Renderer) {}
 
     async solve(solver: SortingProblemSolver): Promise<void> {
         return solver.solve(this.sortables);

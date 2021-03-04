@@ -1,6 +1,6 @@
 import ProblemStats from '../../src/problems/ProblemStats';
 import ProblemStatsObserver from '../../src/problems/ProblemStatsObserver';
-import { anything, deepEqual, instance, mock, reset, verify } from 'ts-mockito';
+import { instance, mock, reset, verify } from 'ts-mockito';
 
 describe('ProblemStats', () => {
     let stats: ProblemStats;

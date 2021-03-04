@@ -1,7 +1,7 @@
 import Grid from '../../../src/problems/pathfinding/Grid';
+import PathFindingProblemStats from '../../../src/problems/pathfinding/PathFindingProblemStats';
 import { TestRenderer } from '../../TestRenderer';
 import arrayContaining = jasmine.arrayContaining;
-import PathFindingProblemStats from '../../../src/problems/pathfinding/PathFindingProblemStats';
 
 describe('Grid', () => {
     const testRenderer = new TestRenderer();

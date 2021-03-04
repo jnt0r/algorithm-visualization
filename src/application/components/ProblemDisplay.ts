@@ -3,10 +3,10 @@ import SolverDisplay from './SolverDisplay';
 import ProblemSolver from '../../problems/ProblemSolver';
 import Renderer from '../../renderer/Renderer';
 
-export default class ProblemDisplay<T extends Problem<T>, S extends ProblemSolver<T, any, any>> {
+export default class ProblemDisplay<T extends Problem<T>, S extends ProblemSolver<T, unknown, unknown>> {
     constructor(
         private readonly displayName: string,
-        private readonly problem: { new (renderer: Renderer): T },
+        private readonly problem: new (renderer: Renderer) => T,
         private readonly solvers: SolverDisplay<S>[],
     ) {}
 

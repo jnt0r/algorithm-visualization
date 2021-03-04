@@ -4,13 +4,6 @@ import Renderer from '../../../src/renderer/Renderer';
 import PathFindingProblem from '../../../src/problems/pathfinding/PathFindingProblem';
 import PathFindingProblemSolver from '../../../src/problems/pathfinding/PathFindingProblemSolver';
 import Path from '../../../src/problems/pathfinding/Path';
-import BubbleSort from '../../../src/problems/sorting/solver/BubbleSort';
-import SelectionSort from '../../../src/problems/sorting/solver/SelectionSort';
-import QuickSort from '../../../src/problems/sorting/solver/QuickSort';
-import SortingProblemSolver from '../../../src/problems/sorting/SortingProblemSolver';
-import SortableData from '../../../src/problems/sorting/SortableData';
-import Dijkstra from '../../../src/problems/pathfinding/solver/Dijkstra';
-import AStar from '../../../src/problems/pathfinding/solver/AStar';
 
 describe('PathFindingProblem', () => {
     const renderer: Renderer = new TestRenderer();

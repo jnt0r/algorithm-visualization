@@ -1,14 +1,12 @@
-import Renderer from '../../renderer/Renderer';
 import Problem from '../Problem';
 import Grid from './Grid';
 import PathFindingProblemSolver from './PathFindingProblemSolver';
 import ProblemStats from '../ProblemStats';
 import Path from './Path';
+import MustInitializeWithRenderer from '../MustInitializeWithRenderer';
 
-export default class PathFindingProblem implements Problem<PathFindingProblem> {
+export default class PathFindingProblem extends MustInitializeWithRenderer implements Problem<PathFindingProblem> {
     protected grid!: Grid;
-
-    constructor(private readonly renderer: Renderer) {}
 
     async solve(solver: PathFindingProblemSolver): Promise<void> {
         return solver.solve(this.grid).then((path) => this.constructPath(path));

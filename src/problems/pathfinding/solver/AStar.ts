@@ -80,6 +80,6 @@ export default class AStar implements PathFindingProblemSolver {
     }
 
     private getDistanceToGoal(element: GridBox): number {
-        return element.point.distanceTo(this.grid.goal.point);
+        return element.point.euclideanDistanceTo(this.grid.goal.point);
     }
 }

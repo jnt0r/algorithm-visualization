@@ -7,6 +7,7 @@ import SolverDisplay from './components/SolverDisplay';
 import SuccessMessage from './components/SuccessMessage';
 import ErrorMessage from './components/ErrorMessage';
 import StatsComponent from './components/StatsComponent';
+import { Configuration } from './Configuration';
 
 /**
  * @class Application
@@ -26,7 +27,9 @@ export default class Application {
 
     private readonly statsComponent = new StatsComponent();
 
-    constructor(private readonly controller: Controller) {
+    constructor(private readonly controller: Controller, private readonly config: Configuration) {
+        this.initialize();
+
         this.problemSelectElement.onUpdate((problem) => this.onProblemSelectUpdate(problem));
         this.algorithmSelectElement.onUpdate(() => this.onAlgorithmSelectUpdate());
         this.animationSpeedSelect.oninput = () => this.onAnimationSpeedSelectInput();
@@ -131,5 +134,17 @@ export default class Application {
     private showSuccessMessage(): void {
         const successMessage = new SuccessMessage('Problem solved');
         successMessage.displayWithFading(3000);
+    }
+
+    private initialize() {
+        const matcher = new RegExp('{{([ ]*)([a-zA-Z]+)([ ]*)}}', 'gm');
+        const elements = document.querySelectorAll('html');
+        console.log(elements);
+
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].innerHTML = elements[i].innerHTML.replace(/{{([ ]*)([a-zA-Z]+)([ ]*)}}/gm, (string, p1, p2) =>
+                this.config.getString(p2),
+            );
+        }
     }
 }

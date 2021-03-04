@@ -3,7 +3,7 @@ import SortableData from '../../../src/problems/sorting/SortableData';
 import SortingProblemSolver from '../../../src/problems/sorting/SortingProblemSolver';
 import { TestRenderer } from '../../TestRenderer';
 import SortingProblem from '../../../src/problems/sorting/SortingProblem';
-import { anyOfClass, anything, instance, mock, verify } from 'ts-mockito';
+import { anyOfClass, instance, mock, verify } from 'ts-mockito';
 import SelectionSort from '../../../src/problems/sorting/solver/SelectionSort';
 import QuickSort from '../../../src/problems/sorting/solver/QuickSort';
 

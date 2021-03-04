@@ -11,6 +11,13 @@ export default class QuickSort implements SortingProblemSolver {
         return this.quicksort(0, data.getSize() - 1);
     }
 
+    /**
+     * Recursively sorts the data between left bound and right bound by dividing it into smaller pieces.
+     *
+     * @param left The index of the left bound (inclusive)
+     * @param right The index of the right bound (inclusive)
+     * @private
+     */
     private async quicksort(left: number, right: number): Promise<void> {
         if (left < right) {
             const divider = await this.divide(left, right);
@@ -24,14 +31,25 @@ export default class QuickSort implements SortingProblemSolver {
         }
     }
 
+    /**
+     * Divides the data between index left and index right. Returning the pivot element.
+     *
+     * All elements with value smaller than pivot element are moved left of the pivot element.
+     *
+     * All elements with value bigger than pivot element are moved right of the pivot element.
+     *
+     * @param left The index of the left bound (inclusive)
+     * @param right The index of the right bound (inclusive)
+     * @return The pivot element for the given range
+     * @private
+     */
     private async divide(left: number, right: number): Promise<number> {
+        // Variable names according to Wikipedia pseudocode.
         let i = left;
         let j = right - 1;
         const pivot = right;
 
-        // Visualize pivot element
-        this.data.getElement(pivot).markPivot();
-        await this.data.renderAnimated();
+        await this.visualizePivotElement(pivot);
 
         while (i < j) {
             await this.data.markComparingElements(i, j);
@@ -66,5 +84,11 @@ export default class QuickSort implements SortingProblemSolver {
         await this.data.renderAnimated();
 
         return i;
+    }
+
+    private async visualizePivotElement(pivot: number): Promise<void> {
+        this.data.getElement(pivot).markPivot();
+
+        return this.data.renderAnimated();
     }
 }

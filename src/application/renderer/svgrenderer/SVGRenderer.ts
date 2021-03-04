@@ -1,5 +1,4 @@
 import { SVG } from '@svgdotjs/svg.js';
-import Renderer from '../../../renderer/Renderer';
 import Point from '../../../renderer/Point';
 import Rectangle from '../../../renderer/components/Rectangle';
 import Line from '../../../renderer/components/Line';
@@ -10,19 +9,16 @@ import { SVGCircle } from './SVGCircle';
 import SVGText from './SVGText';
 import Text from '../../../renderer/components/Text';
 import { SVGComponent } from './SVGComponent';
+import BaseRenderer from '../../../renderer/BaseRenderer';
 
-export default class SVGRenderer implements Renderer {
-    private animationSpeed = 10;
+export default class SVGRenderer extends BaseRenderer {
     private readonly svg = SVG().addTo('.svg-wrapper').size('100%', '100%');
 
     constructor() {
+        super();
         this.svg.transform({
             flip: 'y',
         });
-    }
-
-    setAnimationSpeed(animationSpeed: number): void {
-        this.animationSpeed = animationSpeed;
     }
 
     getHeight(): number {
@@ -51,16 +47,6 @@ export default class SVGRenderer implements Renderer {
         e2.animate({ delay: 0, duration: this.animationSpeed }).move(e1.x(), e1.y());
 
         return this.animate();
-    }
-
-    async animate(): Promise<void> {
-        return new Promise<void>((resolve) => {
-            window.requestAnimationFrame(() => {
-                setTimeout(() => {
-                    resolve();
-                }, this.animationSpeed);
-            });
-        });
     }
 
     createRectangle(point: Point, width: number, height: number): Rectangle {

@@ -13,10 +13,17 @@ export default class Point {
      * Returns euclidean distance to given point
      * @param point
      */
-    distanceTo(point: Point): number {
+    euclideanDistanceTo(point: Point): number {
         const dx = Math.pow(this.x - point.getX(), 2);
         const dy = Math.pow(this.y - point.getY(), 2);
 
         return Math.sqrt(dx + dy);
+    }
+
+    manhattanDistanceTo(point: Point): number {
+        const dx = Math.abs(this.x - point.x);
+        const dy = Math.abs(this.y - point.y);
+
+        return dx + dy;
     }
 }

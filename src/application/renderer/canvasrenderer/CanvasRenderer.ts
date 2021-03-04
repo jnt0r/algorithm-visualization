@@ -1,4 +1,3 @@
-import Renderer from '../../../renderer/Renderer';
 import Point from '../../../renderer/Point';
 import Circle from '../../../renderer/components/Circle';
 import Line from '../../../renderer/components/Line';
@@ -10,13 +9,14 @@ import { CanvasComponent } from './CanvasComponent';
 import { CanvasRectangle } from './CanvasRectangle';
 import { CanvasLine } from './CanvasLine';
 import { CanvasText } from './CanvasText';
+import BaseRenderer from '../../../renderer/BaseRenderer';
 
-export default class CanvasRenderer implements Renderer {
+export default class CanvasRenderer extends BaseRenderer {
     private readonly stage: Konva.Stage;
     private readonly layer: Konva.Layer;
-    private animationSpeed = 10;
 
     constructor() {
+        super();
         const wrapper: HTMLDivElement = <HTMLDivElement>document.getElementById('canvas-wrapper');
         this.stage = new Konva.Stage({
             container: 'canvas-wrapper',
@@ -27,16 +27,6 @@ export default class CanvasRenderer implements Renderer {
         });
         this.layer = new Konva.Layer({});
         this.stage.add(this.layer);
-    }
-
-    animate(): Promise<void> {
-        return new Promise<void>((resolve) => {
-            window.requestAnimationFrame(() => {
-                setTimeout(() => {
-                    resolve();
-                }, this.animationSpeed);
-            });
-        });
     }
 
     clear(): void {
@@ -70,10 +60,6 @@ export default class CanvasRenderer implements Renderer {
     render(component: CanvasComponent): void {
         this.layer.add(component.getShape());
         this.layer.batchDraw();
-    }
-
-    setAnimationSpeed(animationSpeed: number): void {
-        this.animationSpeed = animationSpeed;
     }
 
     swapElementsById(id1: number, id2: number): Promise<void> {

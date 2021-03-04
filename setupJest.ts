@@ -1,31 +1,25 @@
 import SortableData from './src/problems/sorting/SortableData';
-import { TestRenderer } from './test/TestRenderer';
 
-const renderer = new TestRenderer();
-const sortedData = new SortableData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], renderer);
 expect.extend({
     toBeSorted(received: SortableData) {
-        if (sortedData.getSize() != received.getSize())
-            return {
-                pass: false,
-                message: () => `Expected to have ${sortedData.getSize()} elements`,
-            };
+        let lastValue = received.getElement(0).getValue();
 
-        for (let i = 0; i < sortedData.getSize(); i++) {
-            if (received.getElement(i).getValue() != sortedData.getElement(i).getValue()) {
+        for (let i = 1; i < received.getSize(); i++) {
+            if (received.getElement(i).getValue() < lastValue) {
                 return {
                     pass: false,
                     message: () =>
-                        `Expected element ${i} to be ${sortedData
+                        `Expected element ${i} to be greater than ${lastValue} but was ${received
                             .getElement(i)
-                            .getValue()} but was ${received.getElement(i).getValue()}`,
+                            .getValue()}`,
                 };
             }
+            lastValue = received.getElement(i).getValue();
         }
 
         return {
             pass: true,
-            message: () => 'Expected ${received} not to be a valid ISO date string',
+            message: () => 'SortableData elements are sorted correctly',
         };
     },
 });

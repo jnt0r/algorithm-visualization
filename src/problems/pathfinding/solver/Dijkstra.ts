@@ -11,51 +11,85 @@ export default class Dijkstra implements PathFindingProblemSolver {
         grid.start.setCost(0);
         grid.start.markVisited();
 
-        let lastLayer: GridBox[] = [this.grid.start];
-        while (lastLayer.length > 0) {
-            // If goal element was checked in last iteration, draw path
-            if (lastLayer.indexOf(this.grid.goal) !== -1) {
-                return this.constructPath();
+        return this.calculateCostsForEachElementOfGrid().then(() => this.calculatePath());
+    }
+
+    private async calculateCostsForEachElementOfGrid(): Promise<void> {
+        let layer: GridBox[] = [this.grid.start];
+
+        while (layer.length > 0) {
+            if (this.goalWasCheckedIn(layer)) {
+                return;
             }
 
-            const nextLayer: GridBox[] = [];
-            for (const box of lastLayer) {
-                grid.getNeighboursOfElement(box).forEach((neighbour) =>
-                    this.processBox(nextLayer, neighbour, box.getCost() + 1),
-                );
-            }
+            layer = this.calculateNextLayer(layer);
             await this.grid.renderAnimated();
-            lastLayer = nextLayer;
         }
-        // When reaching here, there was no path found
+
         throw new Error('No path found');
     }
 
-    processBox(o: GridBox[], element: GridBox, cost: number): void {
-        if (!element.isVisited()) {
-            element.markVisited();
-            element.setCost(cost);
+    /**
+     * Calculates costs for all neighbours of the elements in lastLayer and returns all neighbours of lastLayer elements.
+     *
+     * @param lastLayer
+     * @return All neighbours of the elements of the lastLayer
+     * @private
+     */
+    private calculateNextLayer(lastLayer: GridBox[]): GridBox[] {
+        const nextLayer: GridBox[] = [];
 
-            if (o.indexOf(element) === -1) {
-                o.push(element);
+        lastLayer.forEach((box) =>
+            this.grid
+                .getNeighboursOfElement(box)
+                .forEach((neighbour) => this.processNeighbour(neighbour, box, nextLayer)),
+        );
+
+        return nextLayer;
+    }
+
+    /**
+     * Returns whether goal was processed in lastLayer.
+     *
+     * @param lastLayer
+     * @private
+     */
+    private goalWasCheckedIn(lastLayer: GridBox[]) {
+        return lastLayer.indexOf(this.grid.goal) !== -1;
+    }
+
+    private processNeighbour(neighbour: GridBox, box: GridBox, nextLayer: GridBox[]): void {
+        if (!neighbour.isVisited()) {
+            neighbour.markVisited();
+            neighbour.setCost(box.getCost() + 1);
+
+            if (nextLayer.indexOf(neighbour) === -1) {
+                nextLayer.push(neighbour);
             }
         }
     }
 
-    private async constructPath(): Promise<Path> {
+    private calculatePath(): Path {
         const path = new Path();
         let current = this.grid.goal;
+
         while (current.getCost() !== 1) {
-            current = this.getBestNeighbour(current);
+            current = this.calculateBestNeighbourForElement(current);
             path.addPartOfPath(current);
         }
 
         return path;
     }
 
-    private getBestNeighbour(element: GridBox): GridBox {
+    /**
+     * Calculates neighbour with lowest costs.
+     *
+     * @param current
+     * @private
+     */
+    private calculateBestNeighbourForElement(current: GridBox): GridBox {
         return this.grid
-            .getNeighboursOfElement(element)
+            .getNeighboursOfElement(current)
             .filter((a) => a.getCost() != -1)
             .sort((a, b) => (a.getCost() < b.getCost() ? -1 : 1))[0];
     }
