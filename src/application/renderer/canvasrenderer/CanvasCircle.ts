@@ -8,5 +8,7 @@ export class CanvasCircle extends CanvasComponent implements Circle {
         super(new Konva.Circle({ x: position.getX(), y: position.getY(), radius: radius }), layer);
     }
 
-    setRadius(radius: number): void {}
+    setRadius(radius: number): void {
+        (<Konva.Circle>this.shape).radius(radius);
+    }
 }

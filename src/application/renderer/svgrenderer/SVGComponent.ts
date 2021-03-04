@@ -2,11 +2,7 @@ import Component from '../../../renderer/Component';
 import { Element } from '@svgdotjs/svg.js';
 
 export class SVGComponent implements Component {
-    protected element: Element;
-
-    protected constructor(element: Element) {
-        this.element = element;
-    }
+    protected constructor(protected readonly element: Element) {}
 
     getElement(): Element {
         return this.element;

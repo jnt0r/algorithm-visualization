@@ -8,5 +8,7 @@ export class CanvasLine extends CanvasComponent implements Line {
         super(new Konva.Line({ points: [a.getX(), a.getY(), b.getX(), b.getY()], strokeWidth: 1 }), layer);
     }
 
-    setStrokeWidth(width: number): void {}
+    setStrokeWidth(width: number): void {
+        this.shape.strokeWidth(width);
+    }
 }

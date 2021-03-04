@@ -37,8 +37,11 @@ export default class Application {
         this.generateBtn.onclick = () => this.onGenerateBtnClick();
         this.resetBtn.onclick = () => this.onResetBtnClick();
 
-        // Initial values
-        this.setProblems(controller.getProblems());
+        this.initializeValues();
+    }
+
+    private initializeValues() {
+        this.setProblems(this.controller.getProblems());
         this.onAnimationSpeedSelectInput();
     }
 

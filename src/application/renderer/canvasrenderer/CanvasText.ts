@@ -8,5 +8,7 @@ export class CanvasText extends CanvasComponent implements Text {
         super(new Konva.Text({ x: position.getX(), y: position.getY(), text: text, scaleY: -1 }), layer);
     }
 
-    setText(text: string): void {}
+    setText(text: string): void {
+        (<Konva.Text>this.shape).setText(text);
+    }
 }
