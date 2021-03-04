@@ -12,7 +12,7 @@
     },
     "dependencies": {
         "@svgdotjs/svg.js": "^3.0.16",
-        "konva": "^7.2.3"
+        "konva": "^7.2.5"
     },
     "devDependencies": {
         "@types/jest": "^26.0.20",
