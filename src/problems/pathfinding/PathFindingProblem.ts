@@ -18,11 +18,7 @@ export default class PathFindingProblem extends MustInitializeWithRenderer imple
     }
 
     generate(): void {
-        this.grid = new Grid(
-            Math.floor(this.renderer.getWidth() / 20),
-            Math.floor(this.renderer.getHeight() / 20),
-            this.renderer,
-        );
+        this.grid = new Grid(this.calculateGridWidth(), this.calculateGridHeight(), this.renderer);
     }
 
     reset(): void {
@@ -31,6 +27,24 @@ export default class PathFindingProblem extends MustInitializeWithRenderer imple
 
     getStats(): ProblemStats {
         return this.grid.getStats();
+    }
+
+    private calculateGridHeight() {
+        let height = Math.floor(this.renderer.getHeight() / 20);
+        if (height % 2 === 0) {
+            height -= 1;
+        }
+
+        return height;
+    }
+
+    private calculateGridWidth() {
+        let width = Math.floor(this.renderer.getWidth() / 20);
+        if (width % 2 === 0) {
+            width -= 1;
+        }
+
+        return width;
     }
 
     private async constructPath(path: Path): Promise<void> {
