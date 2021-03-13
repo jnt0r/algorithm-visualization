@@ -21,47 +21,41 @@ export default class LabyrinthProblem extends PathFindingProblem {
     }
 
     private generateMaze(): void {
-        this.generateSetsAndBorders();
+        this.initializeSetsAndBorders();
         this.constructMaze();
     }
 
-    private generateSetsAndBorders(): void {
-        for (let x = 0; x < this.grid.width; x++) {
-            for (let y = 0; y < this.grid.height; y++) {
-                // We know the element at this position must exist so we can ignore the possible return value of undefined
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                const gridBox = this.grid.getElement(x, y)!;
-                gridBox.setWall();
+    private initializeSetsAndBorders(): void {
+        this.forEachBoxInGrid((box, x, y) => {
+            box.setWall();
 
-                if (x % 2 === 0 && y % 2 === 0) {
-                    gridBox.removeWall();
-                    this.sets.push([gridBox]);
-                    this.setsMap.set(this.sets.length - 1, this.sets.length - 1);
-                }
-                if (x % 2 === 0 && y % 2 != 0) {
-                    this.borders.push({
-                        box: gridBox,
-                        firstSetIndex: this.sets.length - 1,
-                        secondSetIndex: this.sets.length,
-                    });
-                }
-                if (x % 2 != 0 && y % 2 === 0) {
-                    const dx = Math.ceil(this.grid.height / 2);
-                    const index1 = Math.floor(x / 2) * dx + Math.floor(y / 2);
-                    this.borders.push({
-                        box: gridBox,
-                        firstSetIndex: index1,
-                        secondSetIndex: index1 + dx,
-                    });
-                }
+            if (x % 2 === 0 && y % 2 === 0) {
+                box.removeWall();
+                this.sets.push([box]);
+                this.setsMap.set(this.sets.length - 1, this.sets.length - 1);
             }
-        }
+            if (x % 2 === 0 && y % 2 != 0) {
+                this.borders.push({
+                    box: box,
+                    firstSetIndex: this.sets.length - 1,
+                    secondSetIndex: this.sets.length,
+                });
+            }
+            if (x % 2 != 0 && y % 2 === 0) {
+                const dx = Math.ceil(this.grid.height / 2);
+                const firstSetIndex = Math.floor(x / 2) * dx + Math.floor(y / 2);
+                this.borders.push({
+                    box: box,
+                    firstSetIndex: firstSetIndex,
+                    secondSetIndex: firstSetIndex + dx,
+                });
+            }
+        });
     }
 
     private constructMaze(): void {
         while (this.sets[this.setsMap.get(0)!].length < this.sets.length) {
-            const randomBorderIndex = Math.floor(Math.random() * (this.borders.length - 1));
-            const border = this.borders.splice(randomBorderIndex, 1)[0];
+            const border = this.chooseRandomBorder();
 
             const firstSetIndex = this.setsMap.get(border.firstSetIndex)!;
             const secondSetIndex = this.setsMap.get(border.secondSetIndex)!;
@@ -81,6 +75,12 @@ export default class LabyrinthProblem extends PathFindingProblem {
         }
     }
 
+    private chooseRandomBorder() {
+        const randomBorderIndex = Math.floor(Math.random() * (this.borders.length - 1));
+
+        return this.borders.splice(randomBorderIndex, 1)[0];
+    }
+
     /**
      * Adds elements of set2 to set1 that not exist in set1.
      *
@@ -92,6 +92,17 @@ export default class LabyrinthProblem extends PathFindingProblem {
         for (const a of set2) {
             if (set1.findIndex((v) => v.point.getX() === a.point.getX() && v.point.getY() === a.point.getY()) === -1) {
                 set1.push(a);
+            }
+        }
+    }
+
+    private forEachBoxInGrid(func: (box: GridBox, x: number, y: number) => void) {
+        for (let x = 0; x < this.grid.width; x++) {
+            for (let y = 0; y < this.grid.height; y++) {
+                // We know the element at this position must exist so we can ignore the possible return value of undefined
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                const gridBox = this.grid.getElement(x, y)!;
+                func(gridBox, x, y);
             }
         }
     }
