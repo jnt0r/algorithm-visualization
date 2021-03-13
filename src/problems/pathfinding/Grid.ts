@@ -49,6 +49,16 @@ export default class Grid {
                         20,
                         20,
                     );
+                    component.onClick(() => {
+                        box.setWall();
+                        component.setColor(box.getColor());
+                        component.setBorderColor(box.getBorderColor());
+                    });
+                    component.onRightClick(() => {
+                        box.removeWall();
+                        component.setColor(box.getColor());
+                        component.setBorderColor(box.getBorderColor());
+                    });
                     component.onMouseOver(({ leftMouseButton, rightMouseButton }) => {
                         if (leftMouseButton) {
                             box.setWall();

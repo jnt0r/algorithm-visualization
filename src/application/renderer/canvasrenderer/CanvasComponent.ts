@@ -5,17 +5,20 @@ export class CanvasComponent implements Component {
     constructor(protected readonly shape: Konva.Shape, private layer: Konva.Layer) {}
 
     onClick(func: () => void): void {
-        this.shape.on('click', func);
+        this.shape.on('click', () => func());
     }
 
     onMouseOver(func: (ev: { leftMouseButton: boolean; rightMouseButton: boolean }) => void): void {
         this.shape.on('mouseover', (ev) =>
-            func({ leftMouseButton: ev.evt.buttons === 1, rightMouseButton: ev.evt.buttons === 2 }),
+            func({
+                leftMouseButton: ev.evt.buttons === 1,
+                rightMouseButton: ev.evt.buttons === 2,
+            }),
         );
     }
 
     onRightClick(func: () => void): void {
-        this.shape.on('contextmenu', func);
+        this.shape.on('contextmenu', () => func());
     }
 
     setBorderColor(hexCode: string): void {
