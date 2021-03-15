@@ -30,7 +30,7 @@ export default class CanvasRenderer extends BaseRenderer {
     }
 
     clear(): void {
-        this.layer.destroyChildren();
+        this.layer.removeChildren();
     }
 
     createCircle(position: Point, radius: number): Circle {
