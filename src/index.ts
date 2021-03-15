@@ -15,6 +15,7 @@ import AStar from './problems/pathfinding/solver/AStar';
 import LabyrinthProblem from './problems/labyrinth/LabyrinthProblem';
 import EnglishConfiguration from './application/Configuration';
 import BreadthFirstSearch from './problems/pathfinding/solver/BreadthFirstSearch';
+import DepthFirstSearch from './problems/pathfinding/solver/DepthFirstSearch';
 
 const renderer = new CanvasRenderer();
 const availableProblems = [
@@ -26,11 +27,14 @@ const availableProblems = [
     new ProblemDisplay<PathFindingProblem, PathFindingProblemSolver>('Pathfinding', PathFindingProblem, [
         new SolverDisplay('Dijkstra', Dijkstra),
         new SolverDisplay('Breadth First', BreadthFirstSearch),
+        new SolverDisplay('Depth First', DepthFirstSearch),
         new SolverDisplay('A*', AStar),
     ]),
     new ProblemDisplay<LabyrinthProblem, PathFindingProblemSolver>('Labyrinth', LabyrinthProblem, [
         new SolverDisplay('Dijkstra', Dijkstra),
         new SolverDisplay('Breadth First', BreadthFirstSearch),
+
+        new SolverDisplay('Depth First', DepthFirstSearch),
         new SolverDisplay('A*', AStar),
     ]),
 ];
