@@ -118,6 +118,15 @@ export default class Grid {
         return neighbours;
     }
 
+    renderPath(part: GridBox): Promise<void> {
+        this.components[part.point.getX()][part.point.getY()].setColor(part.getColor());
+        this.components[part.point.getX()][part.point.getY()].setBorderColor(part.getBorderColor());
+
+        return new Promise((resolve) => {
+            window.requestAnimationFrame((time) => resolve());
+        });
+    }
+
     private generatePlainGrid() {
         for (let x = 0; x < this.width; x++) {
             this.boxes[x] = [];
