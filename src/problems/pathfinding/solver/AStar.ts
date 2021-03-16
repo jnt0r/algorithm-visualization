@@ -17,31 +17,32 @@ export default class AStar implements PathFindingProblemSolver {
         this.cameFrom = [];
         grid.start.setCost(0);
 
-        let count = 0;
+        return this.findPathInGrid().then(() => this.constructPath());
+    }
+
+    private async findPathInGrid(): Promise<void> {
         while (this.openSet.length !== 0) {
-            count++;
             const current: GridBox = this.getBestFromOpenSet();
             current.markVisited();
 
-            if (current === grid.goal) {
-                return this.constructPath();
+            if (current === this.grid.goal) {
+                return;
             }
 
             this.closedSet.push(current);
 
-            grid.getNeighboursOfElement(current).forEach((neighbour) => this.processNeighbour(neighbour, current));
-            if (count === 5) {
-                count = 0;
-                await grid.renderAnimated();
-            }
+            this.grid.getNeighboursOfElement(current).forEach((neighbour) => this.processNeighbour(neighbour, current));
+
+            await this.grid.renderAnimated();
         }
-        // No path has been found
+
         throw new Error('No path found');
     }
 
     private async constructPath(): Promise<Path> {
         const path = new Path();
         let current = this.grid.goal;
+
         current = this.cameFrom[current.point.getX()][current.point.getY()];
         while (current !== this.grid.start) {
             path.addPartOfPath(current);
@@ -58,13 +59,11 @@ export default class AStar implements PathFindingProblemSolver {
     }
 
     private processNeighbour(neighbour: GridBox, current: GridBox): void {
-        if (this.closedSet.indexOf(neighbour) !== -1) {
+        if (this.isContainedInClosedSet(neighbour)) {
             return;
         }
-        // if (!neighbour.isVisited()) {
-        //     neighbour.markVisited();
         const costFromStart = current.getCost() + 1;
-        if (this.openSet.indexOf(neighbour) !== -1 && costFromStart >= neighbour.getCost()) {
+        if (this.isContainedInOpenSet(neighbour) && costFromStart >= neighbour.getCost()) {
             return;
         }
 
@@ -76,7 +75,14 @@ export default class AStar implements PathFindingProblemSolver {
         if (this.openSet.indexOf(neighbour) === -1) {
             this.openSet.push(neighbour);
         }
-        // }
+    }
+
+    private isContainedInOpenSet(neighbour: GridBox) {
+        return this.openSet.indexOf(neighbour) !== -1;
+    }
+
+    private isContainedInClosedSet(neighbour: GridBox) {
+        return this.closedSet.indexOf(neighbour) !== -1;
     }
 
     private getDistanceToGoal(element: GridBox): number {
