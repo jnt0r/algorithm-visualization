@@ -56,9 +56,9 @@ export default class BreadthFirstSearch implements PathFindingProblemSolver {
 
     private calculatePath() {
         const path = new Path();
-
         let current = this.data.goal;
-        while (current !== this.data.start) {
+
+        while (current.getCost() !== 1) {
             current = this.getBestNeighbourFor(current);
             path.addPartOfPath(current);
         }
