@@ -2,10 +2,11 @@ import PathFindingProblemSolver from '../PathFindingProblemSolver';
 import Path from '../Path';
 import Grid from '../Grid';
 import GridBox from '../GridBox';
+import Stack from '../../../utils/Stack';
 
 export default class DepthFirstSearch implements PathFindingProblemSolver {
     private data!: Grid;
-    private queue: GridBox[] = [];
+    private queue = new Stack<GridBox>();
 
     solve(data: Grid): Promise<Path> {
         this.data = data;
@@ -15,8 +16,7 @@ export default class DepthFirstSearch implements PathFindingProblemSolver {
     }
 
     private async findPath(): Promise<void> {
-        while (this.queue.length !== 0) {
-            console.log(this.queue);
+        while (!this.queue.isEmpty()) {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const box = this.queue.pop()!;
             const neighbours = this.data.getNeighboursOfElement(box);

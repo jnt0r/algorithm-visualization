@@ -2,9 +2,10 @@ import PathFindingProblemSolver from '../PathFindingProblemSolver';
 import Path from '../Path';
 import Grid from '../Grid';
 import GridBox from '../GridBox';
+import Queue from '../../../utils/Queue';
 
 export default class BreadthFirstSearch implements PathFindingProblemSolver {
-    private readonly queue: GridBox[] = [];
+    private readonly queue = new Queue<GridBox>();
     private data!: Grid;
 
     async solve(data: Grid): Promise<Path> {
@@ -21,7 +22,7 @@ export default class BreadthFirstSearch implements PathFindingProblemSolver {
     }
 
     private async searchForPathIn(data: Grid): Promise<void> {
-        while (this.queueIsNotEmpty()) {
+        while (!this.queue.isEmpty()) {
             const box = this.getFirstQueueEntry();
             const possibleNeighbours = this.getAllUnvisitedNeighboursOf(box);
 
@@ -43,10 +44,6 @@ export default class BreadthFirstSearch implements PathFindingProblemSolver {
         throw new Error('No Path found!');
     }
 
-    private queueIsNotEmpty() {
-        return this.queue.length != 0;
-    }
-
     private getAllUnvisitedNeighboursOf(box: GridBox) {
         return this.data.getNeighboursOfElement(box).filter((value) => !value.isVisited());
     }
@@ -54,7 +51,7 @@ export default class BreadthFirstSearch implements PathFindingProblemSolver {
     private getFirstQueueEntry(): GridBox {
         // We checked that queue is not empty before calling this method so we can ignore possible unknown return values
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        return this.queue.shift()!;
+        return this.queue.pop()!;
     }
 
     private calculatePath() {

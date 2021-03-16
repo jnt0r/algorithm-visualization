@@ -123,7 +123,7 @@ export default class Grid {
         this.components[part.point.getX()][part.point.getY()].setBorderColor(part.getBorderColor());
 
         return new Promise((resolve) => {
-            window.requestAnimationFrame((time) => resolve());
+            window.requestAnimationFrame(() => resolve());
         });
     }
 
