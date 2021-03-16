@@ -37,7 +37,7 @@ describe('Queue', () => {
     });
 
     test('getSize should return 0 if queue is empty', () => {
-        expect(queue.isEmpty()).toEqual(0);
+        expect(queue.getSize()).toEqual(0);
     });
 
     test('getSize should return size of queue', () => {

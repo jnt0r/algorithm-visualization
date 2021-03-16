@@ -37,7 +37,7 @@ describe('Stack', () => {
     });
 
     test('getSize should return 0 if stack is empty', () => {
-        expect(stack.isEmpty()).toEqual(0);
+        expect(stack.getSize()).toEqual(0);
     });
 
     test('getSize should return size of stack', () => {
