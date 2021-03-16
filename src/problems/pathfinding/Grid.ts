@@ -118,7 +118,7 @@ export default class Grid {
         return neighbours;
     }
 
-    renderPath(part: GridBox): Promise<void> {
+    renderPathPart(part: GridBox): Promise<void> {
         this.components[part.point.getX()][part.point.getY()].setColor(part.getColor());
         this.components[part.point.getX()][part.point.getY()].setBorderColor(part.getBorderColor());
 

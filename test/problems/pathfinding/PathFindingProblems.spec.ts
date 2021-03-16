@@ -43,6 +43,7 @@ describe('PathFindingProblem', () => {
         };
         const pathFindingProblem = new PathFindingProblem(new TestRenderer());
         pathFindingProblem.generate();
+        pathFindingProblem.render();
 
         await pathFindingProblem.solve(solverMock);
 

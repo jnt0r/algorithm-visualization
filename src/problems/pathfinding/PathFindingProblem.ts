@@ -9,7 +9,7 @@ export default class PathFindingProblem extends MustInitializeWithRenderer imple
     protected grid!: Grid;
 
     async solve(solver: PathFindingProblemSolver): Promise<void> {
-        return solver.solve(this.grid).then((path) => this.constructPath(path));
+        return solver.solve(this.grid).then((path) => this.visualizePath(path));
     }
 
     render(): void {
@@ -47,12 +47,12 @@ export default class PathFindingProblem extends MustInitializeWithRenderer imple
         return width;
     }
 
-    private async constructPath(path: Path): Promise<void> {
+    private async visualizePath(path: Path): Promise<void> {
         for (const part of path.getPath()) {
             part.markPartOfPath();
             this.grid.getStats().addPathField();
 
-            await this.grid.renderPath(part);
+            await this.grid.renderPathPart(part);
         }
     }
 }
