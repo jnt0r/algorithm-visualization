@@ -1,10 +1,10 @@
-import PathFindingProblemSolver from '../PathFindingProblemSolver';
 import Path from '../Path';
 import Grid from '../Grid';
 import GridBox from '../GridBox';
 import Queue from '../../../utils/Queue';
+import LowestCostBasedPathCalculationSolver from './LowestCostBasedPathCalculationSolver';
 
-export default class BreadthFirstSearch implements PathFindingProblemSolver {
+export default class BreadthFirstSearch extends LowestCostBasedPathCalculationSolver {
     private readonly queue = new Queue<GridBox>();
     private grid!: Grid;
 
@@ -12,7 +12,7 @@ export default class BreadthFirstSearch implements PathFindingProblemSolver {
         this.grid = data;
         this.initialize();
 
-        return this.searchForPathInGrid().then(() => this.calculatePath());
+        return this.searchForPathInGrid().then(() => this.calculatePath(data));
     }
 
     private initialize() {
@@ -52,21 +52,5 @@ export default class BreadthFirstSearch implements PathFindingProblemSolver {
         // We checked that queue is not empty before calling this method so we can ignore possible unknown return values
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return this.queue.pop()!;
-    }
-
-    private calculatePath() {
-        const path = new Path();
-        let current = this.grid.goal;
-
-        while (current.getCost() !== 1) {
-            current = this.getBestNeighbourFor(current);
-            path.addPartOfPath(current);
-        }
-
-        return path;
-    }
-
-    private getBestNeighbourFor(box: GridBox) {
-        return this.grid.getNeighboursOfElement(box).sort((a, b) => a.getCost() - b.getCost())[0];
     }
 }

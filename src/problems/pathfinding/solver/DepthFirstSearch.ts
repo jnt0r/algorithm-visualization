@@ -1,10 +1,10 @@
-import PathFindingProblemSolver from '../PathFindingProblemSolver';
 import Path from '../Path';
 import Grid from '../Grid';
 import GridBox from '../GridBox';
 import Stack from '../../../utils/Stack';
+import LowestCostBasedPathCalculationSolver from './LowestCostBasedPathCalculationSolver';
 
-export default class DepthFirstSearch implements PathFindingProblemSolver {
+export default class DepthFirstSearch extends LowestCostBasedPathCalculationSolver {
     private data!: Grid;
     private queue = new Stack<GridBox>();
 
@@ -12,10 +12,16 @@ export default class DepthFirstSearch implements PathFindingProblemSolver {
         this.data = data;
         this.initialize();
 
-        return this.findPath().then(() => this.calculatePath());
+        return this.calculateCosts().then(() => this.calculatePath(data));
     }
 
-    private async findPath(): Promise<void> {
+    private initialize() {
+        this.data.start.setCost(0);
+        this.data.start.markVisited();
+        this.queue.push(this.data.start);
+    }
+
+    private async calculateCosts(): Promise<void> {
         while (!this.queue.isEmpty()) {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const box = this.queue.pop()!;
@@ -39,27 +45,5 @@ export default class DepthFirstSearch implements PathFindingProblemSolver {
         }
 
         throw new Error('No Path found!');
-    }
-
-    private calculatePath() {
-        const path = new Path();
-        let current = this.data.goal;
-
-        while (current.getCost() !== 1) {
-            current = this.getBestNeighbourFor(current);
-            path.addPartOfPath(current);
-        }
-
-        return path;
-    }
-
-    private getBestNeighbourFor(box: GridBox) {
-        return this.data.getNeighboursOfElement(box).sort((a, b) => a.getCost() - b.getCost())[0];
-    }
-
-    private initialize() {
-        this.data.start.setCost(0);
-        this.data.start.markVisited();
-        this.queue.push(this.data.start);
     }
 }

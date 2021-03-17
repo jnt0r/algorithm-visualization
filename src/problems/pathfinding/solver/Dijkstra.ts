@@ -1,9 +1,9 @@
-import PathFindingProblemSolver from '../PathFindingProblemSolver';
 import Grid from '../Grid';
 import GridBox from '../GridBox';
 import Path from '../Path';
+import LowestCostBasedPathCalculationSolver from './LowestCostBasedPathCalculationSolver';
 
-export default class Dijkstra implements PathFindingProblemSolver {
+export default class Dijkstra extends LowestCostBasedPathCalculationSolver {
     private grid!: Grid;
 
     async solve(grid: Grid): Promise<Path> {
@@ -11,7 +11,7 @@ export default class Dijkstra implements PathFindingProblemSolver {
         grid.start.setCost(0);
         grid.start.markVisited();
 
-        return this.calculateCostsForEachElementOfGrid().then(() => this.calculatePath());
+        return this.calculateCostsForEachElementOfGrid().then(() => this.calculatePath(grid));
     }
 
     private async calculateCostsForEachElementOfGrid(): Promise<void> {
@@ -67,30 +67,5 @@ export default class Dijkstra implements PathFindingProblemSolver {
                 nextLayer.push(neighbour);
             }
         }
-    }
-
-    private calculatePath(): Path {
-        const path = new Path();
-        let current = this.grid.goal;
-
-        while (current.getCost() !== 1) {
-            current = this.calculateBestNeighbourForElement(current);
-            path.addPartOfPath(current);
-        }
-
-        return path;
-    }
-
-    /**
-     * Calculates neighbour with lowest costs.
-     *
-     * @param current
-     * @private
-     */
-    private calculateBestNeighbourForElement(current: GridBox): GridBox {
-        return this.grid
-            .getNeighboursOfElement(current)
-            .filter((a) => a.getCost() != -1)
-            .sort((a, b) => (a.getCost() < b.getCost() ? -1 : 1))[0];
     }
 }
