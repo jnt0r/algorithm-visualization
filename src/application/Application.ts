@@ -53,6 +53,7 @@ export default class Application {
 
     private onGenerateBtnClick() {
         this.controller.generateProblem();
+        this.statsComponent.reset();
     }
 
     private onSolveBtnClick() {
@@ -61,6 +62,7 @@ export default class Application {
             this.showErrorMessage('No Algorithm selected');
         } else {
             this.disableAllInputs();
+            this.statsComponent.createNewStatForAlgorithm(solver.toString());
             this.controller
                 .solveProblem(solver.getSolver(), this.statsComponent)
                 .then(() => {
@@ -95,6 +97,7 @@ export default class Application {
         if (!problemDisplay) {
             this.showErrorMessage('No Problem selected!');
         } else {
+            this.statsComponent.reset();
             this.controller.setProblem(problemDisplay);
             this.setSolvers(problemDisplay.getSolvers());
             this.controller.generateProblem();

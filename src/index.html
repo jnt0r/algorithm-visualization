@@ -65,7 +65,17 @@
                 margin-top: 10px;
             }
 
-            .app .options .stats span {
+            .app .options .stats .stat:not(:last-child) {
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+                border-bottom: 1px solid black;
+            }
+
+            .app .options .stats .stat .name {
+                font-weight: bold;
+            }
+
+            .app .options .stats .stat span {
                 display: block;
                 margin-top: 5px;
             }
@@ -73,9 +83,6 @@
             .app .renderer-wrapper {
                 height: 100%;
                 width: 82%;
-                /*border: 1px solid #999;*/
-                /*pointer-events: none;*/
-                /*user-select: none;*/
             }
 
             label:disabled, select:disabled, button:disabled {
