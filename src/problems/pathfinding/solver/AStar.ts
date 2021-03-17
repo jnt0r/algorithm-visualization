@@ -23,7 +23,7 @@ export default class AStar implements PathFindingProblemSolver {
     private async findPathInGrid(): Promise<void> {
         while (this.openSet.length !== 0) {
             const current: GridBox = this.getBestFromOpenSet();
-            current.markVisited();
+            this.grid.visitField(current);
 
             if (current === this.grid.goal) {
                 return;

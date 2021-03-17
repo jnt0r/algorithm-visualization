@@ -12,6 +12,17 @@ import BreadthFirstSearch from '../../../src/problems/pathfinding/solver/Breadth
 describe('PathFindingProblem', () => {
     const renderer: Renderer = new TestRenderer();
 
+    test('Checked fields stat should be initialized with 0', () => {
+        const data = new Grid(10, 10, renderer);
+        expect(data.getStats().getStats().get('Checked fields')).toEqual(0);
+    });
+
+    test('Checked fields stat should increase by 1 on getElement', () => {
+        const data = new Grid(10, 10, renderer);
+        data.getElement(1, 1);
+        expect(data.getStats().getStats().get('Checked fields')).toEqual(1);
+    });
+
     test('Visited fields stat should be initialized with 0', () => {
         const data = new Grid(10, 10, renderer);
         expect(data.getStats().getStats().get('Visited fields')).toEqual(0);
@@ -19,7 +30,7 @@ describe('PathFindingProblem', () => {
 
     test('Visited fields stat should increase by 1 on getElement', () => {
         const data = new Grid(10, 10, renderer);
-        data.getElement(1, 1);
+        data.visitField(data.getElement(1, 1)!);
         expect(data.getStats().getStats().get('Visited fields')).toEqual(1);
     });
 

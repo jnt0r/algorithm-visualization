@@ -58,7 +58,7 @@ describe('Grid', () => {
         test('should reset stats', () => {
             const grid = new Grid(10, 10, testRenderer);
             grid.getStats().addPathField();
-            grid.getStats().addVisitedField();
+            grid.getStats().addCheckedField();
 
             grid.reset();
 

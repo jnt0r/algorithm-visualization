@@ -60,7 +60,7 @@ export default class Dijkstra implements PathFindingProblemSolver {
 
     private processNeighbour(neighbour: GridBox, box: GridBox, nextLayer: GridBox[]): void {
         if (!neighbour.isVisited()) {
-            neighbour.markVisited();
+            this.grid.visitField(neighbour);
             neighbour.setCost(box.getCost() + 1);
 
             if (nextLayer.indexOf(neighbour) === -1) {

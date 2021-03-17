@@ -6,37 +6,37 @@ import Queue from '../../../utils/Queue';
 
 export default class BreadthFirstSearch implements PathFindingProblemSolver {
     private readonly queue = new Queue<GridBox>();
-    private data!: Grid;
+    private grid!: Grid;
 
     async solve(data: Grid): Promise<Path> {
-        this.data = data;
+        this.grid = data;
         this.initialize();
 
-        return this.searchForPathIn(data).then(() => this.calculatePath());
+        return this.searchForPathInGrid().then(() => this.calculatePath());
     }
 
     private initialize() {
-        this.data.start.markVisited();
-        this.data.start.setCost(0);
-        this.queue.push(this.data.start);
+        this.grid.start.markVisited();
+        this.grid.start.setCost(0);
+        this.queue.push(this.grid.start);
     }
 
-    private async searchForPathIn(data: Grid): Promise<void> {
+    private async searchForPathInGrid(): Promise<void> {
         while (!this.queue.isEmpty()) {
             const box = this.getFirstQueueEntry();
             const possibleNeighbours = this.getAllUnvisitedNeighboursOf(box);
 
             let goalFound = false;
             possibleNeighbours.forEach((neighbour) => {
-                neighbour.markVisited();
+                this.grid.visitField(neighbour);
                 neighbour.setCost(box.getCost() + 1);
                 this.queue.push(neighbour);
-                if (neighbour === data.goal) {
+                if (neighbour === this.grid.goal) {
                     goalFound = true;
                 }
             });
 
-            await data.renderAnimated();
+            await this.grid.renderAnimated();
 
             if (goalFound) return;
         }
@@ -45,7 +45,7 @@ export default class BreadthFirstSearch implements PathFindingProblemSolver {
     }
 
     private getAllUnvisitedNeighboursOf(box: GridBox) {
-        return this.data.getNeighboursOfElement(box).filter((value) => !value.isVisited());
+        return this.grid.getNeighboursOfElement(box).filter((value) => !value.isVisited());
     }
 
     private getFirstQueueEntry(): GridBox {
@@ -56,7 +56,7 @@ export default class BreadthFirstSearch implements PathFindingProblemSolver {
 
     private calculatePath() {
         const path = new Path();
-        let current = this.data.goal;
+        let current = this.grid.goal;
 
         while (current.getCost() !== 1) {
             current = this.getBestNeighbourFor(current);
@@ -67,6 +67,6 @@ export default class BreadthFirstSearch implements PathFindingProblemSolver {
     }
 
     private getBestNeighbourFor(box: GridBox) {
-        return this.data.getNeighboursOfElement(box).sort((a, b) => a.getCost() - b.getCost())[0];
+        return this.grid.getNeighboursOfElement(box).sort((a, b) => a.getCost() - b.getCost())[0];
     }
 }

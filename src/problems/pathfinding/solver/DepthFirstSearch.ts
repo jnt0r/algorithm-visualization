@@ -19,13 +19,13 @@ export default class DepthFirstSearch implements PathFindingProblemSolver {
         while (!this.queue.isEmpty()) {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const box = this.queue.pop()!;
+            this.data.visitField(box);
             const neighbours = this.data.getNeighboursOfElement(box);
 
             let goalFound = false;
             neighbours
                 .filter((value) => !value.isVisited())
                 .forEach((neighbour) => {
-                    neighbour.markVisited();
                     neighbour.setCost(box.getCost() + 1);
                     this.queue.push(neighbour);
                     if (neighbour === this.data.goal) {
@@ -37,6 +37,8 @@ export default class DepthFirstSearch implements PathFindingProblemSolver {
 
             if (goalFound) return;
         }
+
+        throw new Error('No Path found!');
     }
 
     private calculatePath() {
