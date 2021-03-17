@@ -33,7 +33,6 @@ const availableProblems = [
     new ProblemDisplay<LabyrinthProblem, PathFindingProblemSolver>('Labyrinth', LabyrinthProblem, [
         new SolverDisplay('Dijkstra', Dijkstra),
         new SolverDisplay('Breadth First', BreadthFirstSearch),
-
         new SolverDisplay('Depth First', DepthFirstSearch),
         new SolverDisplay('A*', AStar),
     ]),

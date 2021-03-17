@@ -52,6 +52,6 @@ export default class Controller {
      * @private
      */
     private convertAnimationSpeed(animationSpeed: number) {
-        return 1000 - 10 * animationSpeed;
+        return 100 - 1 * animationSpeed;
     }
 }
