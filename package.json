@@ -15,7 +15,7 @@
         "konva": "^7.2.5"
     },
     "devDependencies": {
-        "@types/jest": "^26.0.20",
+        "@types/jest": "^26.0.21",
         "@typescript-eslint/eslint-plugin": "^4.17.0",
         "@typescript-eslint/parser": "^4.17.0",
         "awesome-typescript-loader": "^5.2.1",
