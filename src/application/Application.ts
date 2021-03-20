@@ -8,6 +8,7 @@ import SuccessMessage from './components/SuccessMessage';
 import ErrorMessage from './components/ErrorMessage';
 import StatsComponent from './components/StatsComponent';
 import { Configuration } from './Configuration';
+import RangeComponent from './components/RangeComponent';
 
 /**
  * @class Application
@@ -18,8 +19,7 @@ export default class Application {
     /* eslint-disable  */
     private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never, any, any>>>("problemSelect");
     private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never, any, any>>>("algorithmSelect");
-    private readonly animationSpeedSelect: HTMLInputElement = <HTMLInputElement>(document.getElementById("animationSpeedSelect"));
-    private readonly animationSpeedOutput: HTMLOutputElement = <HTMLOutputElement>(document.getElementById("animationSpeedOutput"));
+    private readonly animationSpeedSelect = new RangeComponent("animationSpeed", 0, 100, 50);
     private readonly solveBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("solveBtn");
     private readonly generateBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("generateBtn");
     private readonly resetBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("resetBtn");
@@ -27,20 +27,23 @@ export default class Application {
 
     private readonly statsComponent = new StatsComponent();
 
-    constructor(private readonly controller: Controller, private readonly config: Configuration) {
+    constructor(private readonly controller: Controller) {
+        this.registerActions();
+        this.initializeValues();
+    }
+
+    private registerActions() {
         this.problemSelectElement.onUpdate((problem) => this.onProblemSelectUpdate(problem));
         this.algorithmSelectElement.onUpdate(() => this.onAlgorithmSelectUpdate());
-        this.animationSpeedSelect.oninput = () => this.onAnimationSpeedSelectInput();
+        this.animationSpeedSelect.onUpdate((animationSpeed) => this.updateAnimationSpeed(animationSpeed));
         this.solveBtn.onclick = () => this.onSolveBtnClick();
         this.generateBtn.onclick = () => this.onGenerateBtnClick();
         this.resetBtn.onclick = () => this.onResetBtnClick();
-
-        this.initializeValues();
     }
 
     private initializeValues() {
         this.setProblems(this.controller.getProblems());
-        this.onAnimationSpeedSelectInput();
+        this.updateAnimationSpeed(this.animationSpeedSelect.getValue());
     }
 
     private onAlgorithmSelectUpdate() {
@@ -78,17 +81,8 @@ export default class Application {
         }
     }
 
-    private onAnimationSpeedSelectInput() {
-        let animationSpeed = this.animationSpeedSelect.valueAsNumber;
-        if (animationSpeed < 1) {
-            animationSpeed = 1;
-        }
-        if (animationSpeed > 100) {
-            animationSpeed = 100;
-        }
+    private updateAnimationSpeed(animationSpeed: number) {
         this.controller.setAnimationSpeed(animationSpeed);
-        this.animationSpeedOutput.value = '' + animationSpeed;
-        this.animationSpeedSelect.valueAsNumber = animationSpeed;
     }
 
     private onProblemSelectUpdate(
@@ -126,7 +120,7 @@ export default class Application {
     }
 
     private setSolvers(solvers: SolverDisplay<ProblemSolver<never, unknown, unknown>>[]) {
-        this.algorithmSelectElement.empty();
+        this.algorithmSelectElement.clear();
         solvers.forEach((s) => this.algorithmSelectElement.addItem(s));
     }
 

@@ -22,7 +22,7 @@ const availableProblems = [
     new ProblemDisplay<SortingProblem, SortingProblemSolver>('Sorting', SortingProblem, [
         new SolverDisplay('Bubblesort', BubbleSort),
         new SolverDisplay('Selectionsort', SelectionSort),
-        new SolverDisplay('QuickSort', QuickSort),
+        new SolverDisplay('Quicksort', QuickSort),
     ]),
     new ProblemDisplay<PathFindingProblem, PathFindingProblemSolver>('Pathfinding', PathFindingProblem, [
         new SolverDisplay('Dijkstra', Dijkstra),
@@ -38,4 +38,4 @@ const availableProblems = [
     ]),
 ];
 const controller = new Controller(renderer, availableProblems);
-new Application(controller, new EnglishConfiguration());
+new Application(controller);

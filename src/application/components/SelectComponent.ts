@@ -18,11 +18,11 @@ export default class SelectComponent<T extends { toString(): string }> {
         };
     }
 
-    getSelectedItem(): T {
+    getSelectedItem(): T | undefined {
         return this.items[this.items.findIndex((p) => p.toString() === this.select.value)];
     }
 
-    empty(): void {
+    clear(): void {
         this.items = [];
         this.select.options.length = 0;
     }
