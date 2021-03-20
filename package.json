@@ -8,7 +8,7 @@
         "build": "webpack",
         "watch": "webpack --watch",
         "serve": "webpack serve",
-        "lint": "eslint"
+        "lint": "eslint ./src --fix"
     },
     "dependencies": {
         "@svgdotjs/svg.js": "^3.0.16",

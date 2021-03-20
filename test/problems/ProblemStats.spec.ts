@@ -48,7 +48,8 @@ describe('ProblemStats', () => {
     test('add should throw error on not existing stat', () => {
         expect(() => stats.add('notExistingStat', 2)).toThrow(
             new Error(
-                "IllegalArgumentError: Stat with key 'notExistingStat' does not exist. Can only add number to existing stat of type 'number'",
+                'IllegalArgumentError: Stat with key \'notExistingStat\' does not exist. ' +
+                'Can only add number to existing stat of type \'number\'',
             ),
         );
     });
@@ -58,7 +59,8 @@ describe('ProblemStats', () => {
 
         expect(() => stats.add('testString', 2)).toThrow(
             new Error(
-                "IllegalArgumentError: Can only add number to stat that is of type 'number'. Stat with key 'testString' is of type 'string'",
+                'IllegalArgumentError: Can only add number to stat that is of type \'number\'. ' +
+                'Stat with key \'testString\' is of type \'string\'',
             ),
         );
     });
@@ -68,7 +70,8 @@ describe('ProblemStats', () => {
 
         expect(() => stats.add('testBoolean', 2)).toThrow(
             new Error(
-                "IllegalArgumentError: Can only add number to stat that is of type 'number'. Stat with key 'testBoolean' is of type 'boolean'",
+                'IllegalArgumentError: Can only add number to stat that is of type \'number\'. ' +
+              'Stat with key \'testBoolean\' is of type \'boolean\'',
             ),
         );
     });

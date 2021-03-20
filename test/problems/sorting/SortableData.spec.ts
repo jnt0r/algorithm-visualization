@@ -8,31 +8,35 @@ describe('SortableData', () => {
     let data: SortableData;
 
     beforeEach(() => {
-        data = new SortableData([1, 2, 3, 4, 5], renderer);
+        data = new SortableData([ 1, 2, 3, 4, 5 ], renderer);
     });
 
     test('Comparisons stat is initialized with 0', () => {
-        const comparisons = data.getStats().getStats().get('comparisons');
+        const comparisons = data.getStats().getStats()
+            .get('comparisons');
 
         expect(comparisons).toEqual(0);
     });
 
     test('Comparisons stat is increased by 1 on compare', () => {
         data.compareElements(1, EQUAL, 2);
-        const comparisons = data.getStats().getStats().get('comparisons');
+        const comparisons = data.getStats().getStats()
+            .get('comparisons');
 
         expect(comparisons).toEqual(1);
     });
 
     test('Swaps stat is initialized with 0', () => {
-        const swaps = data.getStats().getStats().get('swaps');
+        const swaps = data.getStats().getStats()
+            .get('swaps');
 
         expect(swaps).toEqual(0);
     });
 
     test('Swaps stat is increased by 1 on swap', () => {
         data.swap(1, 2);
-        const swaps = data.getStats().getStats().get('swaps');
+        const swaps = data.getStats().getStats()
+            .get('swaps');
 
         expect(swaps).toEqual(1);
     });

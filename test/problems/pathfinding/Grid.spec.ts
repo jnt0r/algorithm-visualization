@@ -16,25 +16,25 @@ describe('Grid', () => {
         test('should return right neighbour', () => {
             const grid = new Grid(2, 1, testRenderer);
 
-            expect(grid.getNeighboursOfElement(grid.getElement(0, 0)!)).toEqual([grid.getElement(1, 0)]);
+            expect(grid.getNeighboursOfElement(grid.getElement(0, 0)!)).toEqual([ grid.getElement(1, 0) ]);
         });
 
         test('should return left neighbour', () => {
             const grid = new Grid(2, 1, testRenderer);
 
-            expect(grid.getNeighboursOfElement(grid.getElement(1, 0)!)).toEqual([grid.getElement(0, 0)]);
+            expect(grid.getNeighboursOfElement(grid.getElement(1, 0)!)).toEqual([ grid.getElement(0, 0) ]);
         });
 
         test('should return upper neighbour', () => {
             const grid = new Grid(1, 2, testRenderer);
 
-            expect(grid.getNeighboursOfElement(grid.getElement(0, 0)!)).toEqual([grid.getElement(0, 1)]);
+            expect(grid.getNeighboursOfElement(grid.getElement(0, 0)!)).toEqual([ grid.getElement(0, 1) ]);
         });
 
         test('should return lower neighbour', () => {
             const grid = new Grid(1, 2, testRenderer);
 
-            expect(grid.getNeighboursOfElement(grid.getElement(0, 1)!)).toEqual([grid.getElement(0, 0)]);
+            expect(grid.getNeighboursOfElement(grid.getElement(0, 1)!)).toEqual([ grid.getElement(0, 0) ]);
         });
 
         test('should return all neighbours', () => {

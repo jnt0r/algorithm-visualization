@@ -9,7 +9,7 @@ export class CanvasComponent implements Component {
     }
 
     onMouseOver(func: (ev: { leftMouseButton: boolean; rightMouseButton: boolean }) => void): void {
-        this.shape.on('mouseover', (ev) =>
+        this.shape.on('mouseover', ev =>
             func({
                 leftMouseButton: ev.evt.buttons === 1,
                 rightMouseButton: ev.evt.buttons === 2,

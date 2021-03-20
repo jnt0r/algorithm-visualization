@@ -9,7 +9,7 @@ export default class SortableData {
     private readonly stats = new SortingProblemStats();
 
     constructor(numbers: number[], private readonly renderer: Renderer) {
-        numbers.forEach((value) => this.bars.push(new SortingElement(value)));
+        numbers.forEach(value => this.bars.push(new SortingElement(value)));
     }
 
     render(): void {
@@ -53,13 +53,13 @@ export default class SortableData {
     }
 
     markComparingElements(...indexes: number[]): Promise<void> {
-        indexes.forEach((i) => this.getElement(i).markComparing());
+        indexes.forEach(i => this.getElement(i).markComparing());
 
         return this.renderAnimated();
     }
 
     resetComparingElements(...indexes: number[]): void {
-        indexes.forEach((i) => this.getElement(i).unmark());
+        indexes.forEach(i => this.getElement(i).unmark());
         this.render();
     }
 

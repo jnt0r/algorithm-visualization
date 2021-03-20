@@ -30,8 +30,8 @@ export default class DepthFirstSearch extends LowestCostBasedPathCalculationSolv
 
             let goalFound = false;
             neighbours
-                .filter((value) => !value.isVisited())
-                .forEach((neighbour) => {
+                .filter(value => !value.isVisited())
+                .forEach(neighbour => {
                     neighbour.setCost(box.getCost() + 1);
                     this.queue.push(neighbour);
                     if (neighbour === this.data.goal) {

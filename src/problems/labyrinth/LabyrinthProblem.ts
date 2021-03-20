@@ -31,7 +31,7 @@ export default class LabyrinthProblem extends PathFindingProblem {
 
             if (x % 2 === 0 && y % 2 === 0) {
                 box.removeWall();
-                this.sets.push([box]);
+                this.sets.push([ box ]);
                 this.setsMap.set(this.sets.length - 1, this.sets.length - 1);
             }
             if (x % 2 === 0 && y % 2 != 0) {
@@ -90,7 +90,7 @@ export default class LabyrinthProblem extends PathFindingProblem {
      */
     private mergeSets(set1: GridBox[], set2: GridBox[]): void {
         for (const a of set2) {
-            if (set1.findIndex((v) => v.point.getX() === a.point.getX() && v.point.getY() === a.point.getY()) === -1) {
+            if (set1.findIndex(v => v.point.getX() === a.point.getX() && v.point.getY() === a.point.getY()) === -1) {
                 set1.push(a);
             }
         }
@@ -99,7 +99,7 @@ export default class LabyrinthProblem extends PathFindingProblem {
     private forEachBoxInGrid(func: (box: GridBox, x: number, y: number) => void) {
         for (let x = 0; x < this.grid.width; x++) {
             for (let y = 0; y < this.grid.height; y++) {
-                // We know the element at this position must exist so we can ignore the possible return value of undefined
+                // We know the element at this position must exist so we can ignore the possible undefined
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 const gridBox = this.grid.getElement(x, y)!;
                 func(gridBox, x, y);

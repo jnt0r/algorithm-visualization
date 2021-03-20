@@ -8,6 +8,7 @@ module.exports = {
 
     plugins: [ '@typescript-eslint/eslint-plugin' ],
     extends: [
+        'eslint:recommended',
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
     ],
@@ -20,9 +21,13 @@ module.exports = {
 
     rules: {
         'max-len': [ 'error', 120 ],
+        '@typescript-eslint/no-non-null-assertion': [ 'off' ],
         'no-trailing-spaces': [ 'error' ],
         quotes: [ 'error', 'single' ],
-        semi: [ 'error' ],
+        semi: 'off',
+        '@typescript-eslint/semi': [ 'error' ],
+        'no-extra-semi': [ 'error' ],
+        'semi-spacing': [ 'error', { 'before': false, 'after': true } ],
         'arrow-parens': [ 'error', 'as-needed' ],
         'object-curly-spacing': [ 'error', 'always' ],
         'array-bracket-spacing': [ 'error', 'always' ],

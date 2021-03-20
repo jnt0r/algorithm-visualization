@@ -5,7 +5,9 @@ import Point from '../../../renderer/Point';
 
 export default class SVGText extends SVGComponent implements Text {
     constructor(private text: string, private readonly position: Point) {
-        super(new SvgText().text(text).transform({ scaleY: -1 }).move(position.getX(), position.getY()));
+        super(new SvgText().text(text)
+            .transform({ scaleY: -1 })
+            .move(position.getX(), position.getY()));
     }
 
     setText(text: string): void {

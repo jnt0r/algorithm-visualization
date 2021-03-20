@@ -20,7 +20,7 @@ export default class SVGRenderer extends BaseRenderer {
         this.wrapper = <HTMLDivElement>document.getElementById(id);
         this.svg = SVG()
             .addTo(this.wrapper)
-            .size('100%', '100%')
+            .size('100%',  '100%')
             .transform({
                 flip: 'y',
             });

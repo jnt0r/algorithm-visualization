@@ -7,7 +7,6 @@ import SolverDisplay from './components/SolverDisplay';
 import SuccessMessage from './components/SuccessMessage';
 import ErrorMessage from './components/ErrorMessage';
 import StatsComponent from './components/StatsComponent';
-import { Configuration } from './Configuration';
 import RangeComponent from './components/RangeComponent';
 
 /**
@@ -33,9 +32,9 @@ export default class Application {
     }
 
     private registerActions() {
-        this.problemSelectElement.onUpdate((problem) => this.onProblemSelectUpdate(problem));
+        this.problemSelectElement.onUpdate(problem => this.onProblemSelectUpdate(problem));
         this.algorithmSelectElement.onUpdate(() => this.onAlgorithmSelectUpdate());
-        this.animationSpeedSelect.onUpdate((animationSpeed) => this.updateAnimationSpeed(animationSpeed));
+        this.animationSpeedSelect.onUpdate(animationSpeed => this.updateAnimationSpeed(animationSpeed));
         this.solveBtn.onclick = () => this.onSolveBtnClick();
         this.generateBtn.onclick = () => this.onGenerateBtnClick();
         this.resetBtn.onclick = () => this.onResetBtnClick();
@@ -71,7 +70,7 @@ export default class Application {
                 .then(() => {
                     this.showSuccessMessage();
                 })
-                .catch((error) => {
+                .catch(error => {
                     console.error(error);
                     this.showErrorMessage(error);
                 })
@@ -115,13 +114,13 @@ export default class Application {
     }
 
     private setProblems(problems: ProblemDisplay<Problem<never>, ProblemSolver<never, unknown, unknown>>[]): void {
-        problems.forEach((problem) => this.problemSelectElement.addItem(problem));
+        problems.forEach(problem => this.problemSelectElement.addItem(problem));
         this.onProblemSelectUpdate(problems[0]);
     }
 
     private setSolvers(solvers: SolverDisplay<ProblemSolver<never, unknown, unknown>>[]) {
         this.algorithmSelectElement.clear();
-        solvers.forEach((s) => this.algorithmSelectElement.addItem(s));
+        solvers.forEach(s => this.algorithmSelectElement.addItem(s));
     }
 
     private showErrorMessage(message: string): void {

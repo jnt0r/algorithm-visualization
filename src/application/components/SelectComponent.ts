@@ -19,7 +19,7 @@ export default class SelectComponent<T extends { toString(): string }> {
     }
 
     getSelectedItem(): T | undefined {
-        return this.items[this.items.findIndex((p) => p.toString() === this.select.value)];
+        return this.items[this.items.findIndex(p => p.toString() === this.select.value)];
     }
 
     clear(): void {

@@ -5,7 +5,8 @@ import { Rect } from '@svgdotjs/svg.js';
 
 export class SVGRectangle extends SVGComponent implements Rectangle {
     constructor(position: Point, width: number, height: number) {
-        super(new Rect().move(position.getX(), position.getY()).size(width, height));
+        super(new Rect().move(position.getX(), position.getY())
+            .size(width, height));
     }
 
     setHeight(height: number): void {

@@ -12,7 +12,7 @@ export default class AStar implements PathFindingProblemSolver {
 
     async solve(grid: Grid): Promise<Path> {
         this.grid = grid;
-        this.openSet = [grid.start];
+        this.openSet = [ grid.start ];
         this.closedSet = [];
         this.cameFrom = [];
         grid.start.setCost(0);
@@ -31,7 +31,7 @@ export default class AStar implements PathFindingProblemSolver {
 
             this.closedSet.push(current);
 
-            this.grid.getNeighboursOfElement(current).forEach((neighbour) => this.processNeighbour(neighbour, current));
+            this.grid.getNeighboursOfElement(current).forEach(neighbour => this.processNeighbour(neighbour, current));
 
             await this.grid.renderAnimated();
         }

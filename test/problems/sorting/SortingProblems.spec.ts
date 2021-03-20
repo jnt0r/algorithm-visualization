@@ -23,11 +23,11 @@ describe('SortingProblem', () => {
     describe('Solver', () => {
         // Parameterized test for each SortingProblemSolver implementation
         test.each([
-            ['BubbleSort', new BubbleSort()],
-            ['SelectionSort', new SelectionSort()],
-            ['QuickSort', new QuickSort()],
+            [ 'BubbleSort', new BubbleSort() ],
+            [ 'SelectionSort', new SelectionSort() ],
+            [ 'QuickSort', new QuickSort() ],
         ])('%s', async (name: string, solver: SortingProblemSolver) => {
-            const data = new SortableData([9, 1, 4, 8, 10, 2, 3, 6, 5, 7], renderer);
+            const data = new SortableData([ 9, 1, 4, 8, 10, 2, 3, 6, 5, 7 ], renderer);
 
             await solver.solve(data);
 

@@ -14,7 +14,7 @@ export default abstract class BaseRenderer implements Renderer {
     }
 
     async animate(): Promise<void> {
-        return new Promise<void>((resolve) => {
+        return new Promise<void>(resolve => {
             window.requestAnimationFrame(() => {
                 setTimeout(() => {
                     resolve();

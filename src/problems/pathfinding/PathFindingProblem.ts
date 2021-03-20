@@ -9,7 +9,7 @@ export default class PathFindingProblem extends MustInitializeWithRenderer imple
     protected grid!: Grid;
 
     async solve(solver: PathFindingProblemSolver): Promise<void> {
-        return solver.solve(this.grid).then((path) => this.visualizePath(path));
+        return solver.solve(this.grid).then(path => this.visualizePath(path));
     }
 
     render(): void {

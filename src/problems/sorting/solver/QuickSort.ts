@@ -22,7 +22,7 @@ export default class QuickSort implements SortingProblemSolver {
         if (left < right) {
             const divider = await this.divide(left, right);
             // Process left and right part simultaneously
-            await Promise.all([this.quicksort(left, divider - 1), this.quicksort(divider + 1, right)]);
+            await Promise.all([ this.quicksort(left, divider - 1), this.quicksort(divider + 1, right) ]);
         }
 
         if (left === right) {

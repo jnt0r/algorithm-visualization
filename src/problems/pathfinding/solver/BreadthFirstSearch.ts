@@ -27,7 +27,7 @@ export default class BreadthFirstSearch extends LowestCostBasedPathCalculationSo
             const possibleNeighbours = this.getAllUnvisitedNeighboursOf(box);
 
             let goalFound = false;
-            possibleNeighbours.forEach((neighbour) => {
+            possibleNeighbours.forEach(neighbour => {
                 this.grid.visitField(neighbour);
                 neighbour.setCost(box.getCost() + 1);
                 this.queue.push(neighbour);
@@ -45,7 +45,7 @@ export default class BreadthFirstSearch extends LowestCostBasedPathCalculationSo
     }
 
     private getAllUnvisitedNeighboursOf(box: GridBox) {
-        return this.grid.getNeighboursOfElement(box).filter((value) => !value.isVisited());
+        return this.grid.getNeighboursOfElement(box).filter(value => !value.isVisited());
     }
 
     private getFirstQueueEntry(): GridBox {

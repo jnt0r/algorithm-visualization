@@ -6,7 +6,7 @@ import PathFindingProblemSolver from '../PathFindingProblemSolver';
 export default abstract class LowestCostBasedPathCalculationSolver implements PathFindingProblemSolver {
     abstract solve(data: Grid): Promise<Path>;
 
-    protected calculatePath(data: Grid) {
+    protected calculatePath(data: Grid): Path {
         const path = new Path();
         let current = data.goal;
 

@@ -15,7 +15,7 @@ export default class Dijkstra extends LowestCostBasedPathCalculationSolver {
     }
 
     private async calculateCostsForEachElementOfGrid(): Promise<void> {
-        let layer: GridBox[] = [this.grid.start];
+        let layer: GridBox[] = [ this.grid.start ];
 
         while (layer.length > 0) {
             if (this.goalWasCheckedIn(layer)) {
@@ -30,7 +30,7 @@ export default class Dijkstra extends LowestCostBasedPathCalculationSolver {
     }
 
     /**
-     * Calculates costs for all neighbours of the elements in lastLayer and returns all neighbours of lastLayer elements.
+     * Calculates costs for all neighbours of the elements in lastLayer and returns all neighbours of lastLayer elements
      *
      * @param lastLayer
      * @return All neighbours of the elements of the lastLayer
@@ -39,10 +39,10 @@ export default class Dijkstra extends LowestCostBasedPathCalculationSolver {
     private calculateNextLayer(lastLayer: GridBox[]): GridBox[] {
         const nextLayer: GridBox[] = [];
 
-        lastLayer.forEach((box) =>
+        lastLayer.forEach(box =>
             this.grid
                 .getNeighboursOfElement(box)
-                .forEach((neighbour) => this.processNeighbour(neighbour, box, nextLayer)),
+                .forEach(neighbour => this.processNeighbour(neighbour, box, nextLayer)),
         );
 
         return nextLayer;

@@ -14,29 +14,34 @@ describe('PathFindingProblem', () => {
 
     test('Checked fields stat should be initialized with 0', () => {
         const data = new Grid(10, 10, renderer);
-        expect(data.getStats().getStats().get('Checked fields')).toEqual(0);
+        expect(data.getStats().getStats()
+            .get('Checked fields')).toEqual(0);
     });
 
     test('Checked fields stat should increase by 1 on getElement', () => {
         const data = new Grid(10, 10, renderer);
         data.getElement(1, 1);
-        expect(data.getStats().getStats().get('Checked fields')).toEqual(1);
+        expect(data.getStats().getStats()
+            .get('Checked fields')).toEqual(1);
     });
 
     test('Visited fields stat should be initialized with 0', () => {
         const data = new Grid(10, 10, renderer);
-        expect(data.getStats().getStats().get('Visited fields')).toEqual(0);
+        expect(data.getStats().getStats()
+            .get('Visited fields')).toEqual(0);
     });
 
     test('Visited fields stat should increase by 1 on getElement', () => {
         const data = new Grid(10, 10, renderer);
         data.visitField(data.getElement(1, 1)!);
-        expect(data.getStats().getStats().get('Visited fields')).toEqual(1);
+        expect(data.getStats().getStats()
+            .get('Visited fields')).toEqual(1);
     });
 
     test('Path fields stat should be initialized with 0', () => {
         const data = new Grid(10, 10, renderer);
-        expect(data.getStats().getStats().get('Path fields')).toEqual(0);
+        expect(data.getStats().getStats()
+            .get('Path fields')).toEqual(0);
     });
 
     test('Path fields stat should increase by 1 per returned Path field', async () => {
@@ -58,7 +63,8 @@ describe('PathFindingProblem', () => {
 
         await pathFindingProblem.solve(solverMock);
 
-        expect(pathFindingProblem.getStats().getStats().get('Path fields')).toEqual(5);
+        expect(pathFindingProblem.getStats().getStats()
+            .get('Path fields')).toEqual(5);
     });
 
     describe('Solver', () => {
@@ -81,10 +87,10 @@ describe('PathFindingProblem', () => {
 
         // Parameterized test for each PathfindingProblemSolver implementation
         test.each([
-            ['Dijkstra', new Dijkstra()],
-            ['DepthFirstSearch', new DepthFirstSearch()],
-            ['BreadthFirstSearch', new BreadthFirstSearch()],
-            ['AStar', new AStar()],
+            [ 'Dijkstra', new Dijkstra() ],
+            [ 'DepthFirstSearch', new DepthFirstSearch() ],
+            [ 'BreadthFirstSearch', new BreadthFirstSearch() ],
+            [ 'AStar', new AStar() ],
         ])('%s', async (name: string, solver: PathFindingProblemSolver) => {
             // start should be at 0,0
             // goal should be at 2,4

@@ -43,6 +43,6 @@ export default class ProblemStats {
     }
 
     private notify() {
-        this.observers.forEach((subscriber) => subscriber.update(this));
+        this.observers.forEach(subscriber => subscriber.update(this));
     }
 }

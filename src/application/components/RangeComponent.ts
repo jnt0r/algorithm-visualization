@@ -1,28 +1,26 @@
 export default class RangeComponent {
-    private readonly inputElement: HTMLInputElement;
-    private readonly outputElement: HTMLOutputElement;
+    private readonly inputElement!: HTMLInputElement;
+    private readonly outputElement!: HTMLOutputElement;
 
     constructor(
         private readonly id: string,
-        private readonly min: number,
-        private readonly max: number,
-        private readonly initial: number,
+        private readonly minValue: number,
+        private readonly maxValue: number,
+        private readonly initialValue: number,
     ) {
         this.inputElement = <HTMLInputElement>document.getElementById(id);
-        this.inputElement.min = '' + min;
-        this.inputElement.max = '' + max;
-        this.inputElement.valueAsNumber = initial;
-        this.outputElement = this.createOutputElement();
-        this.updateOutputElementValue();
+        this.outputElement = document.createElement('output');
+        this.initializeInputElement();
+        this.initializeOutputElement();
     }
 
     onUpdate(func: (value: number) => void): void {
         this.inputElement.oninput = () => {
-            if (this.inputElement.valueAsNumber < this.min) {
-                this.inputElement.valueAsNumber = this.min;
+            if (this.inputElement.valueAsNumber < this.minValue) {
+                this.inputElement.valueAsNumber = this.minValue;
             }
-            if (this.inputElement.valueAsNumber > this.max) {
-                this.inputElement.valueAsNumber = this.max;
+            if (this.inputElement.valueAsNumber > this.maxValue) {
+                this.inputElement.valueAsNumber = this.maxValue;
             }
 
             this.updateOutputElementValue();
@@ -32,6 +30,19 @@ export default class RangeComponent {
 
     getValue(): number {
         return this.inputElement.valueAsNumber;
+    }
+
+    private initializeOutputElement() {
+        this.outputElement.setAttribute('id', this.id + 'Output');
+        this.inputElement.parentElement!.append(this.outputElement);
+
+        this.updateOutputElementValue();
+    }
+
+    private initializeInputElement() {
+        this.inputElement.min = '' + this.minValue;
+        this.inputElement.max = '' + this.maxValue;
+        this.inputElement.valueAsNumber = this.initialValue;
     }
 
     private updateOutputElementValue() {
