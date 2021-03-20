@@ -15,11 +15,11 @@ export default class CanvasRenderer extends BaseRenderer {
     private readonly stage: Konva.Stage;
     private readonly layer: Konva.Layer;
 
-    constructor() {
+    constructor(private readonly id: string) {
         super();
-        const wrapper: HTMLDivElement = <HTMLDivElement>document.getElementById('canvas-wrapper');
+        const wrapper: HTMLDivElement = <HTMLDivElement>document.getElementById(id);
         this.stage = new Konva.Stage({
-            container: 'canvas-wrapper',
+            container: wrapper,
             width: wrapper.clientWidth,
             height: wrapper.clientHeight,
             y: wrapper.clientHeight,

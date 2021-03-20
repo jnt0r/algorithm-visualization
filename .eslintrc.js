@@ -11,7 +11,6 @@ module.exports = {
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
         'prettier',
-        'plugin:prettier/recommended',
     ],
 
     root: true,
@@ -24,6 +23,8 @@ module.exports = {
         // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
         // e.g. "@typescript-eslint/explicit-function-return-type": "off",
         'newline-before-return': ['error'],
+        indent: ['error', 4, { MemberExpression: 1 }],
+        'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
         'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
         '@typescript-eslint/member-ordering': [
             'error',

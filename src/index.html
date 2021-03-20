@@ -80,7 +80,7 @@
                 margin-top: 5px;
             }
 
-            .app .renderer-wrapper {
+            #renderer-wrapper {
                 height: 100%;
                 width: 82%;
             }
@@ -151,8 +151,7 @@
                 </label>
                 <label>
                     Animation speed
-                    <input id="animationSpeed" type="range" min="1" max="100" value="50">
-<!--                    <output id="animationSpeedOutput"></output>-->
+                    <input id="animationSpeed" type="range">
                 </label>
 
                 <button id="generateBtn">Generate Problem</button>
@@ -164,8 +163,7 @@
                 </div>
             </div>
 
-            <div id="canvas-wrapper" class="canvas-wrapper renderer-wrapper" oncontextmenu="return false"></div>
-<!--            <div class="svg-wrapper renderer-wrapper" oncontextmenu="return false"></div>-->
+            <div id="renderer-wrapper" oncontextmenu="return false"></div>
         </div>
     </body>
 </html>

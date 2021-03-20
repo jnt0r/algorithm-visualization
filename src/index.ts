@@ -13,11 +13,10 @@ import PathFindingProblemSolver from './problems/pathfinding/PathFindingProblemS
 import Dijkstra from './problems/pathfinding/solver/Dijkstra';
 import AStar from './problems/pathfinding/solver/AStar';
 import LabyrinthProblem from './problems/labyrinth/LabyrinthProblem';
-import EnglishConfiguration from './application/Configuration';
 import BreadthFirstSearch from './problems/pathfinding/solver/BreadthFirstSearch';
 import DepthFirstSearch from './problems/pathfinding/solver/DepthFirstSearch';
 
-const renderer = new CanvasRenderer();
+const renderer = new CanvasRenderer('renderer-wrapper');
 const availableProblems = [
     new ProblemDisplay<SortingProblem, SortingProblemSolver>('Sorting', SortingProblem, [
         new SolverDisplay('Bubblesort', BubbleSort),

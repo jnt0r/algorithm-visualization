@@ -1,4 +1,4 @@
-import { SVG } from '@svgdotjs/svg.js';
+import { Svg, SVG } from '@svgdotjs/svg.js';
 import Point from '../../../renderer/Point';
 import Rectangle from '../../../renderer/components/Rectangle';
 import Line from '../../../renderer/components/Line';
@@ -12,21 +12,26 @@ import { SVGComponent } from './SVGComponent';
 import BaseRenderer from '../../../renderer/BaseRenderer';
 
 export default class SVGRenderer extends BaseRenderer {
-    private readonly svg = SVG().addTo('.svg-wrapper').size('100%', '100%');
+    private readonly svg: Svg;
+    private readonly wrapper: HTMLDivElement;
 
-    constructor() {
+    constructor(private readonly id: string) {
         super();
-        this.svg.transform({
-            flip: 'y',
-        });
+        this.wrapper = <HTMLDivElement>document.getElementById(id);
+        this.svg = SVG()
+            .addTo(this.wrapper)
+            .size('100%', '100%')
+            .transform({
+                flip: 'y',
+            });
     }
 
     getHeight(): number {
-        return document.getElementsByClassName('svg-wrapper')[0].clientHeight;
+        return this.wrapper.clientHeight;
     }
 
     getWidth(): number {
-        return document.getElementsByClassName('svg-wrapper')[0].clientWidth;
+        return this.wrapper.clientWidth;
     }
 
     /**
@@ -43,8 +48,10 @@ export default class SVGRenderer extends BaseRenderer {
     swapElementsById(elementId1: number, elementId2: number): Promise<void> {
         const e1 = this.svg.get(elementId1);
         const e2 = this.svg.get(elementId2);
-        e1.animate({ delay: 0, duration: this.animationSpeed }).move(e2.x(), e2.y());
-        e2.animate({ delay: 0, duration: this.animationSpeed }).move(e1.x(), e1.y());
+        e1.animate({ delay: 0, duration: this.animationSpeed })
+            .move(e2.x(), e2.y());
+        e2.animate({ delay: 0, duration: this.animationSpeed })
+            .move(e1.x(), e1.y());
 
         return this.animate();
     }
