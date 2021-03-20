@@ -18,7 +18,7 @@ export default class Application {
     /* eslint-disable  */
     private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never, any, any>>>("problemSelect");
     private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never, any, any>>>("algorithmSelect");
-    private readonly animationSpeedSelect = new RangeComponent("animationSpeed", 0, 100, 50);
+    private readonly animationSpeedSelect = new RangeComponent("animationSpeed", 1, 100, 50);
     private readonly solveBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("solveBtn");
     private readonly generateBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("generateBtn");
     private readonly resetBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("resetBtn");
