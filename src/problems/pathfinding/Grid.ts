@@ -24,6 +24,7 @@ export default class Grid {
     }
 
     reset(): void {
+        this.firstTimeRendering = true;
         this.stats = new PathFindingProblemStats();
 
         for (let x = 0; x < this.width; x++) {
@@ -70,13 +71,13 @@ export default class Grid {
                         component.setBorderColor(box.getBorderColor());
                     });
                     this.components[x].push(component);
+                    this.renderer.render(component);
                 } else {
                     component = this.components[x][y];
                 }
 
                 component.setColor(box.getColor());
                 component.setBorderColor(box.getBorderColor());
-                this.renderer.render(component);
             }
         }
         this.firstTimeRendering = false;

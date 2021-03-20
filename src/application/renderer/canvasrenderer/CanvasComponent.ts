@@ -2,7 +2,9 @@ import Component from '../../../renderer/Component';
 import Konva from 'konva';
 
 export class CanvasComponent implements Component {
-    constructor(protected readonly shape: Konva.Shape, private layer: Konva.Layer) {}
+    constructor(protected readonly shape: Konva.Shape, private layer: Konva.Layer) {
+        shape.perfectDrawEnabled(false);
+    }
 
     onClick(func: () => void): void {
         this.shape.on('click', () => func());
