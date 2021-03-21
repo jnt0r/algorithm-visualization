@@ -3,15 +3,15 @@ import Point from '../../api/Point';
 import Rectangle from '../../api/components/Rectangle';
 import Line from '../../api/components/Line';
 import Circle from '../../api/components/Circle';
-import { SVGRectangle } from './SVGRectangle';
-import { SVGLine } from './SVGLine';
-import { SVGCircle } from './SVGCircle';
+import SVGRectangle from './SVGRectangle';
+import SVGLine from './SVGLine';
+import SVGCircle from './SVGCircle';
 import SVGText from './SVGText';
 import Text from '../../api/components/Text';
-import { SVGComponent } from './SVGComponent';
-import BaseRenderer from '../../api/BaseRenderer';
+import SVGComponent from './SVGComponent';
+import Renderer from '../../api/Renderer';
 
-export default class SVGRenderer extends BaseRenderer {
+export default class SVGRenderer extends Renderer {
     private readonly svg: Svg;
     private readonly wrapper: HTMLDivElement;
 

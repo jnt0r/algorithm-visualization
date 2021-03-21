@@ -1,7 +1,7 @@
 import Component from '../../api/Component';
 import Konva from 'konva';
 
-export class CanvasComponent implements Component {
+export default class CanvasComponent implements Component {
     constructor(protected readonly shape: Konva.Shape, private layer: Konva.Layer) {
         shape.perfectDrawEnabled(false);
     }

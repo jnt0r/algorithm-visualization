@@ -1,5 +1,5 @@
 import Text from '../../api/components/Text';
-import { SVGComponent } from './SVGComponent';
+import SVGComponent from './SVGComponent';
 import { Text as SvgText } from '@svgdotjs/svg.js';
 import Point from '../../api/Point';
 

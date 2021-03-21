@@ -1,7 +1,7 @@
 import Component from '../../api/Component';
 import { Element } from '@svgdotjs/svg.js';
 
-export class SVGComponent implements Component {
+export default class SVGComponent implements Component {
     protected constructor(protected readonly element: Element) {}
 
     getElement(): Element {

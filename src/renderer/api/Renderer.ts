@@ -5,26 +5,38 @@ import Line from './components/Line';
 import Circle from './components/Circle';
 import Text from './components/Text';
 
-export default interface Renderer {
-    setAnimationSpeed(animationSpeed: number): void;
+export default abstract class Renderer {
+    protected animationSpeed = 10;
 
-    getHeight(): number;
+    setAnimationSpeed(animationSpeed: number): void {
+        this.animationSpeed = animationSpeed;
+    }
 
-    getWidth(): number;
+    async animate(): Promise<void> {
+        return new Promise<void>(resolve => {
+            window.requestAnimationFrame(() => {
+                setTimeout(() => {
+                    resolve();
+                }, this.animationSpeed);
+            });
+        });
+    }
 
-    clear(): void;
+    abstract render(component: Component): void;
 
-    render(component: Component): void;
+    abstract swapElementsById(id1: number, id2: number): Promise<void>;
 
-    swapElementsById(id1: number, id2: number): Promise<void>;
+    abstract createRectangle(point: Point, width: number, height: number): Rectangle;
 
-    animate(): Promise<void>;
+    abstract createLine(a: Point, b: Point): Line;
 
-    createRectangle(point: Point, width: number, height: number): Rectangle;
+    abstract createCircle(position: Point, radius: number): Circle;
 
-    createLine(a: Point, b: Point): Line;
+    abstract clear(): void;
 
-    createCircle(position: Point, radius: number): Circle;
+    abstract createText(position: Point, text: string): Text;
 
-    createText(position: Point, text: string): Text;
+    abstract getHeight(): number;
+
+    abstract getWidth(): number;
 }

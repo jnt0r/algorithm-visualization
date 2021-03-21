@@ -6,7 +6,7 @@ import Line from '../src/renderer/api/components/Line';
 import Rectangle from '../src/renderer/api/components/Rectangle';
 import Component from '../src/renderer/api/Component';
 
-export class TestRenderer implements Renderer {
+export class TestRenderer extends Renderer {
     animate(): Promise<void> {
         return Promise.resolve();
     }

@@ -1,9 +1,9 @@
-import { SVGComponent } from './SVGComponent';
+import SVGComponent from './SVGComponent';
 import Rectangle from '../../api/components/Rectangle';
 import Point from '../../api/Point';
 import { Rect } from '@svgdotjs/svg.js';
 
-export class SVGRectangle extends SVGComponent implements Rectangle {
+export default class SVGRectangle extends SVGComponent implements Rectangle {
     constructor(position: Point, width: number, height: number) {
         super(new Rect().move(position.getX(), position.getY())
             .size(width, height));

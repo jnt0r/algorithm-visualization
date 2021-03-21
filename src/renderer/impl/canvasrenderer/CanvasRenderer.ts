@@ -4,14 +4,14 @@ import Line from '../../api/components/Line';
 import Rectangle from '../../api/components/Rectangle';
 import Text from '../../api/components/Text';
 import Konva from 'konva';
-import { CanvasCircle } from './CanvasCircle';
-import { CanvasComponent } from './CanvasComponent';
-import { CanvasRectangle } from './CanvasRectangle';
-import { CanvasLine } from './CanvasLine';
-import { CanvasText } from './CanvasText';
-import BaseRenderer from '../../api/BaseRenderer';
+import CanvasCircle from './CanvasCircle';
+import CanvasComponent from './CanvasComponent';
+import CanvasRectangle from './CanvasRectangle';
+import CanvasLine from './CanvasLine';
+import CanvasText from './CanvasText';
+import Renderer from '../../api/Renderer';
 
-export default class CanvasRenderer extends BaseRenderer {
+export default class CanvasRenderer extends Renderer {
     private readonly stage: Konva.Stage;
     private readonly layer: Konva.Layer;
 

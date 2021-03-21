@@ -1,9 +1,9 @@
-import { CanvasComponent } from './CanvasComponent';
+import CanvasComponent from './CanvasComponent';
 import Rectangle from '../../api/components/Rectangle';
 import Point from '../../api/Point';
 import Konva from 'konva';
 
-export class CanvasRectangle extends CanvasComponent implements Rectangle {
+export default class CanvasRectangle extends CanvasComponent implements Rectangle {
     constructor(point: Point, width: number, height: number, layer: Konva.Layer) {
         super(
             new Konva.Rect({
