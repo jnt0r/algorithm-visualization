@@ -2,7 +2,7 @@ import Point from '../../src/renderer/api/Point';
 
 describe('Point', () => {
     describe('euclideanDistanceTo', () => {
-        test('euclideanDistanceTo should return 0 on same Points', () => {
+        test('should return 0 on same Points', () => {
             const pointA = new Point(1, 2);
             const pointB = new Point(1, 2);
 
@@ -10,7 +10,7 @@ describe('Point', () => {
             expect(pointB.euclideanDistanceTo(pointA)).toBe(0);
         });
 
-        test('euclideanDistanceTo should return euclidean distance #2', () => {
+        test('distance between point and origin', () => {
             const pointA = new Point(0, 0);
             const pointB = new Point(3, 4);
 
@@ -18,7 +18,7 @@ describe('Point', () => {
             expect(pointB.euclideanDistanceTo(pointA)).toBe(5);
         });
 
-        test('euclideanDistanceTo should return euclidean distance #3', () => {
+        test('distance between negative point and origin', () => {
             const pointA = new Point(0, 0);
             const pointB = new Point(-3, -4);
 
@@ -26,7 +26,7 @@ describe('Point', () => {
             expect(pointB.euclideanDistanceTo(pointA)).toBe(5);
         });
 
-        test('euclideanDistanceTo should return euclidean distance #4', () => {
+        test('distance between two points', () => {
             const pointA = new Point(15, 3);
             const pointB = new Point(9, 21);
 
@@ -36,7 +36,7 @@ describe('Point', () => {
     });
 
     describe('manhattanDistanceTo', () => {
-        test('manhattanDistanceTo should return 0 on same Points', () => {
+        test('should return 0 on same Points', () => {
             const pointA = new Point(1, 2);
             const pointB = new Point(1, 2);
 
@@ -44,7 +44,7 @@ describe('Point', () => {
             expect(pointB.manhattanDistanceTo(pointA)).toBe(0);
         });
 
-        test('manhattanDistanceTo should return manhattan distance #2', () => {
+        test('distance between point and origin', () => {
             const pointA = new Point(0, 0);
             const pointB = new Point(3, 4);
 
@@ -52,7 +52,7 @@ describe('Point', () => {
             expect(pointB.manhattanDistanceTo(pointA)).toBe(7);
         });
 
-        test('manhattanDistanceTo should return manhattan distance #3', () => {
+        test('distance between negative point and origin', () => {
             const pointA = new Point(0, 0);
             const pointB = new Point(-3, -4);
 
@@ -60,7 +60,7 @@ describe('Point', () => {
             expect(pointB.manhattanDistanceTo(pointA)).toBe(7);
         });
 
-        test('manhattanDistanceTo should return manhattan distance #4', () => {
+        test('distance between two points', () => {
             const pointA = new Point(15, 3);
             const pointB = new Point(9, 21);
 
