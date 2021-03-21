@@ -1,6 +1,6 @@
 import { CanvasComponent } from './CanvasComponent';
-import Rectangle from '../../../renderer/components/Rectangle';
-import Point from '../../../renderer/Point';
+import Rectangle from '../../api/components/Rectangle';
+import Point from '../../api/Point';
 import Konva from 'konva';
 
 export class CanvasRectangle extends CanvasComponent implements Rectangle {

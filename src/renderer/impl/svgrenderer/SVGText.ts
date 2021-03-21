@@ -1,7 +1,7 @@
-import Text from '../../../renderer/components/Text';
+import Text from '../../api/components/Text';
 import { SVGComponent } from './SVGComponent';
 import { Text as SvgText } from '@svgdotjs/svg.js';
-import Point from '../../../renderer/Point';
+import Point from '../../api/Point';
 
 export default class SVGText extends SVGComponent implements Text {
     constructor(private text: string, private readonly position: Point) {

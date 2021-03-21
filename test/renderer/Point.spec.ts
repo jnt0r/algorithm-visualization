@@ -1,4 +1,4 @@
-import Point from '../../src/renderer/Point';
+import Point from '../../src/renderer/api/Point';
 
 describe('Point', () => {
     describe('euclideanDistanceTo', () => {

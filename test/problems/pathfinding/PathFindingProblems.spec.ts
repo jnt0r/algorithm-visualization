@@ -1,6 +1,6 @@
 import Grid from '../../../src/problems/pathfinding/Grid';
 import { TestRenderer } from '../../TestRenderer';
-import Renderer from '../../../src/renderer/Renderer';
+import Renderer from '../../../src/renderer/api/Renderer';
 import PathFindingProblem from '../../../src/problems/pathfinding/PathFindingProblem';
 import PathFindingProblemSolver from '../../../src/problems/pathfinding/PathFindingProblemSolver';
 import Path from '../../../src/problems/pathfinding/Path';

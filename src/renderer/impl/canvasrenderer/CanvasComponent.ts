@@ -1,4 +1,4 @@
-import Component from '../../../renderer/Component';
+import Component from '../../api/Component';
 import Konva from 'konva';
 
 export class CanvasComponent implements Component {

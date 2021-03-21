@@ -1,15 +1,15 @@
 import { Svg, SVG } from '@svgdotjs/svg.js';
-import Point from '../../../renderer/Point';
-import Rectangle from '../../../renderer/components/Rectangle';
-import Line from '../../../renderer/components/Line';
-import Circle from '../../../renderer/components/Circle';
+import Point from '../../api/Point';
+import Rectangle from '../../api/components/Rectangle';
+import Line from '../../api/components/Line';
+import Circle from '../../api/components/Circle';
 import { SVGRectangle } from './SVGRectangle';
 import { SVGLine } from './SVGLine';
 import { SVGCircle } from './SVGCircle';
 import SVGText from './SVGText';
-import Text from '../../../renderer/components/Text';
+import Text from '../../api/components/Text';
 import { SVGComponent } from './SVGComponent';
-import BaseRenderer from '../../../renderer/BaseRenderer';
+import BaseRenderer from '../../api/BaseRenderer';
 
 export default class SVGRenderer extends BaseRenderer {
     private readonly svg: Svg;

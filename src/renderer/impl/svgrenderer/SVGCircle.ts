@@ -1,6 +1,6 @@
 import { SVGComponent } from './SVGComponent';
-import Circle from '../../../renderer/components/Circle';
-import Point from '../../../renderer/Point';
+import Circle from '../../api/components/Circle';
+import Point from '../../api/Point';
 import { Circle as SvgCircle } from '@svgdotjs/svg.js';
 
 export class SVGCircle extends SVGComponent implements Circle {

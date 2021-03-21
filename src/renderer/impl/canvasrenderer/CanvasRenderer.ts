@@ -1,15 +1,15 @@
-import Point from '../../../renderer/Point';
-import Circle from '../../../renderer/components/Circle';
-import Line from '../../../renderer/components/Line';
-import Rectangle from '../../../renderer/components/Rectangle';
-import Text from '../../../renderer/components/Text';
+import Point from '../../api/Point';
+import Circle from '../../api/components/Circle';
+import Line from '../../api/components/Line';
+import Rectangle from '../../api/components/Rectangle';
+import Text from '../../api/components/Text';
 import Konva from 'konva';
 import { CanvasCircle } from './CanvasCircle';
 import { CanvasComponent } from './CanvasComponent';
 import { CanvasRectangle } from './CanvasRectangle';
 import { CanvasLine } from './CanvasLine';
 import { CanvasText } from './CanvasText';
-import BaseRenderer from '../../../renderer/BaseRenderer';
+import BaseRenderer from '../../api/BaseRenderer';
 
 export default class CanvasRenderer extends BaseRenderer {
     private readonly stage: Konva.Stage;
@@ -62,6 +62,11 @@ export default class CanvasRenderer extends BaseRenderer {
         this.layer.batchDraw();
     }
 
+    /**
+     * TODO: Move this method to Component Class. Renderer should only display
+     * @param id1
+     * @param id2
+     */
     swapElementsById(id1: number, id2: number): Promise<void> {
         const a = this.stage.find('Rect')[id1];
         const b = this.stage.find('Rect')[id2];

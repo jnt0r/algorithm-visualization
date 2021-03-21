@@ -1,6 +1,6 @@
-import Circle from '../../../renderer/components/Circle';
+import Circle from '../../api/components/Circle';
 import { CanvasComponent } from './CanvasComponent';
-import Point from '../../../renderer/Point';
+import Point from '../../api/Point';
 import Konva from 'konva';
 
 export class CanvasCircle extends CanvasComponent implements Circle {

@@ -1,5 +1,5 @@
 import Application from './application/Application';
-import CanvasRenderer from './application/renderer/canvasrenderer/CanvasRenderer';
+import CanvasRenderer from './renderer/impl/canvasrenderer/CanvasRenderer';
 import Controller from './application/Controller';
 import ProblemDisplay from './application/components/ProblemDisplay';
 import SortingProblem from './problems/sorting/SortingProblem';

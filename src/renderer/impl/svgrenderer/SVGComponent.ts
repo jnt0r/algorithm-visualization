@@ -1,4 +1,4 @@
-import Component from '../../../renderer/Component';
+import Component from '../../api/Component';
 import { Element } from '@svgdotjs/svg.js';
 
 export class SVGComponent implements Component {

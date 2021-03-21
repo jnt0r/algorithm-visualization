@@ -1,6 +1,6 @@
 import { SVGComponent } from './SVGComponent';
-import Line from '../../../renderer/components/Line';
-import Point from '../../../renderer/Point';
+import Line from '../../api/components/Line';
+import Point from '../../api/Point';
 import { Line as SvgLine } from '@svgdotjs/svg.js';
 
 export class SVGLine extends SVGComponent implements Line {

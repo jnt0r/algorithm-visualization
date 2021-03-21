@@ -20,8 +20,6 @@ export default interface Renderer {
 
     animate(): Promise<void>;
 
-    // swap(a: Component, b: Component): Promise<void>;
-
     createRectangle(point: Point, width: number, height: number): Rectangle;
 
     createLine(a: Point, b: Point): Line;

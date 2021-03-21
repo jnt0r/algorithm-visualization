@@ -1,10 +1,10 @@
-import Renderer from '../src/renderer/Renderer';
-import Point from '../src/renderer/Point';
-import Circle from '../src/renderer/components/Circle';
-import Text from '../src/renderer/components/Text';
-import Line from '../src/renderer/components/Line';
-import Rectangle from '../src/renderer/components/Rectangle';
-import Component from '../src/renderer/Component';
+import Renderer from '../src/renderer/api/Renderer';
+import Point from '../src/renderer/api/Point';
+import Circle from '../src/renderer/api/components/Circle';
+import Text from '../src/renderer/api/components/Text';
+import Line from '../src/renderer/api/components/Line';
+import Rectangle from '../src/renderer/api/components/Rectangle';
+import Component from '../src/renderer/api/Component';
 
 export class TestRenderer implements Renderer {
     animate(): Promise<void> {

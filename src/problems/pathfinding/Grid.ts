@@ -1,8 +1,8 @@
 import GridBox from './GridBox';
-import Renderer from '../../renderer/Renderer';
-import Point from '../../renderer/Point';
+import Renderer from '../../renderer/api/Renderer';
+import Point from '../../renderer/api/Point';
 import PathFindingProblemStats from './PathFindingProblemStats';
-import Component from '../../renderer/Component';
+import Component from '../../renderer/api/Component';
 
 export default class Grid {
     private readonly boxes: GridBox[][] = [];

@@ -1,4 +1,4 @@
-import Point from '../../renderer/Point';
+import Point from '../../renderer/api/Point';
 
 export default class GridBox {
     private readonly defaultColor = '#FFF';
