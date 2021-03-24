@@ -1,4 +1,7 @@
 import Point from '../../renderer/Point';
+import Component from '../../renderer/Component';
+import Renderer from '../../renderer/Renderer';
+import Rectangle from '../../renderer/components/Rectangle';
 
 export default class GridBox {
     private readonly defaultColor = '#FFF';
@@ -12,7 +15,20 @@ export default class GridBox {
     private _isStart = false;
     private _isGoal = false;
 
-    constructor(readonly point: Point) {}
+    private readonly component: Rectangle;
+
+    constructor(readonly point: Point, private readonly renderer: Renderer) {
+        this.component = this.initializeComponent(renderer);
+    }
+
+    getComponent(): Component {
+        return this.component;
+    }
+
+    render(): void {
+        this.component.setColor(this.getColor());
+        this.component.setBorderColor(this.getBorderColor());
+    }
 
     getColor(): string {
         return this.color;
@@ -103,5 +119,33 @@ export default class GridBox {
 
     isWall(): boolean {
         return this._isWall;
+    }
+
+    private initializeComponent(renderer: Renderer): Rectangle {
+        const component = renderer.createRectangle(
+            new Point(this.point.getX() * 20, this.point.getY() * 20),
+            20,
+            20
+        );
+
+        component.onClick(() => {
+            this.setWall();
+            this.render();
+        });
+        component.onRightClick(() => {
+            this.removeWall();
+            this.render();
+        });
+        component.onMouseOver(({ leftMouseButton, rightMouseButton }) => {
+            if (leftMouseButton) {
+                this.setWall();
+            }
+            if (rightMouseButton) {
+                this.removeWall();
+            }
+            this.render();
+        });
+
+        return component;
     }
 }
