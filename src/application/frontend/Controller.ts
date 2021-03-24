@@ -5,7 +5,7 @@ import ProblemStatsObserver from '../../domain/problems/ProblemStatsObserver';
 import ProblemDisplay from './components/ProblemDisplay';
 
 export default class Controller {
-    private problem!: Problem<never>;
+    private currentProblem!: Problem<never>;
 
     constructor(
         private readonly renderer: Renderer,
@@ -17,20 +17,20 @@ export default class Controller {
     }
 
     setProblem(problem: ProblemDisplay<Problem<never>, ProblemSolver<never, unknown, unknown>>): void {
-        this.problem = problem.getProblem(this.renderer);
+        this.currentProblem = problem.getProblem(this.renderer);
     }
 
     solveProblem(solver: ProblemSolver<never, unknown, unknown>, statsObserver: ProblemStatsObserver): Promise<void> {
-        this.problem.reset();
+        this.currentProblem.reset();
 
-        this.problem.getStats().subscribe(statsObserver);
+        this.currentProblem.getStats().subscribe(statsObserver);
 
-        return this.problem.solve(solver).then(() => this.problem.getStats().unsubscribe(statsObserver));
+        return this.currentProblem.solve(solver).then(() => this.currentProblem.getStats().unsubscribe(statsObserver));
     }
 
     resetProblem(): void {
-        this.problem.reset();
-        this.problem.render();
+        this.currentProblem.reset();
+        this.currentProblem.render();
     }
 
     setAnimationSpeed(animationSpeed: number): void {
@@ -38,8 +38,8 @@ export default class Controller {
     }
 
     generateProblem(): void {
-        this.problem.generate();
-        this.problem.render();
+        this.currentProblem.generate();
+        this.currentProblem.render();
     }
 
     /**

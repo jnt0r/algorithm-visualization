@@ -3,12 +3,10 @@ import ProblemStatsObserver from '../../../domain/problems/ProblemStatsObserver'
 
 export default class StatsComponent implements ProblemStatsObserver {
     private readonly statsDiv: HTMLDivElement = <HTMLDivElement>document.getElementsByClassName('stats')[0];
-    private stats: ProblemStats[] = [];
     private currentStat!: HTMLDivElement;
 
     reset(): void {
         this.clearElement(this.statsDiv);
-        this.stats = [];
     }
 
     createNewStatForAlgorithm(algorithm: string): void {
