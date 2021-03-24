@@ -1,4 +1,4 @@
-import SortableData from './src/problems/sorting/SortableData';
+import SortableData from './src/domain/problems/sorting/SortableData';
 
 expect.extend({
     toBeSorted(received: SortableData) {
