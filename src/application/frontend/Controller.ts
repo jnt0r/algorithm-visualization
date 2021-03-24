@@ -1,6 +1,6 @@
 import Problem from '../../domain/problems/Problem';
 import ProblemSolver from '../../domain/problems/ProblemSolver';
-import Renderer from '../domain/api/Renderer';
+import Renderer from '../../domain/renderer/Renderer';
 import ProblemStatsObserver from '../../domain/problems/ProblemStatsObserver';
 import ProblemDisplay from './components/ProblemDisplay';
 

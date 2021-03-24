@@ -1,6 +1,6 @@
 import CanvasComponent from './CanvasComponent';
-import Text from '../../../domain/api/components/Text';
-import Point from '../../../domain/api/Point';
+import Text from '../../../domain/renderer/components/Text';
+import Point from '../../../domain/renderer/Point';
 import Konva from 'konva';
 
 export default class CanvasText extends CanvasComponent implements Text {

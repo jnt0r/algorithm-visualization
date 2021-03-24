@@ -1,7 +1,7 @@
 import Problem from '../../../domain/problems/Problem';
 import SolverDisplay from './SolverDisplay';
 import ProblemSolver from '../../../domain/problems/ProblemSolver';
-import Renderer from '../../domain/api/Renderer';
+import Renderer from '../../../domain/renderer/Renderer';
 
 export default class ProblemDisplay<T extends Problem<T>, S extends ProblemSolver<T, unknown, unknown>> {
     constructor(

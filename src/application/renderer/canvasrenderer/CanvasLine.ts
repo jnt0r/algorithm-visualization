@@ -1,6 +1,6 @@
 import CanvasComponent from './CanvasComponent';
-import Line from '../../../domain/api/components/Line';
-import Point from '../../../domain/api/Point';
+import Line from '../../../domain/renderer/components/Line';
+import Point from '../../../domain/renderer/Point';
 import Konva from 'konva';
 
 export default class CanvasLine extends CanvasComponent implements Line {
