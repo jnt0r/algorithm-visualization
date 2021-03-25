@@ -15,6 +15,7 @@ import AStar from './application/solvers/pathfinding/AStar';
 import LabyrinthProblem from './domain/problems/labyrinth/LabyrinthProblem';
 import BreadthFirstSearch from './application/solvers/pathfinding/BreadthFirstSearch';
 import DepthFirstSearch from './application/solvers/pathfinding/DepthFirstSearch';
+import MergeSort from './application/solvers/sorting/MergeSort';
 
 const renderer = new CanvasRenderer('renderer-wrapper');
 const availableProblems = [
@@ -22,6 +23,7 @@ const availableProblems = [
         new SolverDisplay('Bubblesort', BubbleSort),
         new SolverDisplay('Selectionsort', SelectionSort),
         new SolverDisplay('Quicksort', QuickSort),
+        new SolverDisplay('MergeSort', MergeSort),
     ]),
     new ProblemDisplay<PathFindingProblem, PathFindingProblemSolver>('Pathfinding', PathFindingProblem, [
         new SolverDisplay('Dijkstra', Dijkstra),

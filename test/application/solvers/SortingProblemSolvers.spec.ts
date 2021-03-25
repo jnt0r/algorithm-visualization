@@ -5,6 +5,7 @@ import SortingProblemSolver from '../../../src/domain/problems/sorting/SortingPr
 import SortableData from '../../../src/domain/problems/sorting/SortableData';
 import { TestRenderer } from '../../TestRenderer';
 import Renderer from '../../../src/domain/renderer/Renderer';
+import MergeSort from '../../../src/application/solvers/sorting/MergeSort';
 
 describe('SortingProblemSolvers', () => {
     const renderer: Renderer = new TestRenderer();
@@ -12,6 +13,7 @@ describe('SortingProblemSolvers', () => {
         [ 'BubbleSort', new BubbleSort() ],
         [ 'SelectionSort', new SelectionSort() ],
         [ 'QuickSort', new QuickSort() ],
+        [ 'MergeSort', new MergeSort() ],
     ])('%s', async (name: string, solver: SortingProblemSolver) => {
         const data = new SortableData([ 9, 1, 4, 8, 10, 2, 3, 6, 5, 7 ], renderer);
 
