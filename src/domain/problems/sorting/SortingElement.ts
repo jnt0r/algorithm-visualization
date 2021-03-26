@@ -16,6 +16,7 @@ export default class SortingElement {
     constructor(private readonly value: number, private index: number, private readonly renderer: Renderer) {
         this.component = this.createComponent();
         this.render();
+        this.renderer.render(this.component);
     }
 
     setIndex(index: number): Promise<void> {
@@ -27,7 +28,6 @@ export default class SortingElement {
     render(): void {
         this.component.setColor(this.getColor());
         this.component.setBorderColor(this.getColor());
-        this.renderer.render(this.component);
     }
 
     isSorted(): boolean {
