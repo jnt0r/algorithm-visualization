@@ -25,25 +25,9 @@ export default class SortingElement {
         return this.component.moveTo(this.getPoint());
     }
 
-    render(): void {
-        this.component.setColor(this.getColor());
-        this.component.setBorderColor(this.getColor());
-    }
-
     isSorted(): boolean {
         return this._isSorted;
     }
-
-    getColor(): string {
-        return this.color;
-    }
-
-    setColor(hexCode: string): void {
-        this.color = hexCode;
-        this.render();
-    }
-
-
 
     markComparing(): void {
         this.setColor(this._comparisonColor);
@@ -61,13 +45,21 @@ export default class SortingElement {
     unmark(): void {
         if (!this._isSorted) {
             this.setColor(this._defaultColor);
-        } else {
-            this.setSorted();
         }
     }
 
     getValue(): number {
         return this.value;
+    }
+
+    private setColor(hexCode: string): void {
+        this.color = hexCode;
+        this.render();
+    }
+
+    private render(): void {
+        this.component.setColor(this.color);
+        this.component.setBorderColor(this.color);
     }
 
     private createComponent() {
