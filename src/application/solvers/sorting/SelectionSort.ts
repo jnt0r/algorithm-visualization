@@ -13,7 +13,6 @@ export default class SelectionSort implements SortingProblemSolver {
 
             data.getElement(smallestIndex).unmark();
             data.getElement(i).setSorted();
-            data.render();
         }
     }
 
@@ -27,7 +26,6 @@ export default class SelectionSort implements SortingProblemSolver {
                 if (smallestIndex !== i) data.getElement(smallestIndex).unmark();
                 smallestIndex = j;
                 data.getElement(smallestIndex).markPivot();
-                data.render();
             } else {
                 data.resetComparingElements(j);
             }

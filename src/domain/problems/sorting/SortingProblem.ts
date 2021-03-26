@@ -13,18 +13,11 @@ export default class SortingProblem extends MustInitializeWithRenderer implement
     }
 
     render(): void {
-        this.sortables.render();
+        this.makeProblem();
     }
 
     generate(): void {
-        // Generate problem by generating random numbers
-        this.numbers = [];
-
-        for (let i = 0; i < 20; i++) {
-            this.numbers.push(Math.random() * (this.renderer.getHeight() - 200));
-        }
-
-        this.makeProblem();
+        this.generateRandomNumbers();
     }
 
     reset(): void {
@@ -33,6 +26,14 @@ export default class SortingProblem extends MustInitializeWithRenderer implement
 
     getStats(): ProblemStats {
         return this.sortables.getStats();
+    }
+
+    private generateRandomNumbers() {
+        this.numbers = [];
+
+        for (let i = 0; i < 20; i++) {
+            this.numbers.push(Math.random() * (this.renderer.getHeight() - 200));
+        }
     }
 
     private makeProblem(): void {

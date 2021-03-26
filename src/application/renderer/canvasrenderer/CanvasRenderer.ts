@@ -34,19 +34,19 @@ export default class CanvasRenderer extends Renderer {
     }
 
     createCircle(position: Point, radius: number): Circle {
-        return new CanvasCircle(position, radius, this.layer);
+        return new CanvasCircle(position, radius, this.getAnimationSpeed());
     }
 
     createLine(a: Point, b: Point): Line {
-        return new CanvasLine(a, b, this.layer);
+        return new CanvasLine(a, b, this.getAnimationSpeed());
     }
 
     createRectangle(point: Point, width: number, height: number): Rectangle {
-        return new CanvasRectangle(point, width, height, this.layer);
+        return new CanvasRectangle(point, width, height, this.getAnimationSpeed());
     }
 
     createText(position: Point, text: string): Text {
-        return new CanvasText(position, text, this.layer);
+        return new CanvasText(position, text, this.getAnimationSpeed());
     }
 
     getHeight(): number {
@@ -62,21 +62,21 @@ export default class CanvasRenderer extends Renderer {
         this.layer.batchDraw();
     }
 
-    /**
-     * TODO: Move this method to Component Class. Renderer should only display
-     * @param id1
-     * @param id2
-     */
-    swapElementsById(id1: number, id2: number): Promise<void> {
-        const a = this.stage.find('Rect')[id1];
-        const b = this.stage.find('Rect')[id2];
-
-        const a_goal = b.x();
-        const b_goal = a.x();
-
-        a.to({ x: a_goal, duration: this.animationSpeed / 1000 });
-        b.to({ x: b_goal, duration: this.animationSpeed / 1000 });
-
-        return this.animate();
-    }
+    // /**
+    //  * TODO: Move this method to Component Class. Renderer should only display
+    //  * @param id1
+    //  * @param id2
+    //  */
+    // swapElementsById(id1: number, id2: number): Promise<void> {
+    //     const a = this.stage.find('Rect')[id1];
+    //     const b = this.stage.find('Rect')[id2];
+    //
+    //     const a_goal = 0;
+    //     const b_goal = 0;
+    //
+    //     a.to({ x: a_goal, duration: this.animationSpeed / 1000 });
+    //     b.to({ x: b_goal, duration: this.animationSpeed / 1000 });
+    //
+    //     return this.animate();
+    // }
 }

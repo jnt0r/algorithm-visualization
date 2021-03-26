@@ -1,3 +1,5 @@
+import Point from './Point';
+
 export default interface Component {
     setColor(hexCode: string): void;
 
@@ -8,4 +10,6 @@ export default interface Component {
     onRightClick(func: () => void): void;
 
     onMouseOver(func: (ev: { leftMouseButton: boolean; rightMouseButton: boolean }) => void): void;
+
+    moveTo(point: Point): Promise<void>;
 }

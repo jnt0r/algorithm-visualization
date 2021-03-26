@@ -17,10 +17,9 @@ export default class BubbleSort implements SortingProblemSolver {
                 data.resetComparingElements(j, j + 1);
             }
 
-            // Mark last moved element as sorted
-            data.getElement(data.getSize() - i - 1).setSorted();
+            const lastMovedElementIndex = data.getSize() - i - 1;
+            data.getElement(lastMovedElementIndex).setSorted();
         }
-        await data.renderAnimated();
     }
 
     private async swapElementsIfValueOfAGreaterB(a: number, b: number): Promise<void> {

@@ -45,16 +45,16 @@ export default class SVGRenderer extends Renderer {
         this.svg.add(component.getElement());
     }
 
-    swapElementsById(elementId1: number, elementId2: number): Promise<void> {
-        const e1 = this.svg.get(elementId1);
-        const e2 = this.svg.get(elementId2);
-        e1.animate({ delay: 0, duration: this.animationSpeed })
-            .move(e2.x(), e2.y());
-        e2.animate({ delay: 0, duration: this.animationSpeed })
-            .move(e1.x(), e1.y());
-
-        return this.animate();
-    }
+    // swapElementsById(elementId1: number, elementId2: number): Promise<void> {
+    //     const e1 = this.svg.get(elementId1);
+    //     const e2 = this.svg.get(elementId2);
+    //     e1.animate({ delay: 0, duration: this.animationSpeed })
+    //         .move(e2.x(), e2.y());
+    //     e2.animate({ delay: 0, duration: this.animationSpeed })
+    //         .move(e1.x(), e1.y());
+    //
+    //     return this.animate();
+    // }
 
     createRectangle(point: Point, width: number, height: number): Rectangle {
         return new SVGRectangle(point, width, height);

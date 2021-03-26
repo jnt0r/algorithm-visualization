@@ -4,27 +4,21 @@ import Rectangle from './components/Rectangle';
 import Line from './components/Line';
 import Circle from './components/Circle';
 import Text from './components/Text';
+import AnimationSpeed from './AnimationSpeed';
 
 export default abstract class Renderer {
-    protected animationSpeed = 10;
-
-    setAnimationSpeed(animationSpeed: number): void {
-        this.animationSpeed = animationSpeed;
-    }
-
+    private readonly animationSpeed = new AnimationSpeed();
     async animate(): Promise<void> {
         return new Promise<void>(resolve => {
             window.requestAnimationFrame(() => {
                 setTimeout(() => {
                     resolve();
-                }, this.animationSpeed);
+                }, this.animationSpeed.getValue());
             });
         });
     }
 
     abstract render(component: Component): void;
-
-    abstract swapElementsById(id1: number, id2: number): Promise<void>;
 
     abstract createRectangle(point: Point, width: number, height: number): Rectangle;
 
@@ -39,4 +33,8 @@ export default abstract class Renderer {
     abstract getHeight(): number;
 
     abstract getWidth(): number;
+
+    getAnimationSpeed(): AnimationSpeed {
+        return this.animationSpeed;
+    }
 }

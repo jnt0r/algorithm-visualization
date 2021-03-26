@@ -1,8 +1,10 @@
 import Component from '../../../domain/renderer/Component';
 import Konva from 'konva';
+import Point from '../../../domain/renderer/Point';
+import AnimationSpeed from '../../../domain/renderer/AnimationSpeed';
 
 export default class CanvasComponent implements Component {
-    constructor(protected readonly shape: Konva.Shape, private layer: Konva.Layer) {
+    constructor(protected readonly shape: Konva.Shape, private readonly animationSpeed: AnimationSpeed) {
         shape.perfectDrawEnabled(false);
     }
 
@@ -41,5 +43,13 @@ export default class CanvasComponent implements Component {
 
     getShape(): Konva.Shape {
         return this.shape;
+    }
+
+    moveTo(point: Point): Promise<void> {
+        this.shape.to({ x: point.getX(), y: point.getY(), duration: this.animationSpeed.getValue()/1000 });
+
+        return new Promise<void>(resolve => {
+            setTimeout(() => resolve(), this.animationSpeed.getValue());
+        });
     }
 }

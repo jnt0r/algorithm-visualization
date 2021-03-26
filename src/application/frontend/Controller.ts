@@ -18,6 +18,8 @@ export default class Controller {
 
     setProblem(problem: ProblemDisplay<Problem<never>, ProblemSolver<never, unknown, unknown>>): void {
         this.currentProblem = problem.getProblem(this.renderer);
+        this.currentProblem.generate();
+        this.currentProblem.render();
     }
 
     solveProblem(solver: ProblemSolver<never, unknown, unknown>, statsObserver: ProblemStatsObserver): Promise<void> {
@@ -34,24 +36,11 @@ export default class Controller {
     }
 
     setAnimationSpeed(animationSpeed: number): void {
-        this.renderer.setAnimationSpeed(this.convertAnimationSpeed(animationSpeed));
+        this.renderer.getAnimationSpeed().setFromPercentage(animationSpeed);
     }
 
     generateProblem(): void {
         this.currentProblem.generate();
         this.currentProblem.render();
-    }
-
-    /**
-     * Converts animationSpeed from frontend to renderer.
-     * Frontend allows to select animationSpeed as 1-100 in percent.
-     * Renderer needs the animationSpeed as duration in ms
-     *
-     * @param animationSpeed in percent
-     * @return animationSpeed in ms
-     * @private
-     */
-    private convertAnimationSpeed(animationSpeed: number) {
-        return 100 - 1 * animationSpeed;
     }
 }

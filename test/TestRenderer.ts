@@ -22,6 +22,7 @@ export class TestRenderer extends Renderer {
             onClick: jest.fn(),
             onRightClick: jest.fn(),
             setRadius: jest.fn(),
+            moveTo: jest.fn(),
         };
     }
 
@@ -33,6 +34,7 @@ export class TestRenderer extends Renderer {
             onClick: jest.fn(),
             onRightClick: jest.fn(),
             setStrokeWidth: jest.fn(),
+            moveTo: jest.fn(),
         };
     }
 
@@ -45,6 +47,7 @@ export class TestRenderer extends Renderer {
             onRightClick: jest.fn(),
             setHeight: jest.fn(),
             setWidth: jest.fn(),
+            moveTo: jest.fn(),
         };
     }
 
@@ -56,6 +59,7 @@ export class TestRenderer extends Renderer {
             onClick: jest.fn(),
             onRightClick: jest.fn(),
             setText: jest.fn(),
+            moveTo: jest.fn(),
         };
     }
 
@@ -69,7 +73,4 @@ export class TestRenderer extends Renderer {
 
     render(component: Component): void {}
     setAnimationSpeed(animationSpeed: number): void {}
-    swapElementsById(id1: number, id2: number): Promise<void> {
-        return Promise.resolve();
-    }
 }

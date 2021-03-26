@@ -1,5 +1,6 @@
 import Component from '../../../domain/renderer/Component';
 import { Element } from '@svgdotjs/svg.js';
+import Point from '../../../domain/renderer/Point';
 
 export default class SVGComponent implements Component {
     protected constructor(protected readonly element: Element) {}
@@ -32,5 +33,9 @@ export default class SVGComponent implements Component {
             e.preventDefault();
             func({ leftMouseButton: e.buttons === 1, rightMouseButton: e.buttons === 2 });
         });
+    }
+
+    moveTo(point: Point): Promise<void> {
+        return Promise.resolve();
     }
 }

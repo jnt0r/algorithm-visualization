@@ -27,7 +27,6 @@ export default class QuickSort implements SortingProblemSolver {
 
         if (left === right) {
             this.data.getElement(left).setSorted();
-            this.data.render();
         }
     }
 
@@ -49,11 +48,12 @@ export default class QuickSort implements SortingProblemSolver {
         let j = right - 1;
         const pivot = right;
 
-        await this.visualizePivotElement(pivot);
+        await this.data.getElement(pivot).markPivot();
 
         while (i < j) {
             await this.data.markComparingElements(i, j);
 
+            // TODO: Refactor this. extract into methods with good names
             while (i < right && this.data.compareElements(i, LESS, pivot)) {
                 this.data.getElement(i).unmark();
                 i++;
@@ -81,14 +81,6 @@ export default class QuickSort implements SortingProblemSolver {
             this.data.getElement(i).setSorted();
         }
 
-        await this.data.renderAnimated();
-
         return i;
-    }
-
-    private async visualizePivotElement(pivot: number): Promise<void> {
-        this.data.getElement(pivot).markPivot();
-
-        return this.data.renderAnimated();
     }
 }

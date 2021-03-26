@@ -2,9 +2,10 @@ import CanvasComponent from './CanvasComponent';
 import Rectangle from '../../../domain/renderer/components/Rectangle';
 import Point from '../../../domain/renderer/Point';
 import Konva from 'konva';
+import AnimationSpeed from '../../../domain/renderer/AnimationSpeed';
 
 export default class CanvasRectangle extends CanvasComponent implements Rectangle {
-    constructor(point: Point, width: number, height: number, layer: Konva.Layer) {
+    constructor(point: Point, width: number, height: number, private readonly speed: AnimationSpeed) {
         super(
             new Konva.Rect({
                 x: point.getX(),
@@ -14,7 +15,7 @@ export default class CanvasRectangle extends CanvasComponent implements Rectangl
                 stroke: 'black',
                 fill: 'red',
             }),
-            layer,
+            speed,
         );
     }
 
