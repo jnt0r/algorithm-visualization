@@ -13,7 +13,6 @@ export default class PathFindingProblem extends MustInitializeWithRenderer imple
     }
 
     render(): void {
-        this.renderer.clear();
         this.grid.render();
     }
 
@@ -38,8 +37,14 @@ export default class PathFindingProblem extends MustInitializeWithRenderer imple
         return height;
     }
 
+    /**
+     * Calculates number of grid elements per row based on the available space.
+     *
+     * @private
+     */
     private calculateGridWidth() {
-        let width = Math.floor(this.renderer.getWidth() / 20);
+        const elementsPerRow = 20;
+        let width = Math.floor(this.renderer.getWidth() / elementsPerRow);
         if (width % 2 === 0) {
             width -= 1;
         }

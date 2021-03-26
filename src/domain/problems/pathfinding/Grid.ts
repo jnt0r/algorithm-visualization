@@ -11,7 +11,11 @@ export default class Grid {
     public readonly start: GridBox;
     public readonly goal: GridBox;
 
-    constructor(readonly width: number, readonly height: number, private readonly renderer: Renderer) {
+    constructor(
+      readonly width: number,
+      readonly height: number,
+      private readonly renderer: Renderer,
+    ) {
         this.generatePlainGrid();
 
         this.start = this.getRandomElement();
@@ -33,17 +37,17 @@ export default class Grid {
     }
 
     render(): void {
-        for (let x = 0; x < this.width; x++) {
-            for (let y = 0; y < this.height; y++) {
-                const box = this.boxes[x][y];
-
-                if (this.firstTimeRendering) {
-                    this.renderer.render(box.getComponent());
-                }
-                box.render();
-            }
-        }
-        this.firstTimeRendering = false;
+        // for (let x = 0; x < this.width; x++) {
+        //     for (let y = 0; y < this.height; y++) {
+        //         const box = this.boxes[x][y];
+        //
+        //         if (this.firstTimeRendering) {
+        //             // this.renderer.render(box.getComponent());
+        //         }
+        //         box.render();
+        //     }
+        // }
+        // this.firstTimeRendering = false;
     }
 
     renderAnimated(): Promise<void> {

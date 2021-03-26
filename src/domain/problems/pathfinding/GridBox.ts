@@ -1,13 +1,18 @@
 import Point from '../../renderer/Point';
-import Component from '../../renderer/Component';
 import Renderer from '../../renderer/Renderer';
 import Rectangle from '../../renderer/components/Rectangle';
 
 export default class GridBox {
-    private readonly defaultColor = '#FFF';
-    private readonly defaultBorderColor = '#000';
-    private borderColor = this.defaultBorderColor;
-    private color = this.defaultColor;
+    private readonly _defaultColor = '#FFF';
+    private readonly _defaultBorderColor = '#000';
+    private readonly _visitedColor = '#FF0';
+    private readonly _startColor = '#F00';
+    private readonly _goalColor = '#0F0';
+    private readonly _pathColor = '#04d9ff';
+    private readonly _wallColor = '#000';
+
+    private borderColor = this._defaultBorderColor;
+    private color = this._defaultColor;
 
     private cost = Number.MAX_VALUE;
     private _isVisited = false;
@@ -19,35 +24,13 @@ export default class GridBox {
 
     constructor(readonly point: Point, private readonly renderer: Renderer) {
         this.component = this.initializeComponent(renderer);
-    }
-
-    getComponent(): Component {
-        return this.component;
+        this.render();
+        this.renderer.render(this.component);
     }
 
     render(): void {
-        this.component.setColor(this.getColor());
-        this.component.setBorderColor(this.getBorderColor());
-    }
-
-    getColor(): string {
-        return this.color;
-    }
-
-    getBorderColor(): string {
-        return this.borderColor;
-    }
-
-    setColor(hexCode: string): void {
-        if (!this._isStart && !this._isGoal) {
-            this.color = hexCode;
-        }
-    }
-
-    setBorderColor(hexCode: string): void {
-        if (!this._isStart && !this._isGoal) {
-            this.borderColor = hexCode;
-        }
+        this.component.setColor(this.color);
+        this.component.setBorderColor(this.borderColor);
     }
 
     setCost(cost: number): void {
@@ -60,24 +43,23 @@ export default class GridBox {
 
     markVisited(): void {
         this._isVisited = true;
-        this.setColor('#FF0');
+        if (!this._isGoal && !this._isStart) {
+            this.setColor(this._visitedColor);
+        }
     }
 
     markStart(): void {
-        this.setColor('#F00');
-        // this.setBorderColor('#F00');
         this._isStart = true;
+        this.setColor(this._startColor);
     }
 
     markGoal(): void {
-        this.setColor('#0F0');
-        // this.setBorderColor('#0F0');
         this._isGoal = true;
+        this.setColor(this._goalColor);
     }
 
     markPartOfPath(): void {
-        this.setColor('#04d9ff');
-        // this.setBorderColor('#04d9ff');
+        this.setColor(this._pathColor);
     }
 
     setWall(): void {
@@ -85,8 +67,8 @@ export default class GridBox {
             this._isWall = true;
             this._isVisited = true;
             this.cost = Number.MAX_VALUE;
-            this.setColor('#000');
-            this.setBorderColor('#000');
+            this.setColor(this._wallColor);
+            this.setBorderColor(this._wallColor);
         }
     }
 
@@ -99,8 +81,8 @@ export default class GridBox {
     }
 
     unmark(): void {
-        this.setColor(this.defaultColor);
-        this.setBorderColor(this.defaultBorderColor);
+        this.setColor(this._defaultColor);
+        this.setBorderColor(this._defaultBorderColor);
     }
 
     reset(): void {
@@ -109,8 +91,9 @@ export default class GridBox {
         }
         this.cost = Number.MAX_VALUE;
         this._isVisited = false;
-        this.setColor(this.defaultColor);
-        this.setBorderColor(this.defaultBorderColor);
+        if (!this._isStart && !this._isGoal) {
+            this.unmark();
+        }
     }
 
     isVisited(): boolean {
@@ -119,6 +102,20 @@ export default class GridBox {
 
     isWall(): boolean {
         return this._isWall;
+    }
+
+    private setColor(hexCode: string): void {
+    // if (!this._isStart && !this._isGoal) {
+        this.color = hexCode;
+        // }
+        this.render();
+    }
+
+    private setBorderColor(hexCode: string): void {
+    // if (!this._isStart && !this._isGoal) {
+        this.borderColor = hexCode;
+        this.render();
+    // }
     }
 
     private initializeComponent(renderer: Renderer): Rectangle {
