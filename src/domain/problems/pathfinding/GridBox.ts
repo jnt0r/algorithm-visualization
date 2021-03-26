@@ -80,11 +80,6 @@ export default class GridBox {
         }
     }
 
-    unmark(): void {
-        this.setColor(this._defaultColor);
-        this.setBorderColor(this._defaultBorderColor);
-    }
-
     reset(): void {
         if (this._isWall) {
             return;
@@ -102,6 +97,11 @@ export default class GridBox {
 
     isWall(): boolean {
         return this._isWall;
+    }
+
+    private unmark(): void {
+        this.setColor(this._defaultColor);
+        this.setBorderColor(this._defaultBorderColor);
     }
 
     private setColor(hexCode: string): void {
