@@ -2,13 +2,16 @@ import SortingElement from './SortingElement';
 import SortingProblemStats from './SortingProblemStats';
 import CompareType from '../CompareType';
 import Renderer from '../../renderer/Renderer';
+import SortingElementConfiguration from './SortingElementConfiguration';
 
 export default class SortableData {
     private readonly bars: SortingElement[] = [];
     private readonly stats = new SortingProblemStats();
+    private readonly config: SortingElementConfiguration;
 
     constructor(private readonly numbers: number[], private readonly renderer: Renderer) {
         this.renderer.clear();
+        this.config = new SortingElementConfiguration(this.renderer.getWidth(), this.renderer.getHeight(), numbers.length);
         this.createBarsFromNumbers();
     }
 
@@ -53,7 +56,7 @@ export default class SortableData {
 
     private createBarsFromNumbers() {
         this.numbers.forEach((value, index) => {
-            this.bars.push(new SortingElement(value, index,this.renderer));
+            this.bars.push(new SortingElement(value, index, this.config, this.renderer));
         });
     }
 }

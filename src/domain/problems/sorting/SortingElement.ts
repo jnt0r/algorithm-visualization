@@ -1,6 +1,6 @@
 import Renderer from '../../renderer/Renderer';
 import Rectangle from '../../renderer/components/Rectangle';
-import Point from '../../renderer/Point';
+import SortingElementConfiguration from './SortingElementConfiguration';
 
 export default class SortingElement {
     private readonly _defaultColor = '#58B7FF';
@@ -13,7 +13,12 @@ export default class SortingElement {
     private _isSorted = false;
     private color = this._defaultColor;
 
-    constructor(private readonly value: number, private index: number, private readonly renderer: Renderer) {
+    constructor(
+      private readonly value: number,
+      private index: number,
+      private readonly config: SortingElementConfiguration,
+      private readonly renderer: Renderer
+    ) {
         this.component = this.createComponent();
         this.render();
         this.renderer.render(this.component);
@@ -22,7 +27,7 @@ export default class SortingElement {
     setIndex(index: number): Promise<void> {
         this.index = index;
 
-        return this.component.moveTo(this.getPoint());
+        return this.component.moveTo(this.config.getPointForIndex(this.index));
     }
 
     isSorted(): boolean {
@@ -62,28 +67,11 @@ export default class SortingElement {
         this.component.setBorderColor(this.color);
     }
 
-    private createComponent() {
-        const width = this.renderer.getWidth() / 50;
-
+    private createComponent(): Rectangle {
         return this.renderer.createRectangle(
-            this.getPoint(),
-            width,
+            this.config.getPointForIndex(this.index),
+            this.config.getWidth(),
             this.value
         );
-    }
-
-    private getPoint() {
-        const width = this.renderer.getWidth() / 50;
-        const padding = 5;
-        const offset = this.calculateRenderOffset(width, padding);
-
-        return new Point(offset + this.index * (width + padding), 100);
-    }
-
-    private calculateRenderOffset(barWidth: number, barOffset: number): number {
-        const centerOfRenderArea = this.renderer.getWidth() / 2;
-        const widthOfGraph = 20 * (barWidth + barOffset);
-
-        return centerOfRenderArea - widthOfGraph / 2;
     }
 }

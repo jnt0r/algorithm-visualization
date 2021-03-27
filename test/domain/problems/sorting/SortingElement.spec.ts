@@ -3,36 +3,43 @@ import Renderer from '../../../../src/domain/renderer/Renderer';
 import { anyNumber, anyOfClass, anyString, deepEqual, instance, mock, resetCalls, verify, when } from 'ts-mockito';
 import Rectangle from '../../../../src/domain/renderer/components/Rectangle';
 import Point from '../../../../src/domain/renderer/Point';
+import SortingElementConfiguration from '../../../../src/domain/problems/sorting/SortingElementConfiguration';
 
 describe('SortingElement', () => {
     const mockRenderer: Renderer = mock<Renderer>();
     const renderer: Renderer = instance(mockRenderer);
+
     const mockRectangle: Rectangle = mock<Rectangle>();
     const rectangle: Rectangle = instance(mockRectangle);
+
+    const mockConfiguration: SortingElementConfiguration = mock(SortingElementConfiguration);
+    const configuration: SortingElementConfiguration = instance(mockConfiguration);
+
+    const width = 20;
+    const pointForIndex2 = new Point(0,0);
+    const pointForIndex1 = new Point(0,0);
+
     let element: SortingElement;
 
     beforeEach(() => {
-        when(mockRenderer.getWidth()).thenReturn(800);
+        when(mockConfiguration.getWidth()).thenReturn(width);
+        when(mockConfiguration.getPointForIndex(2)).thenReturn(pointForIndex2);
+        when(mockConfiguration.getPointForIndex(1)).thenReturn(pointForIndex1);
+
         when(mockRenderer.createRectangle(anyOfClass(Point), anyNumber(), anyNumber())).thenReturn(rectangle);
-        element = new SortingElement(5, 2, renderer);
+        element = new SortingElement(5, 2, configuration, renderer);
         resetCalls(mockRectangle);
     });
 
     it('should create rectangle', () => {
-        const point = new Point(190 + 2 * (16+5),100);
-        const width = 16;
-        const height = 5;
-
-        verify(mockRenderer.createRectangle(deepEqual(point), width, height)).once();
+        verify(mockRenderer.createRectangle(deepEqual(pointForIndex2), width, 5)).once();
     });
 
     describe('setIndex', () => {
         it('should call moveTo with new point on component', () => {
             element.setIndex(1);
 
-            const newPoint = new Point(190 + 1 * (16 + 5), 100);
-
-            verify(mockRectangle.moveTo(deepEqual(newPoint))).once();
+            verify(mockRectangle.moveTo(deepEqual(pointForIndex1))).once();
         });
     });
 
