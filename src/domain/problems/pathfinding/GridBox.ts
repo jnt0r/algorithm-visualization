@@ -22,6 +22,9 @@ export default class GridBox {
 
     private readonly component: Rectangle;
 
+    public static readonly width = 20;
+    public static readonly height = 20;
+
     constructor(readonly point: Point, private readonly renderer: Renderer) {
         this.component = this.initializeComponent(renderer);
         this.render();
@@ -105,33 +108,27 @@ export default class GridBox {
     }
 
     private setColor(hexCode: string): void {
-    // if (!this._isStart && !this._isGoal) {
         this.color = hexCode;
-        // }
         this.render();
     }
 
     private setBorderColor(hexCode: string): void {
-    // if (!this._isStart && !this._isGoal) {
         this.borderColor = hexCode;
         this.render();
-    // }
     }
 
     private initializeComponent(renderer: Renderer): Rectangle {
         const component = renderer.createRectangle(
-            new Point(this.point.getX() * 20, this.point.getY() * 20),
-            20,
-            20
+            new Point(this.point.getX() * GridBox.width, this.point.getY() * GridBox.height),
+            GridBox.width,
+            GridBox.height
         );
 
         component.onClick(() => {
             this.setWall();
-            this.render();
         });
         component.onRightClick(() => {
             this.removeWall();
-            this.render();
         });
         component.onMouseOver(({ leftMouseButton, rightMouseButton }) => {
             if (leftMouseButton) {
@@ -140,7 +137,6 @@ export default class GridBox {
             if (rightMouseButton) {
                 this.removeWall();
             }
-            this.render();
         });
 
         return component;

@@ -4,6 +4,7 @@ import PathFindingProblemSolver from './PathFindingProblemSolver';
 import ProblemStats from '../ProblemStats';
 import Path from './Path';
 import MustInitializeWithRenderer from '../MustInitializeWithRenderer';
+import GridBox from './GridBox';
 
 export default class PathFindingProblem extends MustInitializeWithRenderer implements Problem<PathFindingProblem> {
     protected grid!: Grid;
@@ -29,7 +30,7 @@ export default class PathFindingProblem extends MustInitializeWithRenderer imple
     }
 
     private calculateGridHeight() {
-        let height = Math.floor(this.renderer.getHeight() / 20);
+        let height = Math.floor(this.renderer.getHeight() / GridBox.height);
         if (height % 2 === 0) {
             height -= 1;
         }
@@ -43,8 +44,7 @@ export default class PathFindingProblem extends MustInitializeWithRenderer imple
      * @private
      */
     private calculateGridWidth() {
-        const elementsPerRow = 20;
-        let width = Math.floor(this.renderer.getWidth() / elementsPerRow);
+        let width = Math.floor(this.renderer.getWidth() / GridBox.width);
         if (width % 2 === 0) {
             width -= 1;
         }
