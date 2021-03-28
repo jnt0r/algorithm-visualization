@@ -58,7 +58,6 @@ describe('Grid', () => {
             };
             const pathFindingProblem = new PathFindingProblem(new TestRenderer());
             pathFindingProblem.generate();
-            pathFindingProblem.render();
 
             await pathFindingProblem.solve(solverMock);
 
