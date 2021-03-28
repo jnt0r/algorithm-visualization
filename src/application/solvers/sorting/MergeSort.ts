@@ -26,13 +26,17 @@ export default class MergeSort implements SortingProblemSolver {
             return Promise.resolve();
         }
 
-        const middleIndex = Math.floor(right - ((right - left) / 2));
+        const middleIndex = this.calculateMiddleBetween(left, right);
         await Promise.all([
             this.mergeSort(data, left, middleIndex),
             this.mergeSort(data, middleIndex+1, right)
         ]);
 
         return this.merge(data, left, middleIndex, right);
+    }
+
+    private calculateMiddleBetween(left: number, right: number) {
+        return Math.floor(right - ((right - left) / 2));
     }
 
     /**
