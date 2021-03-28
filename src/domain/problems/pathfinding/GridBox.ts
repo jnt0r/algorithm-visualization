@@ -31,19 +31,6 @@ export default class GridBox {
         this.renderer.render(this.component);
     }
 
-    render(): void {
-        this.component.setColor(this.color);
-        this.component.setBorderColor(this.borderColor);
-    }
-
-    setCost(cost: number): void {
-        this.cost = cost;
-    }
-
-    getCost(): number {
-        return this.cost;
-    }
-
     markVisited(): void {
         this._isVisited = true;
         if (!this._isGoal && !this._isStart) {
@@ -94,6 +81,14 @@ export default class GridBox {
         }
     }
 
+    setCost(cost: number): void {
+        this.cost = cost;
+    }
+
+    getCost(): number {
+        return this.cost;
+    }
+
     isVisited(): boolean {
         return this._isVisited;
     }
@@ -115,6 +110,11 @@ export default class GridBox {
     private setBorderColor(hexCode: string): void {
         this.borderColor = hexCode;
         this.render();
+    }
+
+    private render(): void {
+        this.component.setColor(this.color);
+        this.component.setBorderColor(this.borderColor);
     }
 
     private initializeComponent(renderer: Renderer): Rectangle {

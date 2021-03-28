@@ -57,7 +57,7 @@ export default class PathFindingProblem extends MustInitializeWithRenderer imple
             part.markPartOfPath();
             this.grid.getStats().addPathField();
 
-            await this.grid.renderPathPart(part);
+            await new Promise<void>(resolve => setTimeout(() => resolve(), 5));
         }
     }
 }

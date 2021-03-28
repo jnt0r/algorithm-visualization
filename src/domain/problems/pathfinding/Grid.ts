@@ -91,14 +91,6 @@ export default class Grid {
         return neighbours;
     }
 
-    renderPathPart(part: GridBox): Promise<void> {
-        part.render();
-
-        return new Promise(resolve => {
-            window.requestAnimationFrame(() => resolve());
-        });
-    }
-
     private generatePlainGrid() {
         for (let x = 0; x < this.width; x++) {
             this.boxes[x] = [];
