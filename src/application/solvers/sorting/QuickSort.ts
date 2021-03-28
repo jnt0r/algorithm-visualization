@@ -53,17 +53,8 @@ export default class QuickSort implements SortingProblemSolver {
         while (i < j) {
             await this.data.markComparingElements(i, j);
 
-            // TODO: Refactor this. extract into methods with good names
-            while (i < right && this.data.compareElements(i, LESS, pivot)) {
-                this.data.getElement(i).unmark();
-                i++;
-                await this.data.markComparingElements(i);
-            }
-            while (j > left && this.data.compareElements(j, GREATER_EQUAL, pivot)) {
-                this.data.getElement(j).unmark();
-                j--;
-                await this.data.markComparingElements(j);
-            }
+            i = await this.findFirstElementNotSmallerThanPivotBetween(i, right, pivot);
+            j = await this.findFirstElementSmallerThanPivotBetween(j, left, pivot);
 
             if (i < j) {
                 await this.data.swap(i, j);
@@ -74,7 +65,6 @@ export default class QuickSort implements SortingProblemSolver {
 
         if (this.data.compareElements(i, GREATER, pivot)) {
             await this.data.swap(i, pivot);
-            // Pivot is now element with index i. Mark this element as sorted
             this.data.getElement(i).setSorted();
         } else {
             this.data.getElement(pivot).unmark();
@@ -82,5 +72,41 @@ export default class QuickSort implements SortingProblemSolver {
         }
 
         return i;
+    }
+
+    /**
+     * Returns index of first element between right and left that is less than pivot
+     *
+     * @param right
+     * @param left
+     * @param pivot
+     * @private
+     */
+    private async findFirstElementSmallerThanPivotBetween(right: number, left: number, pivot: number) {
+        while (right > left && this.data.compareElements(right, GREATER_EQUAL, pivot)) {
+            this.data.getElement(right).unmark();
+            right--;
+            await this.data.markComparingElements(right);
+        }
+
+        return right;
+    }
+
+    /**
+     * Returns index of first element between left and right that is not smaller than pivot element
+     *
+     * @param left The left bound
+     * @param right The right bound
+     * @param pivot The value to compare to
+     * @private
+     */
+    private async findFirstElementNotSmallerThanPivotBetween(left: number, right: number, pivot: number) {
+        while (left < right && this.data.compareElements(left, LESS, pivot)) {
+            this.data.getElement(left).unmark();
+            left++;
+            await this.data.markComparingElements(left);
+        }
+
+        return left;
     }
 }
