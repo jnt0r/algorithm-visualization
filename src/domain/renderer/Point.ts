@@ -1,5 +1,9 @@
 export default class Point {
-    constructor(private readonly x: number, private readonly y: number) {}
+    constructor(private readonly x: number, private readonly y: number) {
+        if (x < 0 || y < 0) {
+            throw new Error('IllegalArgument: Coordinates must be positive but got: ' + x);
+        }
+    }
 
     getX(): number {
         return this.x;

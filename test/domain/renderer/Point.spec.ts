@@ -1,6 +1,15 @@
 import Point from '../../../src/domain/renderer/Point';
 
 describe('Point', () => {
+
+    test('should throw error on negative x coordinate', () => {
+        expect(() => new Point(-1, 0)).toThrowError();
+    });
+
+    test('should throw error on negative y coordinate', () => {
+        expect(() => new Point(0, -1)).toThrowError();
+    });
+
     describe('euclideanDistanceTo', () => {
         test('should return 0 on same Points', () => {
             const pointA = new Point(1, 2);
@@ -13,14 +22,6 @@ describe('Point', () => {
         test('distance between point and origin', () => {
             const pointA = new Point(0, 0);
             const pointB = new Point(3, 4);
-
-            expect(pointA.euclideanDistanceTo(pointB)).toBe(5);
-            expect(pointB.euclideanDistanceTo(pointA)).toBe(5);
-        });
-
-        test('distance between negative point and origin', () => {
-            const pointA = new Point(0, 0);
-            const pointB = new Point(-3, -4);
 
             expect(pointA.euclideanDistanceTo(pointB)).toBe(5);
             expect(pointB.euclideanDistanceTo(pointA)).toBe(5);
@@ -47,14 +48,6 @@ describe('Point', () => {
         test('distance between point and origin', () => {
             const pointA = new Point(0, 0);
             const pointB = new Point(3, 4);
-
-            expect(pointA.manhattanDistanceTo(pointB)).toBe(7);
-            expect(pointB.manhattanDistanceTo(pointA)).toBe(7);
-        });
-
-        test('distance between negative point and origin', () => {
-            const pointA = new Point(0, 0);
-            const pointB = new Point(-3, -4);
 
             expect(pointA.manhattanDistanceTo(pointB)).toBe(7);
             expect(pointB.manhattanDistanceTo(pointA)).toBe(7);
