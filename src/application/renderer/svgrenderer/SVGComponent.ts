@@ -1,9 +1,11 @@
 import Component from '../../../domain/renderer/Component';
 import { Element } from '@svgdotjs/svg.js';
 import Point from '../../../domain/renderer/Point';
+import AnimationSpeed from '../../../domain/renderer/AnimationSpeed';
 
 export default class SVGComponent implements Component {
-    protected constructor(protected readonly element: Element) {}
+
+    protected constructor(protected readonly element: Element, private readonly animationSpeed: AnimationSpeed) {}
 
     getElement(): Element {
         return this.element;
@@ -36,6 +38,11 @@ export default class SVGComponent implements Component {
     }
 
     moveTo(point: Point): Promise<void> {
-        return Promise.resolve();
+        this.element.animate({ delay: 0, duration: this.animationSpeed.getValue() })
+            .move(point.getX(), point.getY());
+
+        return new Promise<void>(resolve => {
+            setTimeout(() => resolve(), this.animationSpeed.getValue());
+        });
     }
 }
