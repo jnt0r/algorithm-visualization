@@ -11,6 +11,9 @@ describe('PathFindingProblemSolvers', () => {
     const renderer: Renderer = new TestRenderer();
     beforeEach(() => {
         let counter = 1;
+        // Mocking Math.random to return 0 for the first two times and then return 0.9
+        // First two times is used to get random x,y coordinates for start element
+        // Next two times is used to get random x,y coordinates for goal element
         jest.spyOn(global.Math, 'random').mockImplementation(() => {
             if (counter <= 2) {
                 counter++;

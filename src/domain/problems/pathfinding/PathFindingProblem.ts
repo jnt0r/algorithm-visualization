@@ -29,6 +29,11 @@ export default class PathFindingProblem extends MustInitializeWithRenderer imple
         return this.grid.getStats();
     }
 
+    /**
+     * Calculates number of grid elements per column based on the available height.
+     *
+     * @private
+     */
     private calculateGridHeight() {
         let height = Math.floor(this.renderer.getHeight() / GridBox.height);
         if (height % 2 === 0) {
@@ -39,7 +44,7 @@ export default class PathFindingProblem extends MustInitializeWithRenderer imple
     }
 
     /**
-     * Calculates number of grid elements per row based on the available space.
+     * Calculates number of grid elements per row based on the available width.
      *
      * @private
      */
