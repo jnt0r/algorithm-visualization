@@ -7,12 +7,15 @@ import SortingElementConfiguration from './SortingElementConfiguration';
 export default class SortableData {
     private readonly bars: SortingElement[] = [];
     private readonly stats = new SortingProblemStats();
-    private readonly config: SortingElementConfiguration;
+    private readonly elementConfiguration: SortingElementConfiguration;
 
     constructor(private readonly numbers: number[], private readonly renderer: Renderer) {
         this.renderer.clear();
-        this.config = new SortingElementConfiguration(this.renderer.getWidth(), this.renderer.getHeight(), numbers.length);
-        this.createBarsFromNumbers();
+        this.elementConfiguration = new SortingElementConfiguration(
+            this.renderer.getWidth(),
+            this.renderer.getHeight(),
+            numbers.length);
+        this.convertNumbersToBars();
     }
 
     async swap(a: number, b: number): Promise<void> {
@@ -54,9 +57,9 @@ export default class SortableData {
         return this.stats;
     }
 
-    private createBarsFromNumbers() {
+    private convertNumbersToBars() {
         this.numbers.forEach((value, index) => {
-            this.bars.push(new SortingElement(value, index, this.config, this.renderer));
+            this.bars.push(new SortingElement(value, index, this.elementConfiguration, this.renderer));
         });
     }
 }

@@ -20,8 +20,8 @@ export default class SortingElement {
       private readonly renderer: Renderer
     ) {
         this.component = this.createComponent();
-        this.render();
         this.renderer.render(this.component);
+        this.updateComponentColors();
     }
 
     setIndex(index: number): Promise<void> {
@@ -59,10 +59,10 @@ export default class SortingElement {
 
     private setColor(hexCode: string): void {
         this.color = hexCode;
-        this.render();
+        this.updateComponentColors();
     }
 
-    private render(): void {
+    private updateComponentColors(): void {
         this.component.setColor(this.color);
         this.component.setBorderColor(this.color);
     }
