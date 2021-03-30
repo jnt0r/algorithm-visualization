@@ -15,7 +15,6 @@ export default class SortingProblem extends MustInitializeWithRenderer implement
     }
 
     render(): void {
-        this.renderer.clear();
         this.makeProblem();
     }
 
@@ -24,7 +23,6 @@ export default class SortingProblem extends MustInitializeWithRenderer implement
     }
 
     reset(): void {
-        this.renderer.clear();
         this.makeProblem();
     }
 
