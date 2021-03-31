@@ -1,37 +1,37 @@
-export default class SelectComponent<T extends { toString(): string }> {
-    private readonly select: HTMLSelectElement;
+import HtmlComponent from './HtmlComponent';
 
+export default class SelectComponent<T extends { toString(): string }> extends HtmlComponent<HTMLSelectElement> {
     private items: T[] = [];
 
-    constructor(id: string) {
-        this.select = <HTMLSelectElement>document.getElementById(id);
+    constructor(private readonly id: string) {
+        super(id);
     }
 
     addItem(item: T): void {
         this.items.push(item);
-        this.select.add(new Option(item.toString(), item.toString(), this.items.length === 0));
+        this.element.add(new Option(item.toString(), item.toString(), this.items.length === 0));
     }
 
     onUpdate(func: (selectedItem: T | undefined) => void): void {
-        this.select.onchange = () => {
+        this.element.onchange = () => {
             func(this.getSelectedItem());
         };
     }
 
     getSelectedItem(): T | undefined {
-        return this.items[this.items.findIndex(p => p.toString() === this.select.value)];
+        return this.items[this.items.findIndex(p => p.toString() === this.element.value)];
     }
 
     clear(): void {
         this.items = [];
-        this.select.options.length = 0;
+        this.element.options.length = 0;
     }
 
     disable(): void {
-        this.select.disabled = true;
+        this.element.disabled = true;
     }
 
     enable(): void {
-        this.select.disabled = false;
+        this.element.disabled = false;
     }
 }

@@ -9,6 +9,7 @@ import ErrorMessage from './components/ErrorMessage';
 import StatsComponent from './components/StatsComponent';
 import RangeComponent from './components/RangeComponent';
 import ButtonComponent from './components/ButtonComponent';
+import HtmlComponent from './components/HtmlComponent';
 
 /**
  * @class Application
@@ -26,10 +27,19 @@ export default class Application {
     /* eslint-enable */
 
     private readonly statsComponent = new StatsComponent();
+    private readonly disablingElements: HtmlComponent<any>[] = [];
 
     constructor(private readonly controller: Controller) {
         this.registerActions();
         this.initializeValues();
+
+        this.disablingElements.push(
+            this.problemSelectElement,
+            this.algorithmSelectElement,
+            this.solveBtn,
+            this.generateBtn,
+            this.resetBtn,
+        );
     }
 
     private registerActions() {

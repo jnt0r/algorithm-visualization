@@ -1,8 +1,9 @@
-export default class ButtonComponent {
-    private readonly element: HTMLButtonElement;
+import HtmlComponent from './HtmlComponent';
+
+export default class ButtonComponent extends HtmlComponent<HTMLButtonElement>{
 
     constructor(private readonly id: string) {
-        this.element = <HTMLButtonElement>document.getElementById(id);
+        super(id);
     }
 
     onClick(func: () => void): void {
