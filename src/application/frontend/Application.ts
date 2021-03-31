@@ -17,14 +17,12 @@ import HtmlComponent from './components/HtmlComponent';
  * handles the user interactions and sends the required actions to the controller.
  */
 export default class Application {
-    /* eslint-disable  */
-    private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never, any, any>>>("problemSelect");
-    private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never, any, any>>>("algorithmSelect");
-    private readonly animationSpeedSelect = new RangeComponent("animationSpeed", 1, 100, 50);
-    private readonly solveBtn = new ButtonComponent("solveBtn");
-    private readonly generateBtn = new ButtonComponent("generateBtn");
-    private readonly resetBtn = new ButtonComponent("resetBtn");
-    /* eslint-enable */
+    private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never, any, any>>>('problemSelect');
+    private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never, any, any>>>('algorithmSelect');
+    private readonly animationSpeedSelect = new RangeComponent('animationSpeed', 1, 100, 50);
+    private readonly solveBtn = new ButtonComponent('solveBtn');
+    private readonly generateBtn = new ButtonComponent('generateBtn');
+    private readonly resetBtn = new ButtonComponent('resetBtn');
 
     private readonly statsComponent = new StatsComponent();
     // We only need the methods of the HtmlComponent class so any is okay here to group different Component types.
