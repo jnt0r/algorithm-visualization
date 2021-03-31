@@ -8,6 +8,7 @@ import SuccessMessage from './components/SuccessMessage';
 import ErrorMessage from './components/ErrorMessage';
 import StatsComponent from './components/StatsComponent';
 import RangeComponent from './components/RangeComponent';
+import ButtonComponent from './components/ButtonComponent';
 
 /**
  * @class Application
@@ -19,9 +20,9 @@ export default class Application {
     private readonly problemSelectElement = new SelectComponent<ProblemDisplay<Problem<never>, ProblemSolver<never, any, any>>>("problemSelect");
     private readonly algorithmSelectElement = new SelectComponent<SolverDisplay<ProblemSolver<never, any, any>>>("algorithmSelect");
     private readonly animationSpeedSelect = new RangeComponent("animationSpeed", 1, 100, 50);
-    private readonly solveBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("solveBtn");
-    private readonly generateBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("generateBtn");
-    private readonly resetBtn: HTMLButtonElement = <HTMLButtonElement>document.getElementById("resetBtn");
+    private readonly solveBtn = new ButtonComponent("solveBtn");
+    private readonly generateBtn = new ButtonComponent("generateBtn");
+    private readonly resetBtn = new ButtonComponent("resetBtn");
     /* eslint-enable */
 
     private readonly statsComponent = new StatsComponent();
@@ -35,9 +36,9 @@ export default class Application {
         this.problemSelectElement.onUpdate(problem => this.onProblemSelectUpdate(problem));
         this.algorithmSelectElement.onUpdate(() => this.onAlgorithmSelectUpdate());
         this.animationSpeedSelect.onUpdate(animationSpeed => this.updateAnimationSpeed(animationSpeed));
-        this.solveBtn.onclick = () => this.onSolveBtnClick();
-        this.generateBtn.onclick = () => this.onGenerateBtnClick();
-        this.resetBtn.onclick = () => this.onResetBtnClick();
+        this.solveBtn.onClick(() => this.onSolveBtnClick());
+        this.generateBtn.onClick(() => this.onGenerateBtnClick());
+        this.resetBtn.onClick(() => this.onResetBtnClick());
     }
 
     private initializeValues() {
@@ -100,17 +101,17 @@ export default class Application {
     private disableAllInputs(): void {
         this.problemSelectElement.disable();
         this.algorithmSelectElement.disable();
-        this.resetBtn.disabled = true;
-        this.generateBtn.disabled = true;
-        this.solveBtn.disabled = true;
+        this.resetBtn.disable();
+        this.generateBtn.disable();
+        this.solveBtn.disable();
     }
 
     private enableAllInputs(): void {
         this.problemSelectElement.enable();
         this.algorithmSelectElement.enable();
-        this.resetBtn.disabled = false;
-        this.generateBtn.disabled = false;
-        this.solveBtn.disabled = false;
+        this.resetBtn.enable();
+        this.generateBtn.enable();
+        this.solveBtn.enable();
     }
 
     private setProblems(problems: ProblemDisplay<Problem<never>, ProblemSolver<never, unknown, unknown>>[]): void {
