@@ -32,9 +32,10 @@ export default class SortingProblem extends MustInitializeWithRenderer implement
 
     private generateRandomNumbers() {
         this.numbers = [];
+        const maxNumber = this.renderer.getHeight() * 0.8;
 
         for (let i = 0; i < this.NUMBER_OF_ELEMENTS; i++) {
-            this.numbers.push(Math.random() * (this.renderer.getHeight() - 200));
+            this.numbers.push(Math.random() * maxNumber);
         }
     }
 

@@ -21,7 +21,7 @@ export default class SortingElementConfiguration {
     getPointForIndex(index: number): Point {
         return new Point(
             this.offset + index * (this.width + this.padding),
-            100);
+            this.availableHeight * 0.1);
     }
 
     private calculateRenderOffset(): number {
