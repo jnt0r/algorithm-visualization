@@ -4,10 +4,10 @@ export default class RangeComponent extends HtmlComponent<HTMLInputElement> {
     private readonly outputElement!: HTMLOutputElement;
 
     constructor(
-        private readonly id: string,
-        private readonly minValue: number,
-        private readonly maxValue: number,
-        private readonly initialValue: number,
+    private readonly id: string,
+    private readonly minValue: number,
+    private readonly maxValue: number,
+    private readonly initialValue: number
     ) {
         super(id);
         this.outputElement = document.createElement('output');
@@ -31,6 +31,20 @@ export default class RangeComponent extends HtmlComponent<HTMLInputElement> {
 
     getValue(): number {
         return this.element.valueAsNumber;
+    }
+
+    /**
+      * @Override
+      */
+    disable(): void {
+        this.element.disabled = true;
+    }
+
+    /**
+      * @Override
+      */
+    enable(): void {
+        this.element.disabled = false;
     }
 
     private initializeOutputElement() {

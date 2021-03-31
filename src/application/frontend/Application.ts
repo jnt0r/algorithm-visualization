@@ -74,7 +74,7 @@ export default class Application {
         if (!solver) {
             this.showErrorMessage('No Algorithm selected');
         } else {
-            this.disableAllInputs();
+            this.disableInputs();
             this.statsComponent.createNewStatForAlgorithm(solver.toString());
             this.controller
                 .solveProblem(solver.getSolver(), this.statsComponent)
@@ -86,7 +86,7 @@ export default class Application {
                     this.showErrorMessage(error);
                 })
                 .finally(() => {
-                    this.enableAllInputs();
+                    this.enableInputs();
                 });
         }
     }
@@ -108,20 +108,12 @@ export default class Application {
         }
     }
 
-    private disableAllInputs(): void {
-        this.problemSelectElement.disable();
-        this.algorithmSelectElement.disable();
-        this.resetBtn.disable();
-        this.generateBtn.disable();
-        this.solveBtn.disable();
+    private disableInputs(): void {
+        this.disablingElements.forEach(element => element.disable());
     }
 
-    private enableAllInputs(): void {
-        this.problemSelectElement.enable();
-        this.algorithmSelectElement.enable();
-        this.resetBtn.enable();
-        this.generateBtn.enable();
-        this.solveBtn.enable();
+    private enableInputs(): void {
+        this.disablingElements.forEach(element => element.enable());
     }
 
     private setProblems(problems: ProblemDisplay<Problem<never>, ProblemSolver<never, unknown, unknown>>[]): void {

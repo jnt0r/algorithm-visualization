@@ -27,10 +27,16 @@ export default class SelectComponent<T extends { toString(): string }> extends H
         this.element.options.length = 0;
     }
 
+    /**
+     * @Override
+     */
     disable(): void {
         this.element.disabled = true;
     }
 
+    /**
+     * @Override
+     */
     enable(): void {
         this.element.disabled = false;
     }

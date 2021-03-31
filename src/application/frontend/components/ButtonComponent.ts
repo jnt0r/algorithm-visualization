@@ -10,10 +10,16 @@ export default class ButtonComponent extends HtmlComponent<HTMLButtonElement>{
         this.element.onclick = func;
     }
 
+    /**
+     * @Override
+     */
     disable(): void {
         this.element.disabled = true;
     }
 
+    /**
+     * @Override
+     */
     enable(): void {
         this.element.disabled = false;
     }
