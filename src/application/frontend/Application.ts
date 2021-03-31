@@ -27,6 +27,8 @@ export default class Application {
     /* eslint-enable */
 
     private readonly statsComponent = new StatsComponent();
+    // We only need the methods of the HtmlComponent class so any is okay here to group different Component types.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private readonly disablingElements: HtmlComponent<any>[] = [];
 
     constructor(private readonly controller: Controller) {
@@ -42,6 +44,10 @@ export default class Application {
         );
     }
 
+    /**
+     * Registers the action for each input element that should be executed when the user interacts with the element.
+     * @private
+     */
     private registerActions() {
         this.problemSelectElement.onUpdate(problem => this.onProblemSelectUpdate(problem));
         this.algorithmSelectElement.onUpdate(() => this.onAlgorithmSelectUpdate());
