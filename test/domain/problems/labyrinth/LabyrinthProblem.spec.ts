@@ -59,7 +59,7 @@ function getAllNonWallElements(grid: Grid) {
 async function generateGridWithMaze() {
     let grid!: Grid;
 
-    const problem: Problem<PathFindingProblem> = new PathFindingProblem(new TestRenderer());
+    const problem: Problem<LabyrinthProblem> = new LabyrinthProblem(new TestRenderer());
     problem.generate();
     await problem.solve(new class implements ProblemSolver<LabyrinthProblem, unknown, unknown> {
         async solve(data: Grid): Promise<Path> {
