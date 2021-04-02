@@ -19,15 +19,15 @@ describe('Controller', () => {
     const statsMock: ProblemStats = mock(ProblemStats);
     const stats: ProblemStats = instance(statsMock);
 
-    const stubProblem: Problem<any> = {
+    const stubProblem: Problem<never> = {
         generate: generateMock,
         render: renderMock,
         reset: resetMock,
         solve: solveMock,
         getStats: () => stats
     };
-    const stubSolver: ProblemSolver<any, any, void> = {
-        solve(data: any): Promise<void> {
+    const stubSolver: ProblemSolver<never, never, void> = {
+        solve(data: never): Promise<void> {
             return Promise.resolve();
         }
     };
