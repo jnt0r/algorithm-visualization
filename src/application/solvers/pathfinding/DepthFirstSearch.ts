@@ -23,7 +23,6 @@ export default class DepthFirstSearch extends LowestCostBasedPathCalculationSolv
 
     private async calculateCosts(): Promise<void> {
         while (!this.queue.isEmpty()) {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const box = this.queue.pop()!;
             this.data.visitField(box);
             const neighbours = this.data.getNeighboursOfElement(box);
