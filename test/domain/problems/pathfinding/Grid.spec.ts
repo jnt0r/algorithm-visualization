@@ -42,28 +42,6 @@ describe('Grid', () => {
             expect(data.getStats().getStats()
                 .get('Path fields')).toEqual(0);
         });
-
-        test('Path fields stat should increase by 1 per returned Path field', async () => {
-            const solverMock: PathFindingProblemSolver = {
-                solve(grid: Grid): Promise<Path> {
-                    const path = new Path();
-                    path.addPartOfPath(grid.getElement(1, 1)!);
-                    path.addPartOfPath(grid.getElement(1, 2)!);
-                    path.addPartOfPath(grid.getElement(1, 3)!);
-                    path.addPartOfPath(grid.getElement(1, 4)!);
-                    path.addPartOfPath(grid.getElement(1, 5)!);
-
-                    return Promise.resolve(path);
-                },
-            };
-            const pathFindingProblem = new PathFindingProblem(new TestRenderer());
-            pathFindingProblem.generate();
-
-            await pathFindingProblem.solve(solverMock);
-
-            expect(pathFindingProblem.getStats().getStats()
-                .get('Path fields')).toEqual(5);
-        });
     });
 
     describe('getNeighboursOfElement', () => {
