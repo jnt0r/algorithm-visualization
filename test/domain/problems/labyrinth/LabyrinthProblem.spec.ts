@@ -6,7 +6,6 @@ import Grid from '../../../../src/domain/problems/pathfinding/Grid';
 import Path from '../../../../src/domain/problems/pathfinding/Path';
 import GridBox from '../../../../src/domain/problems/pathfinding/GridBox';
 import Queue from '../../../../src/utils/Queue';
-import PathFindingProblem from '../../../../src/domain/problems/pathfinding/PathFindingProblem';
 
 describe('LabyrinthProblem', () => {
     test('All non wall elements should be connected in generated maze', async () => {
