@@ -6,6 +6,7 @@ import PathFindingProblemSolver from '../../../src/domain/problems/pathfinding/P
 import Grid from '../../../src/domain/problems/pathfinding/Grid';
 import { TestRenderer } from '../../TestRenderer';
 import Renderer from '../../../src/domain/renderer/Renderer';
+import { mockRandomForEach } from 'jest-mock-random';
 
 describe('PathFindingProblemSolvers', () => {
     const renderer: Renderer = new TestRenderer();
@@ -19,20 +20,10 @@ describe('PathFindingProblemSolvers', () => {
         let data: Grid;
         let solver: PathFindingProblemSolver;
 
-        beforeEach(() => {
-            let counter = 1;
-            // Mocking Math.random to return 0 for the first two times and then return 0.9
-            // First two times is used to get random x,y coordinates for start element
-            // Next two times is used to get random x,y coordinates for goal element
-            jest.spyOn(global.Math, 'random').mockImplementation(() => {
-                if (counter <= 2) {
-                    counter++;
+        // Mock math.random to return fixed values. Used to generate start and goal element.
+        mockRandomForEach([ 0, 0, 0.99, 0.99 ]);
 
-                    return 0;
-                } else {
-                    return 0.9;
-                }
-            });
+        beforeEach(() => {
             // start should be at 0,0
             // goal should be at 2,4
             data = new Grid(3, 5, renderer);
@@ -48,10 +39,6 @@ describe('PathFindingProblemSolvers', () => {
             data.getElement(1, 4)!.setWall();
 
             solver = new solverClass();
-        });
-
-        afterEach(() => {
-            jest.spyOn(global.Math, 'random').mockRestore();
         });
 
         it('should find path if path exists', async () => {
