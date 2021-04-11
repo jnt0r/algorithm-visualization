@@ -10,7 +10,7 @@ import Queue from '../../../../src/utils/Queue';
 describe('LabyrinthProblem', () => {
     test('All non wall elements should be connected in generated maze', async () => {
         const grid = await generateGridWithMaze();
-        const allNonWallElements = getAllNonWallElements(grid);
+        const allNonWallElements = getAllNonWallElementsOfGrid(grid);
 
         const reachedElements = calculateAllElementsReachedFromFirstNonWallElement(allNonWallElements, grid);
 
@@ -40,7 +40,7 @@ function calculateAllElementsReachedFromFirstNonWallElement(allNonWallElements: 
     return reachedElements;
 }
 
-function getAllNonWallElements(grid: Grid) {
+function getAllNonWallElementsOfGrid(grid: Grid) {
     const allNonWallElements = [];
 
     for (let i = 0; i < grid.width; i++) {
