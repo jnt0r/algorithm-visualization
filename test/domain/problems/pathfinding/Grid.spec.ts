@@ -15,30 +15,25 @@ describe('Grid', () => {
         });
 
         test('Checked fields stat should be initialized with 0', () => {
-            expect(data.getStats().getStats()
-                .get('Checked fields')).toEqual(0);
+            expect(data.getStats().getStat('Checked fields')).toEqual(0);
         });
 
         test('Checked fields stat should increase by 1 on getElement', () => {
             data.getElement(1, 1);
-            expect(data.getStats().getStats()
-                .get('Checked fields')).toEqual(1);
+            expect(data.getStats().getStat('Checked fields')).toEqual(1);
         });
 
         test('Visited fields stat should be initialized with 0', () => {
-            expect(data.getStats().getStats()
-                .get('Visited fields')).toEqual(0);
+            expect(data.getStats().getStat('Visited fields')).toEqual(0);
         });
 
         test('Visited fields stat should increase by 1 on getElement', () => {
             data.visitField(data.getElement(1, 1)!);
-            expect(data.getStats().getStats()
-                .get('Visited fields')).toEqual(1);
+            expect(data.getStats().getStat('Visited fields')).toEqual(1);
         });
 
         test('Path fields stat should be initialized with 0', () => {
-            expect(data.getStats().getStats()
-                .get('Path fields')).toEqual(0);
+            expect(data.getStats().getStat('Path fields')).toEqual(0);
         });
     });
 
