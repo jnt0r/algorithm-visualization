@@ -10,6 +10,10 @@ export default class LabyrinthProblem extends PathFindingProblem {
     private setsMap!: Map<number, number>;
     private borders!: { box: GridBox; firstSetIndex: number; secondSetIndex: number }[];
 
+    /**
+     * The generated maze always consist of one path that connects all non-wall elements.
+     * Every non-wall element is always reachable from every other non-wall element.
+     */
     generate(): void {
         super.generate();
 
