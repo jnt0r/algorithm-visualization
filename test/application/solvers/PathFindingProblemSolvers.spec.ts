@@ -10,7 +10,6 @@ import Renderer from '../../../src/domain/renderer/Renderer';
 describe('PathFindingProblemSolvers', () => {
     const renderer: Renderer = new TestRenderer();
 
-    // Parameterized test for each PathfindingProblemSolver implementation
     describe.each([
         [ 'Dijkstra', Dijkstra ],
         [ 'DepthFirstSearch', DepthFirstSearch ],
