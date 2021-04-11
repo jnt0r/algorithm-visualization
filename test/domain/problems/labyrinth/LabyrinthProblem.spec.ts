@@ -11,7 +11,6 @@ describe('LabyrinthProblem', () => {
     test('All non wall elements should be connected in generated maze', async () => {
         const grid = await generateGridWithMaze();
         const allNonWallElements = getAllNonWallElementsOfGrid(grid);
-
         const reachedElements = calculateAllElementsReachedFromFirstNonWallElement(allNonWallElements, grid);
 
         expect(reachedElements.size).toBe(allNonWallElements.length);
