@@ -38,33 +38,38 @@ describe('Grid', () => {
     });
 
     describe('getNeighboursOfElement', () => {
-        let grid: Grid;
-
-        beforeEach(() => {
-            grid = new Grid(2, 1, renderer);
-        });
-
         test('should return empty array when no neighbours', () => {
+            const grid = new Grid(1, 1, renderer);
             expect(grid.getNeighboursOfElement(grid.getElement(0, 0)!)).toEqual([]);
         });
 
         test('should return right neighbour', () => {
+            const grid = new Grid(2, 1, renderer);
+
             expect(grid.getNeighboursOfElement(grid.getElement(0, 0)!)).toEqual([ grid.getElement(1, 0) ]);
         });
 
         test('should return left neighbour', () => {
+            const grid = new Grid(2, 1, renderer);
+
             expect(grid.getNeighboursOfElement(grid.getElement(1, 0)!)).toEqual([ grid.getElement(0, 0) ]);
         });
 
         test('should return upper neighbour', () => {
+            const grid = new Grid(1, 2, renderer);
+
             expect(grid.getNeighboursOfElement(grid.getElement(0, 0)!)).toEqual([ grid.getElement(0, 1) ]);
         });
 
         test('should return lower neighbour', () => {
+            const grid = new Grid(1, 2, renderer);
+
             expect(grid.getNeighboursOfElement(grid.getElement(0, 1)!)).toEqual([ grid.getElement(0, 0) ]);
         });
 
         test('should return all neighbours', () => {
+            const grid = new Grid(3, 3, renderer);
+
             const neighbours = grid.getNeighboursOfElement(grid.getElement(1, 1)!);
 
             expect(neighbours.length).toEqual(4);
