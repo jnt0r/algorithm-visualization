@@ -16,7 +16,9 @@ import LabyrinthProblem from './domain/problems/labyrinth/LabyrinthProblem';
 import BreadthFirstSearch from './application/solvers/pathfinding/BreadthFirstSearch';
 import DepthFirstSearch from './application/solvers/pathfinding/DepthFirstSearch';
 import MergeSort from './application/solvers/sorting/MergeSort';
+import SVGRenderer from './application/renderer/svgrenderer/SVGRenderer';
 
+// const renderer = new SVGRenderer('renderer-wrapper');
 const renderer = new CanvasRenderer('renderer-wrapper');
 const availableProblems = [
     new ProblemDisplay<SortingProblem, SortingProblemSolver>('Sorting', SortingProblem, [
