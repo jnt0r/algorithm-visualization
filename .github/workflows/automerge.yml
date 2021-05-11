@@ -1,0 +1,15 @@
+name: Auto-merge patch
+on:
+  workflow_run:
+    workflows: ["Auto-merge trigger"]
+    types:
+      - completed
+jobs:
+  test:
+    name: Auto-merge patch updates
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: koj-co/dependabot-pr-action@master
+        with:
+          token: ${{ secrets.AUTOMERGE_TOKEN }}
+          merge-patch: true
