@@ -10,6 +10,8 @@ It automatically installs npm, nodejs and also the required dependencies.
 sh install.sh
 ```
 
+If you read `Environment installation successful` the installation has been completed and you can run the app.
+
 ## Starting the application
 
 After installation you can run
