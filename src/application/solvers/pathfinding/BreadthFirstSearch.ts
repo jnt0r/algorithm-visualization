@@ -50,7 +50,7 @@ export default class BreadthFirstSearch extends LowestCostBasedPathCalculationSo
 
     private getFirstQueueEntry(): GridBox {
         // We checked that queue is not empty before calling this method so we can ignore possible unknown return values
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
         return this.queue.pop()!;
     }
 }

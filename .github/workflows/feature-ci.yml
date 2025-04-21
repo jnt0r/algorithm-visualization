@@ -1,0 +1,20 @@
+name: CI and Deploy
+on:
+  push:
+    branches:
+      - "!master"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install modules
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Lint
+        run: npm lint

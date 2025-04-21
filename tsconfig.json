@@ -5,7 +5,6 @@
         "module": "commonjs",
         "target": "es6",
         "forceConsistentCasingInFileNames": true,
-        "declaration": true,
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
@@ -14,7 +13,9 @@
         "noImplicitAny": true,
         "noImplicitThis": true,
         "strictFunctionTypes": true,
-        "noStrictGenericChecks": false
+        "noStrictGenericChecks": false,
+        "declaration": false,
     },
-    "include": ["src/**/*", "**/*.d.ts"]
+    "include": ["src/**/*", "**/*.d.ts"],
+
 }

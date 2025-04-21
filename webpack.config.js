@@ -3,14 +3,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        app: './src/index.ts',
+        app: './src/public/index.ts',
     },
-    mode: 'development',
+    mode: 'production',
     devtool: false,
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Algorithm Visualization',
-            template: 'src/index.html',
+            template: 'src/public/index.html',
+            minify: true
         }),
     ],
     module: {
@@ -18,13 +19,18 @@ module.exports = {
             {
                 test: /\.ts/,
                 exclude: /node_modules/,
-                use: ['awesome-typescript-loader'],
+                use: [ 'ts-loader' ],
+            },
+            {
+                test: /\.css$/i,
+                use: [ 'style-loader', 'css-loader' ],
+                exclude: /node_modules/,
             },
         ],
     },
     resolve: {
-        extensions: ['.ts', '.js'],
-        modules: [path.join(__dirname, 'src'), 'node_modules'],
+        extensions: [ '.ts', '.js', '.css' ],
+        modules: [ path.join(__dirname, 'src'), 'node_modules' ],
     },
     output: {
         filename: '[name].bundle.js',

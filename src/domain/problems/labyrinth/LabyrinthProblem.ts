@@ -104,7 +104,7 @@ export default class LabyrinthProblem extends PathFindingProblem {
         for (let x = 0; x < this.grid.width; x++) {
             for (let y = 0; y < this.grid.height; y++) {
                 // We know the element at this position must exist so we can ignore the possible undefined
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
                 const gridBox = this.grid.getElement(x, y)!;
                 func(gridBox, x, y);
             }

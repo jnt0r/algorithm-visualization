@@ -11,7 +11,7 @@ export class TestRenderer extends Renderer {
         return Promise.resolve();
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+
     clear(): void {}
 
     createCircle(position: Point, radius: number): Circle {
