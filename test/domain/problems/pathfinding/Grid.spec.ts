@@ -2,7 +2,6 @@ import Grid from '../../../../src/domain/problems/pathfinding/Grid';
 import PathFindingProblemStats from '../../../../src/domain/problems/pathfinding/PathFindingProblemStats';
 import { TestRenderer } from '../../../TestRenderer';
 import Renderer from '../../../../src/domain/renderer/Renderer';
-import arrayContaining = jasmine.arrayContaining;
 
 describe('Grid', () => {
     const renderer: Renderer = new TestRenderer();
@@ -74,7 +73,7 @@ describe('Grid', () => {
 
             expect(neighbours.length).toEqual(4);
             expect(neighbours).toEqual(
-                arrayContaining([
+                expect.arrayContaining([
                     grid.getElement(2, 1),
                     grid.getElement(0, 1),
                     grid.getElement(1, 2),

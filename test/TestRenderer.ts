@@ -11,7 +11,6 @@ export class TestRenderer extends Renderer {
         return Promise.resolve();
     }
 
-
     clear(): void {}
 
     createCircle(position: Point, radius: number): Circle {
